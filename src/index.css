@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Home Culture brand palette (from the Figma design):
+       terracotta #B8634A, charcoal #2E2E2E, warm white, forest-brown #3B2A20 */
+    --background: 30 25% 98%;
+    --foreground: 0 0% 12%; /* charcoal text */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    /* Home Culture primary: terracotta */
+    --primary: 15 43% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 15 43% 44%;
+
+    /* Secondary: footer charcoal */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 30 20% 95%;
+    --muted-foreground: 0 0% 42%;
+
+    --accent: 20 40% 94%;
+    --accent-foreground: 15 43% 36%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 15% 89%;
+    --input: 30 15% 89%;
+    --ring: 15 43% 51%;
+
+    --radius: 0.75rem;
+
+    /* Home Culture Dashboard Specific */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 200 60% 40%;
+    --info-foreground: 0 0% 100%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 12%; /* Figma footer charcoal #1E1E1E */
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 15 43% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 17%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 15 43% 51%;
+
+    /* Home Culture Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(15 43% 51%), hsl(15 43% 42%));
+    --gradient-secondary: linear-gradient(135deg, hsl(0 0% 12%), hsl(0 0% 20%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 12%), hsl(15 43% 51%));
+
+    /* Home Culture Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 12% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 12% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 12% / 0.1);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0 0% 9%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 15 43% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 17%;
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 17%;
+    --muted-foreground: 0 0% 54%;
+
+    --accent: 0 0% 17%;
+    --accent-foreground: 0 0% 96%;
+
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 96%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 15 43% 51%;
+    --sidebar-background: 0 0% 12%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 15 43% 51%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 17%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 15 43% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
