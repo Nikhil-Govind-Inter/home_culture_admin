@@ -28,7 +28,7 @@ export interface MetaDataPayload {
   meta_keywords: string;
 }
 
-interface ServerMeta {
+interface ServerPagination {
   total: number;
   page: number;
   limit: number;
@@ -61,16 +61,16 @@ export const fetchMetaDataList = async (
 
   const response = await apiFetch(`${META_DATA_URL}?${params}`);
   const envelope = await parseEnvelope<MetaData[]>(response);
-  const meta = envelope.meta as ServerMeta;
+  const pagination = envelope.pagination as ServerMeta;
 
   return {
     data: {
       data: envelope.data,
       pagination: {
-        totalCount: meta.total,
-        totalPages: meta.totalPages,
-        currentPage: meta.page,
-        limit: meta.limit,
+        totalCount: pagination.total,
+        totalPages: pagination.totalPages,
+        currentPage: pagination.page,
+        limit: pagination.limit,
       },
     },
   };
