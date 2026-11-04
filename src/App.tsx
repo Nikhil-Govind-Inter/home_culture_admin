@@ -19,6 +19,8 @@ import NotFound from "./pages/NotFound";
 
 const BannersList = React.lazy(() => import("./pages/siteSettings/BannersList"));
 const BannersForm = React.lazy(() => import("./pages/siteSettings/BannersForm"));
+const MetaDataList = React.lazy(() => import("./pages/siteSettings/MetaDataList"));
+const MetaDataForm = React.lazy(() => import("./pages/siteSettings/MetaDataForm"));
 const PagesList = React.lazy(() => import("./pages/pages/PagesList"));
 const PageForm = React.lazy(() => import("./pages/pages/PageForm"));
 const BlogsList = React.lazy(() => import("./pages/blogs/BlogsList"));
@@ -66,8 +68,11 @@ const App = () => (
 
                 {/* Banners */}
                 <Route path="/banners" element={<BannersList />} />
-                <Route path="/banners/new" element={<BannersForm />} />
                 <Route path="/banners/:id/edit" element={<BannersForm />} />
+
+                {/* Meta Data */}
+                <Route path="/meta-data" element={<MetaDataList />} />
+                <Route path="/meta-data/:id/edit" element={<MetaDataForm />} />
 
                 {/* Pages */}
                 <Route path="/pages" element={<PagesList />} />

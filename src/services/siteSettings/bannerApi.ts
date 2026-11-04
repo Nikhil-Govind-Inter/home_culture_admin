@@ -2,22 +2,25 @@ import { apiFetch } from "@/lib/apiClient";
 import { ApiError, parseEnvelope } from "@/services/auth/authApi";
 
 // Banners — backed by the home_culture server's `/admin/banners` (Bearer-JWT).
-// Writes use caller-built FormData (the image goes in the `image` field).
+// Banners are fixed per-page records: list, get by id and update only.
+// Updates use caller-built FormData (images go in `banner_desktop_media_path`
+// and `banner_mobile_media_path`).
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const BANNERS_URL = `${API_BASE_URL}/banners`;
 
 export { ApiError };
 
-export type BannerStatus = "draft" | "published";
-
 export interface Banner {
   id: number;
+  page: string;
+  page_slug: string;
+  header_title: string;
   title: string;
-  subtitle?: string | null;
-  image?: string | null;
-  link?: string | null;
-  sortOrder?: number;
-  status: BannerStatus;
+  description: string;
+  status: boolean;
+  banner_desktop_media_path?: string | null;
+  banner_mobile_media_path?: string | null;
+  banner_media_alt: string;
   deleted_at?: string | null;
   createdAt?: string;
   updatedAt?: string;
@@ -47,11 +50,13 @@ export interface BannersListResponse {
 export const fetchBannersList = async (
   page: number,
   limit: number,
+  search?: string,
 ): Promise<BannersListResponse> => {
   const params = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
   });
+  if (search) params.set("search", search);
 
   const response = await apiFetch(`${BANNERS_URL}?${params}`);
   const envelope = await parseEnvelope<Banner[]>(response);
@@ -75,11 +80,6 @@ export const fetchBannerById = async (id: number): Promise<{ data: Banner }> => 
   return parseEnvelope<Banner>(response);
 };
 
-export const createBanner = async (formData: FormData): Promise<{ data: Banner }> => {
-  const response = await apiFetch(BANNERS_URL, { method: "POST", body: formData });
-  return parseEnvelope<Banner>(response);
-};
-
 export const updateBanner = async (
   id: number,
   formData: FormData,
@@ -88,7 +88,12 @@ export const updateBanner = async (
   return parseEnvelope<Banner>(response);
 };
 
-export const deleteBanner = async (id: number): Promise<{ data: { id: number } }> => {
-  const response = await apiFetch(`${BANNERS_URL}/${id}`, { method: "DELETE" });
-  return parseEnvelope<{ id: number }>(response);
+// Partial update used by the list-page switch: only `status` is sent.
+export const toggleBannerStatus = async (
+  banner: Banner,
+  isActive: boolean,
+): Promise<{ data: Banner }> => {
+  const formData = new FormData();
+  formData.append("status", String(isActive));
+  return updateBanner(banner.id, formData);
 };

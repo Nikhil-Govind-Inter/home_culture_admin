@@ -1,27 +1,28 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/common/DataTable";
 import MediaThumbnail from "@/components/common/MediaThumbnail";
 import RowActionsMenu from "@/components/common/RowActionsMenu";
-import DeleteDialogue from "@/components/common/DeleteDialogue";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
+import StatusToggleCell from "@/components/common/StatusToggleCell";
+import StatusChangeDialogue from "@/components/common/StatusChangeDialogue";
 import { usePaginatedList } from "@/hooks/usePaginatedList";
+import { useStatusToggle } from "@/hooks/useStatusToggle";
 import {
   fetchBannersList,
-  deleteBanner,
+  toggleBannerStatus,
   Banner,
-  ApiError,
 } from "@/services/siteSettings/bannerApi";
 
 export default function BannersList() {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
 
   const {
     items: banners,
+    setItems,
+    refetch,
+    searchInput,
+    setSearchInput,
+    searching,
     page,
     setPage,
     limit,
@@ -31,35 +32,18 @@ export default function BannersList() {
     loading,
     itemsPage,
     itemsLimit,
-    refetch,
   } = usePaginatedList<Banner>(fetchBannersList);
 
-  const confirmDelete = async () => {
-    if (!deleteItemId) return;
-
-    try {
-      await deleteBanner(deleteItemId);
-      if (banners.length === 1 && page > 1) {
-        setPage(page - 1);
-      } else {
-        refetch();
-      }
-      toast({ title: "Success", description: "Banner deleted successfully" });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description:
-          error instanceof ApiError ? error.message : "Failed to delete banner",
-        variant: "destructive",
-      });
-    } finally {
-      setDeleteItemId(null);
-    }
-  };
+  const { statusToggleItem, setStatusToggleItem, confirmStatusToggle } =
+    useStatusToggle({
+      setItems,
+      refetch,
+      toggleStatus: toggleBannerStatus,
+      label: "Banner",
+    });
 
   const columns: ColumnDef<Banner>[] = [
     {
-      // id
       accessorKey: "id",
       header: "ID",
       enableHiding: true,
@@ -71,54 +55,55 @@ export default function BannersList() {
       ),
     },
     {
-      accessorKey: "image",
+      accessorKey: "banner_desktop_media_path",
       header: "Image",
       cell: ({ row }) => (
-        <MediaThumbnail path={row.original.image} alt={row.original.title} />
+        <MediaThumbnail
+          path={row.original.banner_desktop_media_path}
+          alt={row.original.banner_media_alt}
+        />
+      ),
+    },
+    {
+      accessorKey: "page",
+      header: "Page",
+      cell: ({ row }) => <div className="font-medium">{row.original.page}</div>,
+    },
+    {
+      accessorKey: "page_slug",
+      header: "Slug",
+      cell: ({ row }) => (
+        <div className="text-muted-foreground">{row.original.page_slug}</div>
       ),
     },
     {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => (
-        <div className="max-w-[200px] truncate" title={row.getValue("title")}>
-          {row.getValue("title")}
+        <div className="max-w-[200px] truncate" title={row.original.title}>
+          {row.original.title}
         </div>
       ),
-    },
-    {
-      accessorKey: "subtitle",
-      header: "Sub Title",
-      cell: ({ row }) => (
-        <div
-          className="max-w-[200px] truncate text-muted-foreground"
-          title={row.original.subtitle ?? ""}
-        >
-          {row.original.subtitle || "-"}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "sortOrder",
-      header: "Sort Order",
-      cell: ({ row }) => <div>{row.original.sortOrder ?? 0}</div>,
     },
     {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => (
-        <Badge variant={row.original.status === "published" ? "default" : "secondary"}>
-          {row.original.status}
-        </Badge>
+        <StatusToggleCell
+          status={row.original.status}
+          onCheckedChange={(checked) =>
+            setStatusToggleItem({ item: row.original, newStatus: checked })
+          }
+        />
       ),
     },
     {
-      accessorKey: "createdAt",
-      header: "Created At",
+      accessorKey: "updatedAt",
+      header: "Updated At",
       cell: ({ row }) => (
         <div className="text-sm text-muted-foreground">
-          {row.getValue("createdAt")
-            ? new Date(row.getValue("createdAt")).toLocaleDateString()
+          {row.original.updatedAt
+            ? new Date(row.original.updatedAt).toLocaleDateString()
             : "-"}
         </div>
       ),
@@ -126,15 +111,11 @@ export default function BannersList() {
     {
       id: "actions",
       header: "Actions",
-      cell: ({ row }) => {
-        const item = row.original;
-        return (
-          <RowActionsMenu
-            onEdit={() => navigate(`/banners/${item.id}/edit`)}
-            onDelete={() => setDeleteItemId(item.id)}
-          />
-        );
-      },
+      cell: ({ row }) => (
+        <RowActionsMenu
+          onEdit={() => navigate(`/banners/${row.original.id}/edit`)}
+        />
+      ),
     },
   ];
 
@@ -145,9 +126,11 @@ export default function BannersList() {
         data={banners}
         title="Banners"
         searchPlaceholder="Search banners..."
-        onAdd={() => navigate("/banners/new")}
-        addButtonText="Add Banner"
+        showAddButton={false}
         loading={loading}
+        searching={searching}
+        searchQuery={searchInput}
+        onSearchChange={setSearchInput}
         pagination={{
           currentPage: page,
           totalPages,
@@ -161,10 +144,11 @@ export default function BannersList() {
         }}
       />
 
-      <DeleteDialogue
-        deleteItemId={deleteItemId}
-        setDeleteItemId={setDeleteItemId}
-        confirmDelete={confirmDelete}
+      <StatusChangeDialogue
+        statusToggleItem={statusToggleItem}
+        setStatusToggleItem={setStatusToggleItem}
+        confirmStatusToggle={confirmStatusToggle}
+        itemLabel="banner"
       />
     </>
   );

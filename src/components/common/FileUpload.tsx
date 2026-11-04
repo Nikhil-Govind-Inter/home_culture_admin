@@ -246,8 +246,11 @@ export function FileUpload({
               )}
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 md:gap-3">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <span className="text-sm text-foreground truncate">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 min-w-0">
+                  <span
+                    className="text-sm text-foreground truncate min-w-0 max-w-full sm:max-w-[200px]"
+                    title={value instanceof File ? value.name : undefined}
+                  >
                     {value instanceof File ? value.name : "Current file"}
                   </span>
                   <div className="flex items-center space-x-2 flex-wrap sm:flex-nowrap">

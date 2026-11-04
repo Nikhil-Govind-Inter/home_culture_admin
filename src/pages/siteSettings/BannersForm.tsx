@@ -8,103 +8,105 @@ import { Form } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   FormFileUploadField,
-  FormSelectField,
+  FormSwitchField,
   FormTextField,
+  FormTextareaField,
 } from "@/components/forms/FormFieldComponents";
 import { Save, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   fetchBannerById,
-  createBanner,
   updateBanner,
   ApiError,
 } from "@/services/siteSettings/bannerApi";
 import { bannerSchema, BannerFormData } from "@/schemas/bannerSchema";
 
+const TEXT_FIELDS = [
+  "page_slug",
+  "header_title",
+  "title",
+  "description",
+  "banner_media_alt",
+] as const;
+const MEDIA_FIELDS = ["banner_desktop_media_path", "banner_mobile_media_path"] as const;
+
+// Banners are fixed per-page records, so this form only edits an existing one.
 export default function BannersForm() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { id } = useParams();
-  const isEditing = Boolean(id);
 
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(isEditing);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const form = useForm<BannerFormData>({
     resolver: zodResolver(bannerSchema),
     defaultValues: {
+      page: "",
+      page_slug: "",
+      header_title: "",
       title: "",
-      subtitle: "",
-      link: "",
-      sortOrder: "0",
-      status: "draft",
-      image: "",
+      description: "",
+      banner_media_alt: "",
+      status: true,
+      banner_desktop_media_path: "",
+      banner_mobile_media_path: "",
     },
   });
 
   useEffect(() => {
-    if (isEditing && id) {
-      loadBannerData(parseInt(id));
-    }
-  }, [id, isEditing]);
-
-  const loadBannerData = async (itemId: number) => {
-    try {
-      setInitialLoading(true);
-      const response = await fetchBannerById(itemId);
-      const data = response.data;
-
-      form.reset({
-        title: data.title || "",
-        subtitle: data.subtitle || "",
-        link: data.link || "",
-        sortOrder: String(data.sortOrder ?? 0),
-        status: data.status || "draft",
-        image: data.image || "",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description:
-          error instanceof ApiError ? error.message : "Failed to load banner data",
-        variant: "destructive",
-      });
-    } finally {
-      setInitialLoading(false);
-    }
-  };
+    if (!id) return;
+    const load = async () => {
+      try {
+        setInitialLoading(true);
+        const { data } = await fetchBannerById(parseInt(id));
+        form.reset({
+          page: data.page || "",
+          page_slug: data.page_slug || "",
+          header_title: data.header_title || "",
+          title: data.title || "",
+          description: data.description || "",
+          banner_media_alt: data.banner_media_alt || "",
+          status: Boolean(data.status),
+          banner_desktop_media_path: data.banner_desktop_media_path || "",
+          banner_mobile_media_path: data.banner_mobile_media_path || "",
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description:
+            error instanceof ApiError ? error.message : "Failed to load banner data",
+          variant: "destructive",
+        });
+      } finally {
+        setInitialLoading(false);
+      }
+    };
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const onSubmit = async (data: BannerFormData) => {
+    if (!id) return;
     try {
       setLoading(true);
 
       const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("subtitle", data.subtitle ?? "");
-      formData.append("link", data.link ?? "");
-      formData.append("sortOrder", data.sortOrder || "0");
-      formData.append("status", data.status);
-      // Only a freshly picked file is sent; an unchanged image keeps its stored path.
-      if (data.image instanceof File) {
-        formData.append("image", data.image);
-      }
+      TEXT_FIELDS.forEach((field) => formData.append(field, data[field]));
+      formData.append("status", String(data.status));
+      // Only freshly picked files are sent; unchanged images keep their stored path.
+      MEDIA_FIELDS.forEach((field) => {
+        const value = data[field];
+        if (value instanceof File) formData.append(field, value);
+      });
 
-      if (isEditing && id) {
-        await updateBanner(parseInt(id), formData);
-        toast({ title: "Success", description: "Banner updated successfully" });
-      } else {
-        await createBanner(formData);
-        toast({ title: "Success", description: "Banner created successfully" });
-      }
-
+      await updateBanner(parseInt(id), formData);
+      toast({ title: "Success", description: "Banner updated successfully" });
       navigate("/banners");
     } catch (error) {
       toast({
         title: "Error",
-        description:
-          error instanceof Error
-            ? error.message
-            : `Failed to ${isEditing ? "update" : "create"} banner`,
+        description: error instanceof Error ? error.message : "Failed to update banner",
         variant: "destructive",
       });
     } finally {
@@ -123,10 +125,8 @@ export default function BannersForm() {
           <ArrowLeft className="h-4 w-4" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold">{isEditing ? "Edit" : "Add"} Banner</h1>
-          <p className="text-muted-foreground">
-            {isEditing ? "Update" : "Create a new"} banner
-          </p>
+          <h1 className="text-2xl font-bold">Edit Banner</h1>
+          <p className="text-muted-foreground">Update the {form.getValues("page")} page banner</p>
         </div>
       </div>
 
@@ -138,41 +138,65 @@ export default function BannersForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField form={form} name="page" label="Page" placeholder="Page" disabled />
+                <FormTextField
+                  form={form}
+                  name="page_slug"
+                  label="Page Slug"
+                  placeholder="page-slug"
+                  disabled
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField
+                  form={form}
+                  name="header_title"
+                  label="Header Title"
+                  placeholder="Header title"
+                />
                 <FormTextField form={form} name="title" label="Title" placeholder="Banner title" />
-                <FormTextField
-                  form={form}
-                  name="subtitle"
-                  label="Sub Title"
-                  placeholder="Banner sub title"
-                />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <FormTextField form={form} name="link" label="Link" placeholder="https://..." />
-                <FormTextField
-                  form={form}
-                  name="sortOrder"
-                  label="Sort Order"
-                  placeholder="0"
-                />
-                <FormSelectField
-                  form={form}
-                  name="status"
-                  label="Status"
-                  placeholder="Select status"
-                  options={[
-                    { value: "draft", label: "Draft" },
-                    { value: "published", label: "Published" },
-                  ]}
-                />
-              </div>
-
-              <FormFileUploadField
+              <FormTextareaField
                 form={form}
-                name="image"
-                label="Image"
-                placeholder="Upload banner image"
-                accept="image/*"
+                name="description"
+                label="Description"
+                placeholder="Banner description"
+                rows={4}
+              />
+
+              <FormTextField
+                form={form}
+                name="banner_media_alt"
+                label="Image Alt Text"
+                placeholder="Describe the banner image"
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormFileUploadField
+                  form={form}
+                  name="banner_desktop_media_path"
+                  label="Desktop Image"
+                  placeholder="Upload desktop banner"
+                  accept="image/*"
+                  recommendedDimensions="1920×600px"
+                />
+                <FormFileUploadField
+                  form={form}
+                  name="banner_mobile_media_path"
+                  label="Mobile Image"
+                  placeholder="Upload mobile banner"
+                  accept="image/*"
+                  recommendedDimensions="768×800px"
+                />
+              </div>
+
+              <FormSwitchField
+                form={form}
+                name="status"
+                label="Active"
+                description="Show this banner on the website"
               />
             </CardContent>
           </Card>
@@ -183,7 +207,7 @@ export default function BannersForm() {
             </Button>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
-              {isEditing ? "Update" : "Create"}
+              Update
             </Button>
           </div>
         </form>

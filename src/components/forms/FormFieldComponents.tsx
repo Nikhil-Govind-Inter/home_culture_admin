@@ -36,6 +36,7 @@ interface BaseFormFieldProps<T extends FieldValues> {
 // Text Input Field Component
 interface FormTextFieldProps<T extends FieldValues> extends BaseFormFieldProps<T> {
   type?: "text" | "email" | "url" | "password";
+  disabled?: boolean;
 }
 
 export function FormTextField<T extends FieldValues>({
@@ -44,6 +45,7 @@ export function FormTextField<T extends FieldValues>({
   label,
   placeholder,
   type = "text",
+  disabled,
 }: FormTextFieldProps<T>) {
   return (
     <FormField
@@ -53,7 +55,7 @@ export function FormTextField<T extends FieldValues>({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input {...field} type={type} placeholder={placeholder} />
+            <Input {...field} type={type} placeholder={placeholder} disabled={disabled} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -207,6 +209,8 @@ interface FormFileUploadFieldProps<T extends FieldValues> extends BaseFormFieldP
   maxImageSize?: number;
   maxVideoSize?: number;
   preview?: boolean;
+  recommendedDimensions: string;
+  dimensionNote?: string;
 }
 
 export function FormFileUploadField<T extends FieldValues>({
@@ -218,6 +222,8 @@ export function FormFileUploadField<T extends FieldValues>({
   maxImageSize,
   maxVideoSize,
   preview = true,
+  recommendedDimensions,
+  dimensionNote,
 }: FormFileUploadFieldProps<T>) {
   return (
     <FormField
@@ -236,6 +242,8 @@ export function FormFileUploadField<T extends FieldValues>({
               maxVideoSize={maxVideoSize}
               placeholder={placeholder}
               preview={preview}
+              recommendedDimensions={recommendedDimensions}
+              dimensionNote={dimensionNote}
             />
           </FormControl>
           <FormMessage />
