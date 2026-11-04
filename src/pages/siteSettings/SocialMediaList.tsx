@@ -14,7 +14,7 @@ import {
   toggleSocialMediaStatus,
   updateSocialMediaSortOrder,
   SocialMedia,
-} from "@/services/common/socialMediaApi";
+} from "@/services/siteSettings/socialMediaApi";
 import { useToast } from "@/hooks/use-toast";
 import { useSortOrder } from "@/hooks/useSortOrder";
 import { useStatusToggle } from "@/hooks/useStatusToggle";
@@ -104,11 +104,11 @@ export default function SocialMediaList() {
       ),
     },
     {
-      accessorKey: "media_path",
+      accessorKey: "icon_media_path",
       header: "Icon",
       cell: ({ row }) => (
         <MediaThumbnail
-          path={row.getValue("media_path")}
+          path={row.getValue("icon_media_path")}
           alt={row.original.media_alt}
         />
       ),
@@ -159,10 +159,10 @@ export default function SocialMediaList() {
       },
     },
     {
-      accessorKey: "is_active",
+      accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {
-        const status = row.getValue("is_active") as boolean;
+        const status = row.getValue("status") as boolean;
         return (
           <StatusToggleCell
             status={status}
@@ -201,6 +201,8 @@ export default function SocialMediaList() {
       },
     },
   ];
+
+  console.log(socialMediaItems)
 
   return (
     <>

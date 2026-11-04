@@ -180,6 +180,10 @@ export function DataTable<TData, TValue>({
     },
   });
 
+
+
+  console.log(data)
+
   const selectedRows = table.getFilteredSelectedRowModel().rows;
   const hasSelectedRows = selectedRows.length > 0;
 

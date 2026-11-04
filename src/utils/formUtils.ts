@@ -89,6 +89,14 @@ export const commonValidations = {
   
   optionalDate: z.string().optional(),
   
+  // required link
+requiredLink: z
+    .string()
+    .trim()
+    .min(1, "Link is required")
+    .url("Enter a valid URL")
+    .refine((v) => /^https?:\/\//i.test(v), "Link must start with http:// or https://"),
+
   // Array validations
   tagArray: z.array(z.number()).optional(),
   
@@ -132,6 +140,7 @@ export const createFormDataWithFiles = (
   
   return formData;
 };
+
 
 // Check if form data contains files
 export const hasFileUploads = (data: Record<string, any>): boolean => {

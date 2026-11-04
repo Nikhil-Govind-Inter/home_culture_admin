@@ -20,6 +20,7 @@ interface ApiEnvelope<T> {
   statusCode?: number;
   data: T;
   meta?: unknown;
+  pagination?: unknown;
 }
 
 export class ApiError extends Error {

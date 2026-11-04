@@ -79,6 +79,8 @@ export function usePaginatedList<T, F = undefined>(
         debouncedSearch || undefined,
         filtersRef.current
       );
+
+
       setItems(response.data.data);
       setItemsPage(page);
       setItemsLimit(limit);

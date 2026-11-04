@@ -26,7 +26,7 @@ export interface Banner {
   updatedAt?: string;
 }
 
-interface ServerMeta {
+interface ServerPagination {
   total: number;
   page: number;
   limit: number;
@@ -60,7 +60,7 @@ export const fetchBannersList = async (
 
   const response = await apiFetch(`${BANNERS_URL}?${params}`);
   const envelope = await parseEnvelope<Banner[]>(response);
-  const meta = envelope.meta as ServerMeta;
+  const meta = envelope.pagination as ServerPagination;
 
   return {
     data: {

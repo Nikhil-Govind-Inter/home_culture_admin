@@ -27,8 +27,8 @@ const BlogsList = React.lazy(() => import("./pages/blogs/BlogsList"));
 const BlogForm = React.lazy(() => import("./pages/blogs/BlogForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
-const SocialMediaList = React.lazy(() => import("./pages/common/SocialMediaList"));
-const SocialMediaForm = React.lazy(() => import("./pages/common/SocialMediaForm"));
+const SocialMediaList = React.lazy(() => import("./pages/siteSettings/SocialMediaList"));
+const SocialMediaForm = React.lazy(() => import("./pages/siteSettings/SocialMediaForm"));
 
 const queryClient = new QueryClient();
 

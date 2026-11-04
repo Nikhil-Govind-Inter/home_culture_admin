@@ -2,12 +2,11 @@ import { z } from "zod";
 import { commonValidations } from "@/utils/formUtils";
 
 export const socialMediaSchema = z.object({
-  media_path: commonValidations.requiredFile("Icon"),
-  footer_media_path: z.custom<File | string>().optional(),
+  icon_media_path: commonValidations.requiredFile("Icon"),
   media_alt: commonValidations.requiredString("Alt text"),
-  link: commonValidations.requiredString("Link"),
+  link: commonValidations.requiredLink,
   sort_order: commonValidations.sortOrder,
-  is_active: commonValidations.booleanStatus,
+  status: commonValidations.booleanStatus,
 });
 
 export type SocialMediaFormData = z.infer<typeof socialMediaSchema>;
