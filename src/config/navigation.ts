@@ -4,7 +4,6 @@ import {
   LayoutTemplate,
   Info,
   Phone,
-  FileText,
   Newspaper,
   PanelBottom,
   Image,
@@ -69,7 +68,6 @@ export const NAV: NavSection[] = [
             items: [{ title: "Page Content", url: "/contact-cms", icon: Phone }],
           },
         ],
-        items: [{ title: "All Pages", url: "/pages", icon: FileText }],
       },
       {
         id: "blogs",

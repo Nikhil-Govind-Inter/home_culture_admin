@@ -7,10 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Image, Info, Share2, FileText, Newspaper, Phone } from "lucide-react";
+import { Image, Info, Share2, Newspaper, Phone } from "lucide-react";
 
 const quickActions = [
-  { title: "Pages", description: "Manage pages", icon: FileText, href: "/pages", variant: "outline" as const },
   { title: "Blogs", description: "Manage blog posts", icon: Newspaper, href: "/blogs", variant: "outline" as const },
   { title: "Contact CMS", description: "Edit the contact page content", icon: Phone, href: "/contact-cms", variant: "outline" as const },
   {

@@ -21,8 +21,6 @@ const BannersList = React.lazy(() => import("./pages/siteSettings/BannersList"))
 const BannersForm = React.lazy(() => import("./pages/siteSettings/BannersForm"));
 const MetaDataList = React.lazy(() => import("./pages/siteSettings/MetaDataList"));
 const MetaDataForm = React.lazy(() => import("./pages/siteSettings/MetaDataForm"));
-const PagesList = React.lazy(() => import("./pages/pages/PagesList"));
-const PageForm = React.lazy(() => import("./pages/pages/PageForm"));
 const BlogsList = React.lazy(() => import("./pages/blogs/BlogsList"));
 const BlogForm = React.lazy(() => import("./pages/blogs/BlogForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
@@ -73,11 +71,6 @@ const App = () => (
                 {/* Meta Data */}
                 <Route path="/meta-data" element={<MetaDataList />} />
                 <Route path="/meta-data/:id/edit" element={<MetaDataForm />} />
-
-                {/* Pages */}
-                <Route path="/pages" element={<PagesList />} />
-                <Route path="/pages/new" element={<PageForm />} />
-                <Route path="/pages/:id/edit" element={<PageForm />} />
 
                 {/* Blogs */}
                 <Route path="/blogs" element={<BlogsList />} />
