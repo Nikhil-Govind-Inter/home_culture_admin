@@ -15,6 +15,7 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 
 const BannersList = React.lazy(() => import("./pages/siteSettings/BannersList"));
@@ -64,6 +65,7 @@ const App = () => (
           <Suspense fallback={null}>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<Index />} />

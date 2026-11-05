@@ -66,3 +66,27 @@ export const getCurrentAdmin = async (): Promise<AdminUser> => {
   const envelope = await parseEnvelope<AdminUser>(response);
   return envelope.data;
 };
+
+const postJson = async (path: string, payload: unknown) => {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return parseEnvelope<null>(response);
+};
+
+export const forgotPassword = async (email: string): Promise<string> =>
+  (await postJson("/auth/forgot-password", { email })).message;
+
+export const verifyOtp = async (email: string, otp: string): Promise<void> => {
+  await postJson("/auth/verify-otp", { email, otp });
+};
+
+export const resetPassword = async (
+  email: string,
+  otp: string,
+  newPassword: string,
+  confirmPassword: string
+): Promise<string> =>
+  (await postJson("/auth/reset-password", { email, otp, newPassword, confirmPassword })).message;
