@@ -8,11 +8,17 @@ export { ApiError };
 
 export interface ContactCms {
   id?: number;
-  title: string;
-  description: string;
+  form_section_status: boolean;
+  form_section_title: string;
+  form_section_description: string;
+  google_map_link: string;
   form_title: string;
-  social_media_title: string;
-  map_url: string;
+  form_description: string;
+  faq_section_status: boolean;
+  faq_section_title: string;
+  faq_section_description: string;
+  faq_section_button_text: string;
+  faq_section_button_link: string;
 }
 
 export const fetchContactCms = async () =>
