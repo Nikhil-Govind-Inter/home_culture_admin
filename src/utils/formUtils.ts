@@ -20,11 +20,11 @@ const passwordBase = z
   .regex(PASSWORD_PATTERN, PASSWORD_PATTERN_MSG);
 
 const stringValidations = {
-  requiredString: (fieldName: string) =>
+  requiredString: (fieldName: string, maxLength: number = 255) =>
     z
       .string()
       .min(1, `${fieldName} is required`)
-      .max(255, `${fieldName} must be 255 characters or less`),
+      .max(maxLength, `${fieldName} must be ${maxLength} characters or less`),
 
   optionalString: z.string().optional(),
 

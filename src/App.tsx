@@ -30,6 +30,12 @@ const AboutHighlightsList = React.lazy(() => import("./pages/about/AboutHighligh
 const AboutHighlightForm = React.lazy(() => import("./pages/about/AboutHighlightForm"));
 const HowItWorksCmsForm = React.lazy(() => import("./pages/howItWorks/HowItWorksCmsForm"));
 const SiteSettingsForm = React.lazy(() => import("./pages/siteSettings/SiteSettingsForm"));
+const WorkshopMaterialList = React.lazy(() => import("./pages/howItWorks/WorkshopMaterialList"));
+const WorkshopMaterialForm = React.lazy(() => import("./pages/howItWorks/WorkshopMaterialForm"));
+const TestimonialList = React.lazy(() => import("./pages/howItWorks/TestimonialList"));
+const TestimonialForm = React.lazy(() => import("./pages/howItWorks/TestimonialForm"));
+const JourneyStepList = React.lazy(() => import("./pages/howItWorks/JourneyStepList"));
+const JourneyStepForm = React.lazy(() => import("./pages/howItWorks/JourneyStepForm"));
 const SocialMediaList = React.lazy(() => import("./pages/siteSettings/SocialMediaList"));
 const SocialMediaForm = React.lazy(() => import("./pages/siteSettings/SocialMediaForm"));
 
@@ -97,6 +103,16 @@ const App = () => (
 
                 {/* Site Settings */}
                 <Route path="/site-settings" element={<SiteSettingsForm />} />
+
+                <Route path="/workshop-materials" element={<WorkshopMaterialList />} />
+                <Route path="/workshop-materials/new" element={<WorkshopMaterialForm />} />
+                <Route path="/workshop-materials/:id/edit" element={<WorkshopMaterialForm />} />
+                <Route path="/testimonials" element={<TestimonialList />} />
+                <Route path="/testimonials/new" element={<TestimonialForm />} />
+                <Route path="/testimonials/:id/edit" element={<TestimonialForm />} />
+                <Route path="/journey-steps" element={<JourneyStepList />} />
+                <Route path="/journey-steps/new" element={<JourneyStepForm />} />
+                <Route path="/journey-steps/:id/edit" element={<JourneyStepForm />} />
 
                 {/* Social Media */}
                 <Route path="/social-media" element={<SocialMediaList />} />

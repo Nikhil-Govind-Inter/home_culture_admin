@@ -181,7 +181,7 @@ export default function HowItWorksCmsForm() {
                 <FormTextField form={form} name="vision_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="vision_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="vision_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="vision_section_description" label="Description" placeholder="Description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField {...imageProps} name="vision_section_media_path" label="Image" placeholder="Upload image" recommendedDimensions="600×700px" />
                 <FormTextField form={form} name="vision_section_media_alt" label="Image Alt Text" placeholder="Describe the image" />
@@ -201,7 +201,7 @@ export default function HowItWorksCmsForm() {
                 <FormTextField form={form} name="workshop_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="workshop_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="workshop_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="workshop_section_description" label="Description" placeholder="Description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField {...imageProps} name="workshop_section_media_path" label="Image" placeholder="Upload image" recommendedDimensions="600×700px" />
                 <FormTextField form={form} name="workshop_section_media_alt" label="Image Alt Text" placeholder="Describe the image" />
@@ -221,7 +221,7 @@ export default function HowItWorksCmsForm() {
                 <FormTextField form={form} name="artisans_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="artisans_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="artisans_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="artisans_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -266,7 +266,7 @@ export default function HowItWorksCmsForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end">
+      <div className="flex justify-end">
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : "Save"}
