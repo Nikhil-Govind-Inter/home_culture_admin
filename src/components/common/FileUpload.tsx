@@ -8,6 +8,15 @@ import { Upload, X, Eye, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generatePlaceholderWithSizes } from "@/utils/imageUtils";
 
+// Keep in sync with server/src/admin/middlewares/multer.middleware.js
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+];
+const IMAGE_TYPE_ERROR = "Only jpeg, png, webp or gif images are allowed";
+
 interface FileUploadProps {
   label?: string;
   value?: File | string | null;
@@ -57,6 +66,10 @@ export function FileUpload({
     (file: File) => {
       const isImage = file.type.startsWith("image/");
       const isVideo = file.type.startsWith("video/");
+
+      if (isImage && !ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        return { code: "file-invalid-type", message: IMAGE_TYPE_ERROR };
+      }
 
       // Always use specific size limits (now they have defaults)
       if (isImage && file.size > maxImageSize) {
@@ -129,7 +142,9 @@ export function FileUpload({
       onDrop,
       accept: accept
         .split(",")
-        .reduce((acc, type) => ({ ...acc, [type.trim()]: [] }), {}),
+        .map((type) => type.trim())
+        .flatMap((type) => (type === "image/*" ? ALLOWED_IMAGE_TYPES : [type]))
+        .reduce((acc, type) => ({ ...acc, [type]: [] }), {}),
       maxSize: undefined, // Always use custom validation
       multiple: false,
     });
@@ -285,7 +300,10 @@ export function FileUpload({
 
           {(fileRejections.length > 0 || customError) && (
             <div className="mt-2 text-sm text-destructive">
-              {customError || fileRejections[0]?.errors[0]?.message}
+              {customError ||
+                (fileRejections[0]?.errors[0]?.code === "file-invalid-type"
+                  ? IMAGE_TYPE_ERROR
+                  : fileRejections[0]?.errors[0]?.message)}
             </div>
           )}
         </CardContent>
@@ -316,7 +334,6 @@ export function FileUpload({
           />
         </div>
       )}
-
     </div>
   );
 }

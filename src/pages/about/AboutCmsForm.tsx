@@ -132,7 +132,9 @@ export default function AboutCmsForm() {
 
       const formData = new FormData();
       TEXT_FIELDS.forEach((field) => formData.append(field, values[field]));
-      STATUS_FIELDS.forEach((field) => formData.append(field, String(values[field])));
+      STATUS_FIELDS.forEach((field) =>
+        formData.append(field, String(values[field])),
+      );
       // Only freshly picked files are sent; unchanged media keep their stored path.
       MEDIA_FIELDS.forEach((field) => {
         const value = values[field];
@@ -180,11 +182,13 @@ export default function AboutCmsForm() {
               <CardTitle>Story Section</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FormSwitchField
-                form={form}
-                name="story_section_status"
-                label="Show section"
-              />
+              <div className="w-full md:w-1/2">
+                <FormSwitchField
+                  form={form}
+                  name="story_section_status"
+                  label="Show section"
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField
                   form={form}
@@ -229,11 +233,13 @@ export default function AboutCmsForm() {
               <CardTitle>Philosophy Section</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FormSwitchField
-                form={form}
-                name="philosophy_section_status"
-                label="Show section"
-              />
+              <div className="w-full md:w-1/2">
+                <FormSwitchField
+                  form={form}
+                  name="philosophy_section_status"
+                  label="Show section"
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField
                   form={form}
@@ -340,11 +346,13 @@ export default function AboutCmsForm() {
               <CardTitle>Highlight Section</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FormSwitchField
-                form={form}
-                name="highlight_section_status"
-                label="Show section"
-              />
+              <div className="w-full md:w-1/2">
+                <FormSwitchField
+                  form={form}
+                  name="highlight_section_status"
+                  label="Show section"
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField
                   form={form}
@@ -368,11 +376,13 @@ export default function AboutCmsForm() {
               <CardTitle>Promise Section</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FormSwitchField
-                form={form}
-                name="promise_section_status"
-                label="Show section"
-              />
+              <div className="w-full md:w-1/2">
+                <FormSwitchField
+                  form={form}
+                  name="promise_section_status"
+                  label="Show section"
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField
                   form={form}
@@ -401,14 +411,6 @@ export default function AboutCmsForm() {
                   placeholder="Upload left image"
                   recommendedDimensions="600×700px"
                 />
-                <FormTextField
-                  form={form}
-                  name="promise_section_left_media_alt"
-                  label="Left Image Alt Text"
-                  placeholder="Describe the image"
-                />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField
                   {...imageProps}
                   name="promise_section_right_media_path"
@@ -416,6 +418,15 @@ export default function AboutCmsForm() {
                   placeholder="Upload right image"
                   recommendedDimensions="600×700px"
                 />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField
+                  form={form}
+                  name="promise_section_left_media_alt"
+                  label="Left Image Alt Text"
+                  placeholder="Describe the image"
+                />
+                
                 <FormTextField
                   form={form}
                   name="promise_section_right_media_alt"
@@ -432,11 +443,13 @@ export default function AboutCmsForm() {
               <CardTitle>CTA Section</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FormSwitchField
-                form={form}
-                name="cta_section_status"
-                label="Show section"
-              />
+              <div className="w-full md:w-1/2">
+                <FormSwitchField
+                  form={form}
+                  name="cta_section_status"
+                  label="Show section"
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField
                   form={form}

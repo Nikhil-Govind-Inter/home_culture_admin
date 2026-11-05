@@ -23,3 +23,13 @@ export const generatePlaceholderWithSizes = (
   
   return basePlaceholder;
 };
+// "1920×600px" -> { width: 1920, height: 600 }
+export const parseDimensions = (
+  value?: string
+): { width: number; height: number } | null => {
+  const match = value?.match(/(\d+)\s*[×xX]\s*(\d+)/);
+  if (!match) return null;
+  const width = Number(match[1]);
+  const height = Number(match[2]);
+  return width > 0 && height > 0 ? { width, height } : null;
+};

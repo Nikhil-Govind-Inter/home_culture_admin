@@ -413,8 +413,8 @@ export function RichTextEditor({
         {/* Editor */}
         <EditorContent
           editor={editor}
-          className="p-3"
-          style={{ minHeight: height ?? "300px" }}
+          className="p-3 overflow-y-auto"
+          style={{ height: height ?? "300px" }}
           placeholder={placeholder}
         />
         
