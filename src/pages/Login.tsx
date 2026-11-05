@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { loginSchema, type LoginFormData } from "@/schemas/auth/loginSchema";
+import { toast } from "sonner";
 
 export default function Login() {
   const { isAuthenticated, login } = useAuth();
@@ -32,6 +33,13 @@ export default function Login() {
     setServerError("");
     try {
       await login(values.email, values.password);
+
+
+      toast.success("Login successful", 
+        {
+          duration: 3000,
+        }
+      );
 
       const from =
         (location.state as { from?: Location })?.from?.pathname || "/";

@@ -78,6 +78,7 @@ export default function ForgotPassword() {
     }
   };
 
+
   const submitReset = async (values: ResetPasswordData) => {
     setServerError("");
     try {
@@ -113,7 +114,7 @@ export default function ForgotPassword() {
           )}
 
           {step === "email" && (
-            <form onSubmit={emailForm.handleSubmit(sendOtp)} className="space-y-4">
+            <form onSubmit={emailForm.handleSubmit(sendOtp)} className="space-y-4" noValidate>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">

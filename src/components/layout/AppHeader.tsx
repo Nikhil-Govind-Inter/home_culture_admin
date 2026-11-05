@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 export function AppHeader() {
   const { user, logout } = useAuth();
@@ -20,6 +21,11 @@ export function AppHeader() {
 
   const handleLogout = () => {
     logout();
+    toast.success("Logged out successfully", 
+      {
+        duration: 3000,
+      }
+    );
     navigate("/login", { replace: true });
   };
 

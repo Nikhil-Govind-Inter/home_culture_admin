@@ -14,6 +14,7 @@ const PASSWORD_PATTERN_MSG =
 
 const passwordBase = z
   .string()
+  .min(1, "Password is required")
   .min(8, PASSWORD_LENGTH_MSG)
   .max(128, PASSWORD_LENGTH_MSG)
   .regex(PASSWORD_PATTERN, PASSWORD_PATTERN_MSG);
