@@ -9,7 +9,7 @@ import { BrandPanel } from "@/components/auth/BrandPanel";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { loginSchema, type LoginFormData } from "@/schemas/loginSchema";
+import { loginSchema, type LoginFormData } from "@/schemas/auth/loginSchema";
 
 export default function Login() {
   const { isAuthenticated, login } = useAuth();

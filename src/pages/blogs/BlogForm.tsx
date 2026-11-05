@@ -21,7 +21,7 @@ import {
   updateBlog,
   ApiError,
 } from "@/services/blogs/blogApi";
-import { blogSchema, BlogFormData } from "@/schemas/blogSchema";
+import { blogSchema, BlogFormData } from "@/schemas/blogs/blogSchema";
 
 export default function BlogForm() {
   const { toast } = useToast();

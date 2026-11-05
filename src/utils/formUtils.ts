@@ -1,8 +1,24 @@
 import { z } from "zod";
 
-// Common validation patterns
-export const commonValidations = {
-  // String validations
+/* -------------------------------------------------------------------------- */
+/*  Validation building blocks                                                */
+/* -------------------------------------------------------------------------- */
+
+const MAX_LINK_LENGTH = 255;
+
+// Mirrors the server's passwordRule regex (lower/upper/digit/special char).
+const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+const PASSWORD_LENGTH_MSG = "Password must be between 8 and 128 characters";
+const PASSWORD_PATTERN_MSG =
+  "Password must contain lowercase, uppercase, number, and special char";
+
+const passwordBase = z
+  .string()
+  .min(8, PASSWORD_LENGTH_MSG)
+  .max(128, PASSWORD_LENGTH_MSG)
+  .regex(PASSWORD_PATTERN, PASSWORD_PATTERN_MSG);
+
+const stringValidations = {
   requiredString: (fieldName: string) =>
     z
       .string()
@@ -14,7 +30,13 @@ export const commonValidations = {
   requiredText: (fieldName: string) =>
     z.string().min(1, `${fieldName} is required`),
 
-  // Number validations
+  richText: (fieldName: string) =>
+    z.string().min(1, `${fieldName} is required`),
+
+  optionalRichText: z.string().optional(),
+};
+
+const numberValidations = {
   sortOrder: z
     .string()
     .refine((val) => {
@@ -27,49 +49,33 @@ export const commonValidations = {
     z.number().min(0, `${fieldName} must be 0 or greater`),
 
   optionalNumber: z.number().optional(),
+};
 
-  // Status validations
+const statusValidations = {
   booleanStatus: z.boolean(),
-
   statusEnum: z.enum(["active", "inactive"]),
-
   publishStatus: z.enum(["published", "draft"]),
+};
 
-  // email validation
+const accountValidations = {
   requiredEmail: z.string().min(1, "Email is required").email("Invalid Email"),
 
   optionalEmail: z.string().email().optional(),
 
-  // Username validation — mirrors server's username rule (3-50 chars, alnum+underscore)
+  // Mirrors the server's username rule (3-50 chars).
   username: z
     .string()
     .min(3, "Username must be between 3 and 50 characters")
     .max(50, "Username must be between 3 and 50 characters"),
 
-  // Password validation — mirrors server's passwordRule regex (lower/upper/digit/special char)
-  requiredPassword: z
-    .string()
-    .min(8, "Password must be between 8 and 128 characters")
-    .max(128, "Password must be between 8 and 128 characters")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password must contain lowercase, uppercase, number, and special char",
-    ),
+  requiredPassword: passwordBase,
 
-  optionalPassword: z
-    .string()
-    .min(8, "Password must be between 8 and 128 characters")
-    .max(128, "Password must be between 8 and 128 characters")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password must contain lowercase, uppercase, number, and special char",
-    )
-    .optional()
-    .or(z.literal("")),
+  optionalPassword: passwordBase.optional().or(z.literal("")),
 
-  // Admin user role
   userRole: z.enum(["admin", "user"]),
-  // Media validations
+};
+
+const mediaValidations = {
   mediaType: z.enum(["image", "video"]),
 
   fileUpload: z.any().optional(),
@@ -81,8 +87,10 @@ export const commonValidations = {
         (typeof val === "string" && val.trim().length > 0),
       { message: `${fieldName} is required` },
     ),
+};
 
-  // URL validations
+const linkValidations = {
+  // Site-relative path, e.g. "/about".
   optionalUrl: z
     .string()
     .regex(/^\/.*/, "Must start with /")
@@ -92,15 +100,10 @@ export const commonValidations = {
   requiredUrl: (fieldName: string) =>
     z.string().regex(/^\/.*/, `${fieldName} must start with /`),
 
-  // Date validations
-  dateString: z.string().min(1, "Date is required"),
-
-  optionalDate: z.string().optional(),
-
-  // required link
+  // Absolute http(s) link.
   requiredLink: z
     .string()
-    .max(255, "Link must be 255 characters or less")
+    .max(MAX_LINK_LENGTH, `Link must be ${MAX_LINK_LENGTH} characters or less`)
     .trim()
     .min(1, "Link is required")
     .url("Enter a valid URL")
@@ -108,22 +111,37 @@ export const commonValidations = {
       (v) => /^https?:\/\//i.test(v),
       "Link must start with http:// or https://",
     ),
+};
 
-  // Array validations
+const dateValidations = {
+  dateString: z.string().min(1, "Date is required"),
+  optionalDate: z.string().optional(),
+};
+
+const arrayValidations = {
   tagArray: z.array(z.number()).optional(),
 
   categoryArray: z
     .array(z.number())
     .min(1, "At least one category is required"),
-
-  // Rich text validation
-  richText: (fieldName: string) =>
-    z.string().min(1, `${fieldName} is required`),
-
-  optionalRichText: z.string().optional(),
 };
 
-// Form data construction utilities
+/** All reusable zod validators, grouped above and exposed as one flat object. */
+export const commonValidations = {
+  ...stringValidations,
+  ...numberValidations,
+  ...statusValidations,
+  ...accountValidations,
+  ...mediaValidations,
+  ...linkValidations,
+  ...dateValidations,
+  ...arrayValidations,
+};
+
+/* -------------------------------------------------------------------------- */
+/*  Form data & submission helpers                                            */
+/* -------------------------------------------------------------------------- */
+
 export const createFormDataWithFiles = (
   data: Record<string, any>,
   files: Record<string, File | string | null> = {},

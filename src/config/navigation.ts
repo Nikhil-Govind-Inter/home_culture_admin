@@ -11,6 +11,7 @@ import {
   Search,
   Settings,
   Star,
+  Workflow,
 } from "lucide-react";
 
 /**
@@ -65,6 +66,12 @@ export const NAV: NavSection[] = [
               { title: "Page Content", url: "/about-cms", icon: Info },
               { title: "Highlights", url: "/about-highlights", icon: Star },
             ],
+          },
+          {
+            id: "how-it-works",
+            title: "How It Works",
+            icon: Workflow,
+            items: [{ title: "Page Content", url: "/how-it-works-cms", icon: Workflow }],
           },
           {
             id: "contact",

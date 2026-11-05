@@ -27,6 +27,7 @@ const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm")
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
 const AboutHighlightsList = React.lazy(() => import("./pages/about/AboutHighlightsList"));
 const AboutHighlightForm = React.lazy(() => import("./pages/about/AboutHighlightForm"));
+const HowItWorksCmsForm = React.lazy(() => import("./pages/howItWorks/HowItWorksCmsForm"));
 const SiteSettingsForm = React.lazy(() => import("./pages/siteSettings/SiteSettingsForm"));
 const SocialMediaList = React.lazy(() => import("./pages/siteSettings/SocialMediaList"));
 const SocialMediaForm = React.lazy(() => import("./pages/siteSettings/SocialMediaForm"));
@@ -88,6 +89,9 @@ const App = () => (
                 <Route path="/about-highlights" element={<AboutHighlightsList />} />
                 <Route path="/about-highlights/new" element={<AboutHighlightForm />} />
                 <Route path="/about-highlights/:id/edit" element={<AboutHighlightForm />} />
+
+                {/* How It Works CMS */}
+                <Route path="/how-it-works-cms" element={<HowItWorksCmsForm />} />
 
                 {/* Site Settings */}
                 <Route path="/site-settings" element={<SiteSettingsForm />} />

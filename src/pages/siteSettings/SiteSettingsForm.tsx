@@ -12,7 +12,7 @@ import {
 } from "@/components/forms/FormFieldComponents";
 import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { siteSettingsSchema, SiteSettingsFormData } from "@/schemas/siteSettingsSchema";
+import { siteSettingsSchema, SiteSettingsFormData } from "@/schemas/siteSettings/siteSettingsSchema";
 import {
   fetchSiteSettings,
   saveSiteSettings,

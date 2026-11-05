@@ -19,7 +19,7 @@ import {
   updateBanner,
   ApiError,
 } from "@/services/siteSettings/bannerApi";
-import { bannerSchema, BannerFormData } from "@/schemas/bannerSchema";
+import { bannerSchema, BannerFormData } from "@/schemas/siteSettings/bannerSchema";
 
 const TEXT_FIELDS = [
   "page_slug",

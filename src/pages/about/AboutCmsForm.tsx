@@ -14,7 +14,7 @@ import {
 } from "@/components/forms/FormFieldComponents";
 import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { aboutCmsSchema, AboutCmsFormData } from "@/schemas/aboutCmsSchema";
+import { aboutCmsSchema, AboutCmsFormData } from "@/schemas/about/aboutCmsSchema";
 import {
   fetchAboutCms,
   saveAboutCms,

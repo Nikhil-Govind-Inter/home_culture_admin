@@ -17,7 +17,7 @@ import {
   updateMetaData,
   ApiError,
 } from "@/services/siteSettings/metaDataApi";
-import { metaDataSchema, MetaDataFormData } from "@/schemas/metaDataSchema";
+import { metaDataSchema, MetaDataFormData } from "@/schemas/siteSettings/metaDataSchema";
 
 // Meta data are fixed per-page records, so this form only edits an existing one.
 export default function MetaDataForm() {

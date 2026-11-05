@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormTextField, FormTextareaField } from "@/components/forms/FormFieldComponents";
 import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { contactCmsSchema, ContactCmsFormData } from "@/schemas/contactCmsSchema";
+import { contactCmsSchema, ContactCmsFormData } from "@/schemas/contact/contactCmsSchema";
 import { fetchContactCms, saveContactCms, ApiError, type ContactCms } from "@/services/contact/contactCmsApi";
 
 const defaultValues: ContactCmsFormData = {

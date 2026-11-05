@@ -30,7 +30,7 @@ import {
 import {
   socialMediaSchema,
   SocialMediaFormData,
-} from "@/schemas/socialMediaSchema";
+} from "@/schemas/siteSettings/socialMediaSchema";
 
 export default function SocialMediaForm() {
   const { toast } = useToast();

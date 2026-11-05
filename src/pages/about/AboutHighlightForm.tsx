@@ -31,7 +31,7 @@ import {
 import {
   aboutHighlightSchema,
   AboutHighlightFormData,
-} from "@/schemas/aboutHighlightSchema";
+} from "@/schemas/about/aboutHighlightSchema";
 
 export default function AboutHighlightForm() {
   const { toast } = useToast();
