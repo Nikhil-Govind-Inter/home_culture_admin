@@ -10,6 +10,7 @@ import {
   Share2,
   Search,
   Settings,
+  Star,
 } from "lucide-react";
 
 /**
@@ -60,7 +61,10 @@ export const NAV: NavSection[] = [
             id: "about",
             title: "About",
             icon: Info,
-            items: [{ title: "Page Content", url: "/about-cms", icon: Info }],
+            items: [
+              { title: "Page Content", url: "/about-cms", icon: Info },
+              { title: "Highlights", url: "/about-highlights", icon: Star },
+            ],
           },
           {
             id: "contact",
