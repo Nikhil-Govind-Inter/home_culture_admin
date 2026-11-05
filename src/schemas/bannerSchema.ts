@@ -7,7 +7,7 @@ export const bannerSchema = z.object({
   page_slug: commonValidations.requiredString("Page slug"),
   header_title: commonValidations.requiredString("Header title"),
   title: commonValidations.requiredString("Title"),
-  description: commonValidations.requiredString("Description"),
+  description: commonValidations.requiredText("Description"),
   banner_media_alt: commonValidations.requiredString("Image alt text"),
   status: z.boolean(),
   // File (new upload) or non-empty string (existing stored path).

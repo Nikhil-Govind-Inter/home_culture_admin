@@ -7,11 +7,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Image, Info, Share2, Newspaper, Phone } from "lucide-react";
+import { Image, Info, Share2, Newspaper, Phone, Settings } from "lucide-react";
 
 const quickActions = [
   { title: "Blogs", description: "Manage blog posts", icon: Newspaper, href: "/blogs", variant: "outline" as const },
   { title: "Contact CMS", description: "Edit the contact page content", icon: Phone, href: "/contact-cms", variant: "outline" as const },
+  { title: "Site Settings", description: "Edit logos, header button and contact details", icon: Settings, href: "/site-settings", variant: "outline" as const },
   {
     title: "Banners",
     description: "Manage banners",

@@ -25,6 +25,7 @@ const BlogsList = React.lazy(() => import("./pages/blogs/BlogsList"));
 const BlogForm = React.lazy(() => import("./pages/blogs/BlogForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
+const SiteSettingsForm = React.lazy(() => import("./pages/siteSettings/SiteSettingsForm"));
 const SocialMediaList = React.lazy(() => import("./pages/siteSettings/SocialMediaList"));
 const SocialMediaForm = React.lazy(() => import("./pages/siteSettings/SocialMediaForm"));
 
@@ -82,6 +83,9 @@ const App = () => (
 
                 {/* About CMS */}
                 <Route path="/about-cms" element={<AboutCmsForm />} />
+
+                {/* Site Settings */}
+                <Route path="/site-settings" element={<SiteSettingsForm />} />
 
                 {/* Social Media */}
                 <Route path="/social-media" element={<SocialMediaList />} />

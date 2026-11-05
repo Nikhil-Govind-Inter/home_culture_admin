@@ -158,22 +158,6 @@ export default function SocialMediaForm() {
               <CardTitle>Social Media Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormTextField
-                  form={form}
-                  name="media_alt"
-                  label="Alt Text"
-                  placeholder="e.g., Facebook, Twitter, LinkedIn"
-                />
-              </div>
-
-              <FormTextField
-                form={form}
-                name="link"
-                label="Link"
-                placeholder="https://..."
-              />
-
               <FormFileUploadField
                 form={form}
                 name="icon_media_path"
@@ -182,6 +166,21 @@ export default function SocialMediaForm() {
                 accept="image/*"
                 recommendedDimensions="64×64px"
               />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField
+                  form={form}
+                  name="link"
+                  label="Link"
+                  placeholder="https://..."
+                />
+
+                <FormTextField
+                  form={form}
+                  name="media_alt"
+                  label="Name"
+                  placeholder="e.g., Facebook, Twitter, LinkedIn"
+                />
+              </div>
             </CardContent>
           </Card>
 

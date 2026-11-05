@@ -6,7 +6,7 @@ export const metaDataSchema = z.object({
   page: commonValidations.requiredString("Page"),
   page_slug: commonValidations.requiredString("Page slug"),
   meta_title: commonValidations.requiredString("Meta title"),
-  meta_description: commonValidations.requiredString("Meta description"),
+  meta_description: commonValidations.requiredText("Meta description"),
   meta_keywords: commonValidations.requiredString("Meta keywords"),
 });
 

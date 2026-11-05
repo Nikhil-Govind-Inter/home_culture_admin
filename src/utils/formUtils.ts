@@ -3,14 +3,17 @@ import { z } from "zod";
 // Common validation patterns
 export const commonValidations = {
   // String validations
-  requiredString: (fieldName: string) => 
-    z.string().min(1, `${fieldName} is required`),
-  
+  requiredString: (fieldName: string) =>
+    z
+      .string()
+      .min(1, `${fieldName} is required`)
+      .max(255, `${fieldName} must be 255 characters or less`),
+
   optionalString: z.string().optional(),
-  
-  requiredText: (fieldName: string) => 
+
+  requiredText: (fieldName: string) =>
     z.string().min(1, `${fieldName} is required`),
-  
+
   // Number validations
   sortOrder: z
     .string()
@@ -19,22 +22,21 @@ export const commonValidations = {
       return !isNaN(num) && num > 0;
     }, "Sort order must be a positive integer")
     .optional(),
-  
-  requiredNumber: (fieldName: string) => 
+
+  requiredNumber: (fieldName: string) =>
     z.number().min(0, `${fieldName} must be 0 or greater`),
-  
+
   optionalNumber: z.number().optional(),
-  
+
   // Status validations
   booleanStatus: z.boolean(),
-  
+
   statusEnum: z.enum(["active", "inactive"]),
-  
+
   publishStatus: z.enum(["published", "draft"]),
-  
+
   // email validation
-  requiredEmail:
-    z.string().min(1, "Email is required").email('Invalid Email'),
+  requiredEmail: z.string().min(1, "Email is required").email("Invalid Email"),
 
   optionalEmail: z.string().email().optional(),
 
@@ -51,7 +53,7 @@ export const commonValidations = {
     .max(128, "Password must be between 8 and 128 characters")
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password must contain lowercase, uppercase, number, and special char"
+      "Password must contain lowercase, uppercase, number, and special char",
     ),
 
   optionalPassword: z
@@ -60,7 +62,7 @@ export const commonValidations = {
     .max(128, "Password must be between 8 and 128 characters")
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password must contain lowercase, uppercase, number, and special char"
+      "Password must contain lowercase, uppercase, number, and special char",
     )
     .optional()
     .or(z.literal("")),
@@ -69,53 +71,65 @@ export const commonValidations = {
   userRole: z.enum(["admin", "user"]),
   // Media validations
   mediaType: z.enum(["image", "video"]),
-  
+
   fileUpload: z.any().optional(),
 
   requiredFile: (fieldName: string) =>
     z.custom<File | string>(
-      (val) => val instanceof File || (typeof val === "string" && val.trim().length > 0),
-      { message: `${fieldName} is required` }
+      (val) =>
+        val instanceof File ||
+        (typeof val === "string" && val.trim().length > 0),
+      { message: `${fieldName} is required` },
     ),
 
   // URL validations
-  optionalUrl: z.string().regex(/^\/.*/, "Must start with /").optional().or(z.literal("")),
-  
-  requiredUrl: (fieldName: string) => 
+  optionalUrl: z
+    .string()
+    .regex(/^\/.*/, "Must start with /")
+    .optional()
+    .or(z.literal("")),
+
+  requiredUrl: (fieldName: string) =>
     z.string().regex(/^\/.*/, `${fieldName} must start with /`),
-  
+
   // Date validations
   dateString: z.string().min(1, "Date is required"),
-  
+
   optionalDate: z.string().optional(),
-  
+
   // required link
-requiredLink: z
+  requiredLink: z
     .string()
+    .max(255, "Link must be 255 characters or less")
     .trim()
     .min(1, "Link is required")
     .url("Enter a valid URL")
-    .refine((v) => /^https?:\/\//i.test(v), "Link must start with http:// or https://"),
+    .refine(
+      (v) => /^https?:\/\//i.test(v),
+      "Link must start with http:// or https://",
+    ),
 
   // Array validations
   tagArray: z.array(z.number()).optional(),
-  
-  categoryArray: z.array(z.number()).min(1, "At least one category is required"),
-  
+
+  categoryArray: z
+    .array(z.number())
+    .min(1, "At least one category is required"),
+
   // Rich text validation
-  richText: (fieldName: string) => 
+  richText: (fieldName: string) =>
     z.string().min(1, `${fieldName} is required`),
-  
+
   optionalRichText: z.string().optional(),
 };
 
 // Form data construction utilities
 export const createFormDataWithFiles = (
-  data: Record<string, any>, 
-  files: Record<string, File | string | null> = {}
+  data: Record<string, any>,
+  files: Record<string, File | string | null> = {},
 ): FormData => {
   const formData = new FormData();
-  
+
   // Add regular fields
   Object.entries(data).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
@@ -128,23 +142,22 @@ export const createFormDataWithFiles = (
       }
     }
   });
-  
+
   // Add file fields
   Object.entries(files).forEach(([key, file]) => {
     if (file instanceof File) {
       formData.append(key, file);
-    } else if (typeof file === 'string' && file) {
+    } else if (typeof file === "string" && file) {
       formData.append(key, file);
     }
   });
-  
+
   return formData;
 };
 
-
 // Check if form data contains files
 export const hasFileUploads = (data: Record<string, any>): boolean => {
-  return Object.values(data).some(value => value instanceof File);
+  return Object.values(data).some((value) => value instanceof File);
 };
 
 // API submission helper that automatically handles content-type
@@ -152,32 +165,32 @@ export const submitFormData = async (
   url: string,
   data: Record<string, any>,
   options: {
-    method?: 'POST' | 'PUT' | 'PATCH';
+    method?: "POST" | "PUT" | "PATCH";
     token?: string;
-  } = {}
+  } = {},
 ): Promise<Response> => {
-  const { method = 'POST', token } = options;
-  
+  const { method = "POST", token } = options;
+
   const hasFiles = hasFileUploads(data);
   const headers: HeadersInit = {};
-  
+
   // Add authorization if token provided
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
-  
+
   let body: BodyInit;
-  
+
   if (hasFiles) {
     // For file uploads, use FormData and let browser set Content-Type
     body = createFormDataWithFiles(data);
     // DON'T set Content-Type - browser will set it automatically with boundary
   } else {
     // For regular JSON data
-    headers['Content-Type'] = 'application/json';
+    headers["Content-Type"] = "application/json";
     body = JSON.stringify(data);
   }
-  
+
   return fetch(url, {
     method,
     headers,
@@ -196,7 +209,7 @@ export const generateSlug = (text: string): string => {
 
 // Default values generators
 export const createDefaultFormValues = <T extends Record<string, any>>(
-  schema: z.ZodSchema<T>
+  schema: z.ZodSchema<T>,
 ): Partial<T> => {
   // This is a helper to create default values based on schema
   // You can extend this based on your specific needs
@@ -205,23 +218,23 @@ export const createDefaultFormValues = <T extends Record<string, any>>(
 
 // Form field error extractors
 export const getFieldError = (
-  errors: Record<string, any>, 
-  fieldName: string
+  errors: Record<string, any>,
+  fieldName: string,
 ): string | undefined => {
   return errors[fieldName]?.message;
 };
 
 // File validation utilities
 export const validateFileType = (
-  file: File, 
-  allowedTypes: string[]
+  file: File,
+  allowedTypes: string[],
 ): boolean => {
-  return allowedTypes.some(type => file.type.startsWith(type));
+  return allowedTypes.some((type) => file.type.startsWith(type));
 };
 
 export const validateFileSize = (
-  file: File, 
-  maxSizeInBytes: number
+  file: File,
+  maxSizeInBytes: number,
 ): boolean => {
   return file.size <= maxSizeInBytes;
 };
@@ -245,7 +258,7 @@ export const handleFormSubmission = async <T>(
     onError?: (error: Error) => void;
     successMessage?: string;
     errorMessage?: string;
-  } = {}
+  } = {},
 ) => {
   try {
     const result = await submitFn(data);

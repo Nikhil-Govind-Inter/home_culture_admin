@@ -9,6 +9,7 @@ import {
   Image,
   Share2,
   Search,
+  Settings,
 } from "lucide-react";
 
 /**
@@ -80,6 +81,7 @@ export const NAV: NavSection[] = [
         title: "Site Elements",
         icon: PanelBottom,
         items: [
+          { title: "Site Settings", url: "/site-settings", icon: Settings },
           { title: "Banners", url: "/banners", icon: Image },
           { title: "Meta Data", url: "/meta-data", icon: Search },
           { title: "Social Media", url: "/social-media", icon: Share2 },

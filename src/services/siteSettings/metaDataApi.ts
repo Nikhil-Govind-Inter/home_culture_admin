@@ -61,7 +61,7 @@ export const fetchMetaDataList = async (
 
   const response = await apiFetch(`${META_DATA_URL}?${params}`);
   const envelope = await parseEnvelope<MetaData[]>(response);
-  const pagination = envelope.pagination as ServerMeta;
+  const pagination = envelope.pagination as ServerPagination;
 
   return {
     data: {
