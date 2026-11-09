@@ -18,6 +18,7 @@ import {
   HelpCircle,
   MessageCircleQuestion,
   Tags,
+  ShieldCheck,
 } from "lucide-react";
 
 /**
@@ -89,6 +90,12 @@ export const NAV: NavSection[] = [
             title: "Contact",
             icon: Phone,
             items: [{ title: "Page Content", url: "/contact-cms", icon: Phone }],
+          },
+          {
+            id: "privacy-policy",
+            title: "Privacy Policy",
+            icon: ShieldCheck,
+            items: [{ title: "Page Content", url: "/privacy-policy", icon: ShieldCheck }],
           },
           {
             id: "faq",

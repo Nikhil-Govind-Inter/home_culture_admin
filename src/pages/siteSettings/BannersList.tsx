@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { IMAGELESS_BANNER_SLUGS } from "@/schemas/siteSettings/bannerSchema";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/common/DataTable";
 import MediaThumbnail from "@/components/common/MediaThumbnail";
@@ -52,16 +53,6 @@ export default function BannersList() {
         <div className="font-medium">
           {(itemsPage - 1) * itemsLimit + row.index + 1}
         </div>
-      ),
-    },
-    {
-      accessorKey: "banner_desktop_media_path",
-      header: "Image",
-      cell: ({ row }) => (
-        <MediaThumbnail
-          path={row.original.banner_desktop_media_path}
-          alt={row.original.banner_media_alt}
-        />
       ),
     },
     {

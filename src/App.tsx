@@ -25,6 +25,7 @@ const MetaDataForm = React.lazy(() => import("./pages/siteSettings/MetaDataForm"
 const BlogsList = React.lazy(() => import("./pages/blogs/BlogsList"));
 const BlogForm = React.lazy(() => import("./pages/blogs/BlogForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
+const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
 const AboutHighlightsList = React.lazy(() => import("./pages/about/AboutHighlightsList"));
 const AboutHighlightForm = React.lazy(() => import("./pages/about/AboutHighlightForm"));
@@ -96,6 +97,9 @@ const App = () => (
 
                 {/* Contact CMS */}
                 <Route path="/contact-cms" element={<ContactCmsForm />} />
+
+                {/* Privacy Policy */}
+                <Route path="/privacy-policy" element={<PrivacyPolicyForm />} />
 
                 {/* About CMS */}
                 <Route path="/about-cms" element={<AboutCmsForm />} />

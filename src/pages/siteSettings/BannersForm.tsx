@@ -19,7 +19,7 @@ import {
   updateBanner,
   ApiError,
 } from "@/services/siteSettings/bannerApi";
-import { bannerSchema, BannerFormData } from "@/schemas/siteSettings/bannerSchema";
+import { bannerSchema, BannerFormData, IMAGELESS_BANNER_SLUGS } from "@/schemas/siteSettings/bannerSchema";
 
 const TEXT_FIELDS = [
   "page_slug",
@@ -53,6 +53,8 @@ export default function BannersForm() {
       banner_mobile_media_path: "",
     },
   });
+
+  const hideImages = IMAGELESS_BANNER_SLUGS.includes(form.watch("page_slug"));
 
   useEffect(() => {
     if (!id) return;
@@ -166,31 +168,35 @@ export default function BannersForm() {
                 rows={4}
               />
 
-              <FormTextField
-                form={form}
-                name="banner_media_alt"
-                label="Image Alt Text"
-                placeholder="Describe the banner image"
-              />
+              {!hideImages && (
+                <>
+                  <FormTextField
+                    form={form}
+                    name="banner_media_alt"
+                    label="Image Alt Text"
+                    placeholder="Describe the banner image"
+                  />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormFileUploadField
-                  form={form}
-                  name="banner_desktop_media_path"
-                  label="Desktop Image"
-                  placeholder="Upload desktop banner"
-                  accept="image/*"
-                  recommendedDimensions="1920×600px"
-                />
-                <FormFileUploadField
-                  form={form}
-                  name="banner_mobile_media_path"
-                  label="Mobile Image"
-                  placeholder="Upload mobile banner"
-                  accept="image/*"
-                  recommendedDimensions="768×800px"
-                />
-              </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormFileUploadField
+                      form={form}
+                      name="banner_desktop_media_path"
+                      label="Desktop Image"
+                      placeholder="Upload desktop banner"
+                      accept="image/*"
+                      recommendedDimensions="1920×600px"
+                    />
+                    <FormFileUploadField
+                      form={form}
+                      name="banner_mobile_media_path"
+                      label="Mobile Image"
+                      placeholder="Upload mobile banner"
+                      accept="image/*"
+                      recommendedDimensions="768×800px"
+                    />
+                  </div>
+                </>
+              )}
 
               <FormSwitchField
                 form={form}
