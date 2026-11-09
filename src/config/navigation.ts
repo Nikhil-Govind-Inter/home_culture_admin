@@ -15,6 +15,9 @@ import {
   Quote,
   Route,
   Workflow,
+  HelpCircle,
+  MessageCircleQuestion,
+  Tags,
 } from "lucide-react";
 
 /**
@@ -86,6 +89,16 @@ export const NAV: NavSection[] = [
             title: "Contact",
             icon: Phone,
             items: [{ title: "Page Content", url: "/contact-cms", icon: Phone }],
+          },
+          {
+            id: "faq",
+            title: "FAQ",
+            icon: HelpCircle,
+            items: [
+              { title: "Page Content", url: "/faq-cms", icon: HelpCircle },
+              { title: "Categories", url: "/faq-categories", icon: Tags },
+              { title: "FAQs", url: "/faqs", icon: MessageCircleQuestion },
+            ],
           },
         ],
       },

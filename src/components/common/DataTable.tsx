@@ -93,6 +93,8 @@ interface DataTableProps<TData, TValue> {
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
   headerExtra?: React.ReactNode;
+  // Rendered inside the table card, next to the search box (e.g. server-side filters).
+  toolbarExtra?: React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -113,6 +115,7 @@ export function DataTable<TData, TValue>({
   searchQuery,
   onSearchChange,
   headerExtra,
+  toolbarExtra,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -217,7 +220,7 @@ export function DataTable<TData, TValue>({
             Manage your {title?.toLowerCase() || "items"}
           </p>
         </div>
-        <div className="flex flex-wrap items-center justify-end gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-6">
           {headerExtra}
           {onAdd && showAddButton && (
             <Button onClick={onAdd} className="bg-primary hover:bg-primary/90">
@@ -246,6 +249,7 @@ export function DataTable<TData, TValue>({
                   className="pl-8"
                 />
               </div>
+              {toolbarExtra}
             </div>
             <div className="flex items-center space-x-2">
               {/* Advanced Filters Toggle */}

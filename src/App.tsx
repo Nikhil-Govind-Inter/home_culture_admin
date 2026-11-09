@@ -29,6 +29,11 @@ const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
 const AboutHighlightsList = React.lazy(() => import("./pages/about/AboutHighlightsList"));
 const AboutHighlightForm = React.lazy(() => import("./pages/about/AboutHighlightForm"));
 const HowItWorksCmsForm = React.lazy(() => import("./pages/howItWorks/HowItWorksCmsForm"));
+const FaqCmsForm = React.lazy(() => import("./pages/faq/FaqCmsForm"));
+const FaqList = React.lazy(() => import("./pages/faq/FaqList"));
+const FaqForm = React.lazy(() => import("./pages/faq/FaqForm"));
+const FaqCategoryList = React.lazy(() => import("./pages/faq/FaqCategoryList"));
+const FaqCategoryForm = React.lazy(() => import("./pages/faq/FaqCategoryForm"));
 const SiteSettingsForm = React.lazy(() => import("./pages/siteSettings/SiteSettingsForm"));
 const WorkshopMaterialList = React.lazy(() => import("./pages/howItWorks/WorkshopMaterialList"));
 const WorkshopMaterialForm = React.lazy(() => import("./pages/howItWorks/WorkshopMaterialForm"));
@@ -100,6 +105,15 @@ const App = () => (
 
                 {/* How It Works CMS */}
                 <Route path="/how-it-works-cms" element={<HowItWorksCmsForm />} />
+
+                {/* FAQ CMS */}
+                <Route path="/faq-cms" element={<FaqCmsForm />} />
+                <Route path="/faq-categories" element={<FaqCategoryList />} />
+                <Route path="/faq-categories/new" element={<FaqCategoryForm />} />
+                <Route path="/faq-categories/:id/edit" element={<FaqCategoryForm />} />
+                <Route path="/faqs" element={<FaqList />} />
+                <Route path="/faqs/new" element={<FaqForm />} />
+                <Route path="/faqs/:id/edit" element={<FaqForm />} />
 
                 {/* Site Settings */}
                 <Route path="/site-settings" element={<SiteSettingsForm />} />

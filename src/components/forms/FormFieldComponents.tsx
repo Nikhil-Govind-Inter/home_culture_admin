@@ -1,6 +1,21 @@
 import React from "react";
 import { UseFormReturn, FieldPath, FieldValues } from "react-hook-form";
-import { X } from "lucide-react";
+import { Check, ChevronsUpDown, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   FormField,
   FormItem,
@@ -166,6 +181,94 @@ export function FormSelectField<T extends FieldValues>({
           <FormMessage />
         </FormItem>
       )}
+    />
+  );
+}
+
+// Searchable Select Field Component (popover + command list with a search box)
+interface FormSearchableSelectFieldProps<T extends FieldValues> extends BaseFormFieldProps<T> {
+  options: { value: string; label: string }[];
+  searchPlaceholder?: string;
+  emptyMessage?: string;
+}
+
+export function FormSearchableSelectField<T extends FieldValues>({
+  form,
+  name,
+  label,
+  placeholder,
+  options,
+  searchPlaceholder = "Search...",
+  emptyMessage = "No results found",
+}: FormSearchableSelectFieldProps<T>) {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => {
+        const selected = options.find((option) => option.value === field.value);
+        return (
+          <FormItem className="flex flex-col">
+            <FormLabel>{label}</FormLabel>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className={cn(
+                      "w-full justify-between font-normal",
+                      !selected && "text-muted-foreground",
+                    )}
+                  >
+                    <span className="truncate">
+                      {selected ? selected.label : placeholder}
+                    </span>
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-[--radix-popover-trigger-width] p-0"
+                align="start"
+              >
+                <Command>
+                  <CommandInput placeholder={searchPlaceholder} />
+                  <CommandList>
+                    <CommandEmpty>{emptyMessage}</CommandEmpty>
+                    <CommandGroup>
+                      {options.map((option) => (
+                        <CommandItem
+                          key={option.value}
+                          // Label + id keeps duplicate labels distinct; search matches the label.
+                          value={`${option.label}__${option.value}`}
+                          onSelect={() => {
+                            field.onChange(option.value);
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              option.value === field.value ? "opacity-100" : "opacity-0",
+                            )}
+                          />
+                          {option.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+            <FormMessage />
+          </FormItem>
+        );
+      }}
     />
   );
 }
