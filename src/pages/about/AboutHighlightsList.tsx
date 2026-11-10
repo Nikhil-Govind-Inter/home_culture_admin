@@ -192,7 +192,7 @@ export default function AboutHighlightsList() {
         columns={columns}
         data={highlightItems}
         title="About Highlights"
-        searchPlaceholder="Search highlights..."
+        searchPlaceholder="Search by Title or Description..."
         onAdd={() => navigate("/about-highlights/new")}
         addButtonText="Add Highlight"
         loading={loading}

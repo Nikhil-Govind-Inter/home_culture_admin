@@ -194,7 +194,7 @@ export default function TestimonialList() {
         columns={columns}
         data={testimonialItems}
         title="Testimonials"
-        searchPlaceholder="Search testimonials..."
+        searchPlaceholder="Search by Name, Designation..."
         onAdd={() => navigate("/testimonials/new")}
         addButtonText="Add Testimonial"
         loading={loading}

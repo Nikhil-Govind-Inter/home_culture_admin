@@ -164,7 +164,7 @@ export default function BookingProcessList() {
         columns={columns}
         data={items}
         title="Booking Processes"
-        searchPlaceholder="Search booking processes..."
+        searchPlaceholder="Search by Title or Description..."
         onAdd={() => navigate("/booking-processes/new")}
         addButtonText="Add Booking Process"
         loading={loading}

@@ -165,7 +165,7 @@ export default function ExperienceFeatureList() {
         columns={columns}
         data={items}
         title="Experience Features"
-        searchPlaceholder="Search experience features..."
+        searchPlaceholder="Search by Title..."
         onAdd={() => navigate("/experience-features/new")}
         addButtonText="Add Experience Feature"
         loading={loading}

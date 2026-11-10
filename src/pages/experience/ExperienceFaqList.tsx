@@ -164,7 +164,7 @@ export default function ExperienceFaqList() {
         columns={columns}
         data={items}
         title="Experience FAQs"
-        searchPlaceholder="Search experience faqs..."
+        searchPlaceholder="Search by Question or Answer..."
         onAdd={() => navigate("/experience-faqs/new")}
         addButtonText="Add Experience FAQ"
         loading={loading}

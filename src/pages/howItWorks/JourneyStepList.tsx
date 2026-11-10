@@ -179,7 +179,7 @@ export default function JourneyStepList() {
         columns={columns}
         data={journeyStepItems}
         title="Journey Steps"
-        searchPlaceholder="Search journey steps..."
+        searchPlaceholder="Search by Title or Description..."
         onAdd={() => navigate("/journey-steps/new")}
         addButtonText="Add Journey Step"
         loading={loading}

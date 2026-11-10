@@ -19,6 +19,7 @@ import { useStatusToggle } from "@/hooks/useStatusToggle";
 import { usePaginatedList } from "@/hooks/usePaginatedList";
 import DeleteDialogue from "@/components/common/DeleteDialogue";
 import StatusChangeDialogue from "@/components/common/StatusChangeDialogue";
+import { Button } from "@/components/ui/button";
 
 export default function LocationList() {
   const navigate = useNavigate();
@@ -42,13 +43,18 @@ export default function LocationList() {
   } = usePaginatedList<Location>(fetchLocationList);
   const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
 
-  const handleSortOrderChange = useSortOrder(items, setItems, updateLocationSortOrder);
-  const { statusToggleItem, setStatusToggleItem, confirmStatusToggle } = useStatusToggle({
+  const handleSortOrderChange = useSortOrder(
+    items,
     setItems,
-    refetch,
-    toggleStatus: toggleLocationStatus,
-    label: "Location",
-  });
+    updateLocationSortOrder,
+  );
+  const { statusToggleItem, setStatusToggleItem, confirmStatusToggle } =
+    useStatusToggle({
+      setItems,
+      refetch,
+      toggleStatus: toggleLocationStatus,
+      label: "Location",
+    });
 
   const confirmDelete = async () => {
     if (!deleteItemId) return;
@@ -91,7 +97,9 @@ export default function LocationList() {
       accessorKey: "location",
       header: "Location",
       cell: ({ row }) => (
-        <div className="font-medium">{(row.getValue("location") as string) || "-"}</div>
+        <div className="font-medium">
+          {(row.getValue("location") as string) || "-"}
+        </div>
       ),
     },
     {
@@ -99,24 +107,29 @@ export default function LocationList() {
       header: "Location Link",
       cell: ({ row }) => {
         const link = row.getValue("location_link") as string;
-        if (!link) return <span className="text-sm text-muted-foreground">-</span>;
+        if (!link)
+          return <span className="text-sm text-muted-foreground">-</span>;
         return (
           // Plain anchor: react-router's Link would treat an absolute URL as an in-app path.
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={link}
-            className="flex items-center gap-1 max-w-[320px] text-sm text-muted-foreground underline hover:text-foreground"
-          >
-            <ExternalLink className="h-4 w-4 shrink-0" />
-            <span className="truncate">{link}</span>
-          </a>
+          <div className="flex items-center justify-start gap-2">
+            <div className="font-mono text-sm mx text-muted-foreground max-w-[200px] truncate">
+              {link}
+            </div>
+            {link && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.open(link, "_blank")}
+              >
+                <ExternalLink className="h-3 w-3" />
+              </Button>
+            )}
+          </div>
         );
       },
     },
     {
-      accessorKey: "sort_order",  
+      accessorKey: "sort_order",
       header: "Sort Order",
       cell: ({ row }) => {
         const item = row.original;
@@ -179,7 +192,7 @@ export default function LocationList() {
         columns={columns}
         data={items}
         title="Locations"
-        searchPlaceholder="Search by location..."
+        searchPlaceholder="Search by Location..."
         onAdd={() => navigate("/locations/new")}
         addButtonText="Add Location"
         loading={loading}

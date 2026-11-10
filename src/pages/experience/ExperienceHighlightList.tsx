@@ -164,7 +164,7 @@ export default function ExperienceHighlightList() {
         columns={columns}
         data={items}
         title="Experience Highlights"
-        searchPlaceholder="Search experience highlights..."
+        searchPlaceholder="Search by Title..."
         onAdd={() => navigate("/experience-highlights/new")}
         addButtonText="Add Experience Highlight"
         loading={loading}

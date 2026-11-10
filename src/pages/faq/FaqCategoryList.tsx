@@ -173,7 +173,7 @@ export default function FaqCategoryList() {
         columns={columns}
         data={categoryItems}
         title="FAQ Categories"
-        searchPlaceholder="Search categories..."
+        searchPlaceholder="Search by Title or Slug..."
         onAdd={() => navigate("/faq-categories/new")}
         addButtonText="Add Category"
         loading={loading}

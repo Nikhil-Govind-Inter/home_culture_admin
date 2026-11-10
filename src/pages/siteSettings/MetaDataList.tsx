@@ -96,7 +96,7 @@ export default function MetaDataList() {
       columns={columns}
       data={items}
       title="Meta Data"
-      searchPlaceholder="Search by page or title..."
+      searchPlaceholder="Search by Page or Meta Title..."
       showAddButton={false}
       loading={loading}
       searching={searching}

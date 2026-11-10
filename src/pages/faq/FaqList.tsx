@@ -202,7 +202,7 @@ export default function FaqList() {
         columns={columns}
         data={faqItems}
         title="FAQs"
-        searchPlaceholder="Search FAQs..."
+        searchPlaceholder="Search by Question, Answer or Category..."
         onAdd={() => navigate("/faqs/new")}
         addButtonText="Add FAQ"
         toolbarExtra={

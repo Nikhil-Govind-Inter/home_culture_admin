@@ -116,7 +116,7 @@ export default function BannersList() {
         columns={columns}
         data={banners}
         title="Banners"
-        searchPlaceholder="Search banners..."
+        searchPlaceholder="Search by Page..."
         showAddButton={false}
         loading={loading}
         searching={searching}

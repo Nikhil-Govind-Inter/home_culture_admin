@@ -180,7 +180,7 @@ export default function WorkshopMaterialList() {
         columns={columns}
         data={workshopMaterialItems}
         title="Workshop Materials"
-        searchPlaceholder="Search workshop materials..."
+        searchPlaceholder="Search by Title..."
         onAdd={() => navigate("/workshop-materials/new")}
         addButtonText="Add Workshop Material"
         loading={loading}

@@ -95,13 +95,6 @@ export default function ExperienceTimelineList() {
       ),
     },
     {
-      accessorKey: "media_alt",
-      header: "Image Alt Text",
-      cell: ({ row }) => (
-        <div className="text-sm text-muted-foreground max-w-[320px] truncate">{(row.getValue("media_alt") as string) || "-"}</div>
-      ),
-    },
-    {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => (
@@ -179,7 +172,7 @@ export default function ExperienceTimelineList() {
         columns={columns}
         data={items}
         title="Experience Timeline"
-        searchPlaceholder="Search experience timeline..."
+        searchPlaceholder="Search by Title..."
         onAdd={() => navigate("/experience-timeline/new")}
         addButtonText="Add Timeline Item"
         loading={loading}

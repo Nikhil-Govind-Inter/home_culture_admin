@@ -126,7 +126,7 @@ export default function SocialMediaList() {
       cell: ({ row }) => {
         const link = row.getValue("link") as string;
         return (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-start gap-2">
             <div className="font-mono text-sm mx text-muted-foreground max-w-[200px] truncate">
               {link}
             </div>
@@ -210,7 +210,7 @@ export default function SocialMediaList() {
         columns={columns}
         data={socialMediaItems}
         title="Social Media"
-        searchPlaceholder="Search social media items..."
+        searchPlaceholder="Search by Name or Link..."
         onAdd={() => navigate("/social-media/new")}
         addButtonText="Add Social Media"
         loading={loading}

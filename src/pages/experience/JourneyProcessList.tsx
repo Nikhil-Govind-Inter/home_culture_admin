@@ -164,7 +164,7 @@ export default function JourneyProcessList() {
         columns={columns}
         data={items}
         title="Journey Processes"
-        searchPlaceholder="Search journey processes..."
+        searchPlaceholder="Search by Title..."
         onAdd={() => navigate("/journey-processes/new")}
         addButtonText="Add Journey Process"
         loading={loading}
