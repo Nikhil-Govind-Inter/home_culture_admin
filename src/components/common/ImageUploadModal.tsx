@@ -104,7 +104,6 @@ export function ImageUploadModal({ isOpen, onClose, onInsertImage }: ImageUpload
                   placeholder="Drop an image file here or click to browse"
                   preview={true}
                   className="mt-2"
-                  enableCropping={false}
                 />
               </div>
             </TabsContent>

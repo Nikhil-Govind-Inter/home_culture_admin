@@ -314,6 +314,7 @@ interface FormFileUploadFieldProps<T extends FieldValues> extends BaseFormFieldP
   preview?: boolean;
   recommendedDimensions: string;
   dimensionNote?: string;
+  typeError?: string;
 }
 
 export function FormFileUploadField<T extends FieldValues>({
@@ -327,6 +328,7 @@ export function FormFileUploadField<T extends FieldValues>({
   preview = true,
   recommendedDimensions,
   dimensionNote,
+  typeError,
 }: FormFileUploadFieldProps<T>) {
   return (
     <FormField
@@ -347,6 +349,7 @@ export function FormFileUploadField<T extends FieldValues>({
               preview={preview}
               recommendedDimensions={recommendedDimensions}
               dimensionNote={dimensionNote}
+              typeError={typeError}
             />
           </FormControl>
           <FormMessage />

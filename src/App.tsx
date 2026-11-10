@@ -28,6 +28,10 @@ const BlogCmsForm = React.lazy(() => import("./pages/blogs/BlogCmsForm"));
 const BlogCategoryList = React.lazy(() => import("./pages/blogs/BlogCategoryList"));
 const BlogCategoryForm = React.lazy(() => import("./pages/blogs/BlogCategoryForm"));
 const CareerCmsForm = React.lazy(() => import("./pages/career/CareerCmsForm"));
+const CareerVisionList = React.lazy(() => import("./pages/career/CareerVisionList"));
+const CareerVisionForm = React.lazy(() => import("./pages/career/CareerVisionForm"));
+const CareerBenefitList = React.lazy(() => import("./pages/career/CareerBenefitList"));
+const CareerBenefitForm = React.lazy(() => import("./pages/career/CareerBenefitForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
@@ -120,6 +124,12 @@ const App = () => (
 
                 {/* Career CMS */}
                 <Route path="/career-cms" element={<CareerCmsForm />} />
+                <Route path="/career-visions" element={<CareerVisionList />} />
+                <Route path="/career-visions/new" element={<CareerVisionForm />} />
+                <Route path="/career-visions/:id/edit" element={<CareerVisionForm />} />
+                <Route path="/career-benefits" element={<CareerBenefitList />} />
+                <Route path="/career-benefits/new" element={<CareerBenefitForm />} />
+                <Route path="/career-benefits/:id/edit" element={<CareerBenefitForm />} />
 
                 {/* Contact CMS */}
                 <Route path="/contact-cms" element={<ContactCmsForm />} />

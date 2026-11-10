@@ -32,6 +32,7 @@ interface FileUploadProps {
   className?: string;
   recommendedDimensions?: string; // e.g., "1440×900px"
   dimensionNote?: string; // Additional context about dimensions
+  typeError?: string; // Message shown for a disallowed file type (defaults to the generic image message)
 }
 
 export function FileUpload({
@@ -49,7 +50,14 @@ export function FileUpload({
   className,
   recommendedDimensions,
   dimensionNote,
+  typeError = IMAGE_TYPE_ERROR,
 }: FileUploadProps) {
+  // "image/*" means the standard image list; otherwise only the image types named in `accept`.
+  const acceptEntries = accept.split(",").map((type) => type.trim());
+  const allowedImageTypes = acceptEntries.includes("image/*")
+    ? ALLOWED_IMAGE_TYPES
+    : acceptEntries.filter((type) => type.startsWith("image/"));
+
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
 
@@ -67,8 +75,12 @@ export function FileUpload({
       const isImage = file.type.startsWith("image/");
       const isVideo = file.type.startsWith("video/");
 
-      if (isImage && !ALLOWED_IMAGE_TYPES.includes(file.type)) {
-        return { code: "file-invalid-type", message: IMAGE_TYPE_ERROR };
+      if (isImage && !allowedImageTypes.includes(file.type)) {
+        return { code: "file-invalid-type", message: typeError };
+      }
+      // Restricted uploads (e.g. SVG only) must reject non-image files too.
+      if (!isImage && !isVideo && !acceptEntries.includes("image/*") && allowedImageTypes.length > 0) {
+        return { code: "file-invalid-type", message: typeError };
       }
 
       // Always use specific size limits (now they have defaults)
@@ -108,7 +120,8 @@ export function FileUpload({
 
       return null;
     },
-    [maxSize, maxImageSize, maxVideoSize]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [maxSize, maxImageSize, maxVideoSize, accept, typeError]
   );
 
   const onDrop = useCallback(
@@ -140,11 +153,13 @@ export function FileUpload({
   const { getRootProps, getInputProps, isDragActive, fileRejections } =
     useDropzone({
       onDrop,
-      accept: accept
-        .split(",")
-        .map((type) => type.trim())
+      accept: acceptEntries
+        .filter((type) => !type.startsWith("."))
         .flatMap((type) => (type === "image/*" ? ALLOWED_IMAGE_TYPES : [type]))
-        .reduce((acc, type) => ({ ...acc, [type]: [] }), {}),
+        .reduce(
+          (acc, type) => ({ ...acc, [type]: type === "image/svg+xml" ? [".svg"] : [] }),
+          {},
+        ),
       maxSize: undefined, // Always use custom validation
       multiple: false,
     });
@@ -302,7 +317,7 @@ export function FileUpload({
             <div className="mt-2 text-sm text-destructive">
               {customError ||
                 (fileRejections[0]?.errors[0]?.code === "file-invalid-type"
-                  ? IMAGE_TYPE_ERROR
+                  ? typeError
                   : fileRejections[0]?.errors[0]?.message)}
             </div>
           )}

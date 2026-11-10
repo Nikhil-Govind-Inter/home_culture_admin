@@ -27,6 +27,8 @@ import {
   MessageSquare,
   Gem,
   Briefcase,
+  Eye,
+  Gift,
 } from "lucide-react";
 
 /**
@@ -112,7 +114,11 @@ export const NAV: NavSection[] = [
             id: "career",
             title: "Career",
             icon: Briefcase,
-            items: [{ title: "Page Content", url: "/career-cms", icon: Briefcase }],
+            items: [
+              { title: "Page Content", url: "/career-cms", icon: Briefcase },
+              { title: "Vision", url: "/career-visions", icon: Eye },
+              { title: "Benefits", url: "/career-benefits", icon: Gift },
+            ],
           },
           {
             id: "contact",
