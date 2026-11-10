@@ -19,6 +19,13 @@ import {
   MessageCircleQuestion,
   Tags,
   ShieldCheck,
+  Compass,
+  Sparkles,
+  CalendarCheck,
+  MapPin,
+  Clock,
+  MessageSquare,
+  Gem,
 } from "lucide-react";
 
 /**
@@ -83,6 +90,21 @@ export const NAV: NavSection[] = [
               { title: "Workshop Materials", url: "/workshop-materials", icon: Hammer },
               { title: "Testimonials", url: "/testimonials", icon: Quote },
               { title: "Journey Steps", url: "/journey-steps", icon: Route },
+            ],
+          },
+          {
+            id: "experience",
+            title: "Experience",
+            icon: Compass,
+            items: [
+              { title: "Page Content", url: "/experience-cms", icon: Compass },
+              { title: "Journey Process", url: "/journey-processes", icon: Route },
+              { title: "Timeline", url: "/experience-timeline", icon: Clock },
+              { title: "Highlights", url: "/experience-highlights", icon: Sparkles },
+              { title: "Features", url: "/experience-features", icon: Gem },
+              { title: "Locations", url: "/locations", icon: MapPin },
+              { title: "Booking Process", url: "/booking-processes", icon: CalendarCheck },
+              { title: "FAQs", url: "/experience-faqs", icon: MessageSquare },
             ],
           },
           {

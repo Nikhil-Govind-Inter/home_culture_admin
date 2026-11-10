@@ -42,6 +42,21 @@ const TestimonialList = React.lazy(() => import("./pages/howItWorks/TestimonialL
 const TestimonialForm = React.lazy(() => import("./pages/howItWorks/TestimonialForm"));
 const JourneyStepList = React.lazy(() => import("./pages/howItWorks/JourneyStepList"));
 const JourneyStepForm = React.lazy(() => import("./pages/howItWorks/JourneyStepForm"));
+const ExperienceCmsForm = React.lazy(() => import("./pages/experience/ExperienceCmsForm"));
+const JourneyProcessList = React.lazy(() => import("./pages/experience/JourneyProcessList"));
+const JourneyProcessForm = React.lazy(() => import("./pages/experience/JourneyProcessForm"));
+const ExperienceHighlightList = React.lazy(() => import("./pages/experience/ExperienceHighlightList"));
+const ExperienceHighlightForm = React.lazy(() => import("./pages/experience/ExperienceHighlightForm"));
+const BookingProcessList = React.lazy(() => import("./pages/experience/BookingProcessList"));
+const BookingProcessForm = React.lazy(() => import("./pages/experience/BookingProcessForm"));
+const ExperienceFaqList = React.lazy(() => import("./pages/experience/ExperienceFaqList"));
+const ExperienceFaqForm = React.lazy(() => import("./pages/experience/ExperienceFaqForm"));
+const LocationList = React.lazy(() => import("./pages/experience/LocationList"));
+const LocationForm = React.lazy(() => import("./pages/experience/LocationForm"));
+const ExperienceTimelineList = React.lazy(() => import("./pages/experience/ExperienceTimelineList"));
+const ExperienceTimelineForm = React.lazy(() => import("./pages/experience/ExperienceTimelineForm"));
+const ExperienceFeatureList = React.lazy(() => import("./pages/experience/ExperienceFeatureList"));
+const ExperienceFeatureForm = React.lazy(() => import("./pages/experience/ExperienceFeatureForm"));
 const SocialMediaList = React.lazy(() => import("./pages/siteSettings/SocialMediaList"));
 const SocialMediaForm = React.lazy(() => import("./pages/siteSettings/SocialMediaForm"));
 
@@ -128,6 +143,30 @@ const App = () => (
                 <Route path="/testimonials" element={<TestimonialList />} />
                 <Route path="/testimonials/new" element={<TestimonialForm />} />
                 <Route path="/testimonials/:id/edit" element={<TestimonialForm />} />
+
+                {/* Experience CMS */}
+                <Route path="/experience-cms" element={<ExperienceCmsForm />} />
+                <Route path="/journey-processes" element={<JourneyProcessList />} />
+                <Route path="/journey-processes/new" element={<JourneyProcessForm />} />
+                <Route path="/journey-processes/:id/edit" element={<JourneyProcessForm />} />
+                <Route path="/experience-highlights" element={<ExperienceHighlightList />} />
+                <Route path="/experience-highlights/new" element={<ExperienceHighlightForm />} />
+                <Route path="/experience-highlights/:id/edit" element={<ExperienceHighlightForm />} />
+                <Route path="/booking-processes" element={<BookingProcessList />} />
+                <Route path="/booking-processes/new" element={<BookingProcessForm />} />
+                <Route path="/booking-processes/:id/edit" element={<BookingProcessForm />} />
+                <Route path="/experience-faqs" element={<ExperienceFaqList />} />
+                <Route path="/experience-faqs/new" element={<ExperienceFaqForm />} />
+                <Route path="/experience-faqs/:id/edit" element={<ExperienceFaqForm />} />
+                <Route path="/locations" element={<LocationList />} />
+                <Route path="/locations/new" element={<LocationForm />} />
+                <Route path="/locations/:id/edit" element={<LocationForm />} />
+                <Route path="/experience-timeline" element={<ExperienceTimelineList />} />
+                <Route path="/experience-timeline/new" element={<ExperienceTimelineForm />} />
+                <Route path="/experience-timeline/:id/edit" element={<ExperienceTimelineForm />} />
+                <Route path="/experience-features" element={<ExperienceFeatureList />} />
+                <Route path="/experience-features/new" element={<ExperienceFeatureForm />} />
+                <Route path="/experience-features/:id/edit" element={<ExperienceFeatureForm />} />
                 <Route path="/journey-steps" element={<JourneyStepList />} />
                 <Route path="/journey-steps/new" element={<JourneyStepForm />} />
                 <Route path="/journey-steps/:id/edit" element={<JourneyStepForm />} />

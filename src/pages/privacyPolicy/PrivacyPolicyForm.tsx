@@ -188,7 +188,7 @@ export default function PrivacyPolicyForm() {
                 <FormTextField
                   form={form}
                   name="cta_section_button_text"
-                  label="Button Text"
+                  label="Button Label"
                   placeholder="Button text"
                 />
                 <FormTextField

@@ -125,7 +125,7 @@ export default function ContactCmsForm() {
               <FormTextField form={form} name="faq_section_title" label="Title" placeholder="Section title" />
               <FormTextareaField form={form} name="faq_section_description" label="Description" placeholder="Section description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormTextField form={form} name="faq_section_button_text" label="Button Text" placeholder="Button text" />
+                <FormTextField form={form} name="faq_section_button_text" label="Button Label" placeholder="Button text" />
                 <FormTextField form={form} name="faq_section_button_link" label="Button Link" placeholder="/faq" />
               </div>
             </CardContent>

@@ -178,7 +178,7 @@ export default function FaqCmsForm() {
               </div>
               <FormTextareaField form={form} name="section_two_description" label="Description" placeholder="Description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormTextField form={form} name="section_two_button_text" label="Button Text" placeholder="Button text" />
+                <FormTextField form={form} name="section_two_button_text" label="Button Label" placeholder="Button text" />
                 <FormTextField form={form} name="section_two_button_link" label="Button Link" placeholder="/contact" />
               </div>
             </CardContent>

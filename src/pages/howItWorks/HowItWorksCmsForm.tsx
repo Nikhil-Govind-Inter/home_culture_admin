@@ -255,7 +255,7 @@ export default function HowItWorksCmsForm() {
               </div>
               <FormTextareaField form={form} name="cta_description" label="Description" placeholder="Description" rows={6} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormTextField form={form} name="cta_button_text" label="Button Text" placeholder="Button text" />
+                <FormTextField form={form} name="cta_button_text" label="Button Label" placeholder="Button text" />
                 <FormTextField form={form} name="cta_button_link" label="Button Link" placeholder="/contact" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

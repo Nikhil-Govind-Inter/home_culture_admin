@@ -152,7 +152,7 @@ export default function SiteSettingsForm() {
                 <FormTextField
                   form={form}
                   name="header_button_text"
-                  label="Header Button Text"
+                  label="Header Button Label"
                   placeholder="Button text"
                 />
                 <FormTextField
