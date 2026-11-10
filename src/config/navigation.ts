@@ -26,6 +26,7 @@ import {
   Clock,
   MessageSquare,
   Gem,
+  Briefcase,
 } from "lucide-react";
 
 /**
@@ -106,6 +107,12 @@ export const NAV: NavSection[] = [
               { title: "Booking Process", url: "/booking-processes", icon: CalendarCheck },
               { title: "FAQs", url: "/experience-faqs", icon: MessageSquare },
             ],
+          },
+          {
+            id: "career",
+            title: "Career",
+            icon: Briefcase,
+            items: [{ title: "Page Content", url: "/career-cms", icon: Briefcase }],
           },
           {
             id: "contact",

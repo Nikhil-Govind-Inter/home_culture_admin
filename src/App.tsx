@@ -27,6 +27,7 @@ const BlogForm = React.lazy(() => import("./pages/blogs/BlogForm"));
 const BlogCmsForm = React.lazy(() => import("./pages/blogs/BlogCmsForm"));
 const BlogCategoryList = React.lazy(() => import("./pages/blogs/BlogCategoryList"));
 const BlogCategoryForm = React.lazy(() => import("./pages/blogs/BlogCategoryForm"));
+const CareerCmsForm = React.lazy(() => import("./pages/career/CareerCmsForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
@@ -116,6 +117,9 @@ const App = () => (
                 <Route path="/blogs" element={<BlogsList />} />
                 <Route path="/blogs/new" element={<BlogForm />} />
                 <Route path="/blogs/:id/edit" element={<BlogForm />} />
+
+                {/* Career CMS */}
+                <Route path="/career-cms" element={<CareerCmsForm />} />
 
                 {/* Contact CMS */}
                 <Route path="/contact-cms" element={<ContactCmsForm />} />
