@@ -24,6 +24,9 @@ const MetaDataList = React.lazy(() => import("./pages/siteSettings/MetaDataList"
 const MetaDataForm = React.lazy(() => import("./pages/siteSettings/MetaDataForm"));
 const BlogsList = React.lazy(() => import("./pages/blogs/BlogsList"));
 const BlogForm = React.lazy(() => import("./pages/blogs/BlogForm"));
+const BlogCmsForm = React.lazy(() => import("./pages/blogs/BlogCmsForm"));
+const BlogCategoryList = React.lazy(() => import("./pages/blogs/BlogCategoryList"));
+const BlogCategoryForm = React.lazy(() => import("./pages/blogs/BlogCategoryForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
@@ -106,6 +109,10 @@ const App = () => (
                 <Route path="/meta-data/:id/edit" element={<MetaDataForm />} />
 
                 {/* Blogs */}
+                <Route path="/blog-cms" element={<BlogCmsForm />} />
+                <Route path="/blog-categories" element={<BlogCategoryList />} />
+                <Route path="/blog-categories/new" element={<BlogCategoryForm />} />
+                <Route path="/blog-categories/:id/edit" element={<BlogCategoryForm />} />
                 <Route path="/blogs" element={<BlogsList />} />
                 <Route path="/blogs/new" element={<BlogForm />} />
                 <Route path="/blogs/:id/edit" element={<BlogForm />} />

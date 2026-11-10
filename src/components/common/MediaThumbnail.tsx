@@ -12,7 +12,7 @@ export default function MediaThumbnail({ path, alt }: MediaThumbnailProps) {
   const src = resolveImageUrl(path);
 
   return (
-    <div className="w-10 h-10 rounded-md bg-muted flex items-center justify-center overflow-hidden">
+    <div className="w-15 h-15 rounded-md bg-muted flex items-center justify-center overflow-hidden">
       {src ? (
         <img
           src={src}
@@ -21,7 +21,7 @@ export default function MediaThumbnail({ path, alt }: MediaThumbnailProps) {
           className="w-full h-full object-cover"
         />
       ) : (
-        <div className="w-8 h-8 rounded bg-muted-foreground/20" />
+        <div className="w-15 h-15 rounded bg-muted-foreground/20" />
       )}
     </div>
   );

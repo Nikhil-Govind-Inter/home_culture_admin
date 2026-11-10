@@ -135,7 +135,11 @@ export const NAV: NavSection[] = [
         id: "blogs",
         title: "Blogs",
         icon: Newspaper,
-        items: [{ title: "Blogs", url: "/blogs", icon: Newspaper }],
+        items: [
+          { title: "Page Content", url: "/blog-cms", icon: LayoutTemplate },
+          { title: "Categories", url: "/blog-categories", icon: Tags },
+          { title: "Blogs", url: "/blogs", icon: Newspaper },
+        ],
       },
       {
         id: "site-elements",

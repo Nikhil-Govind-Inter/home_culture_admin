@@ -407,7 +407,7 @@ export function FormDateField<T extends FieldValues>({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input {...field} type="datetime-local" />
+            <Input {...field} type="date" />
           </FormControl>
           <FormMessage />
         </FormItem>
