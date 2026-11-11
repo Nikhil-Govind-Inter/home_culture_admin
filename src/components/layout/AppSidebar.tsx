@@ -154,7 +154,7 @@ export function AppSidebar() {
           ) : (
             <div className="w-8 h-8 bg-sidebar-primary rounded-md flex items-center justify-center mx-auto">
               <span className="text-sidebar-primary-foreground font-bold text-sm">
-                HC
+                O
               </span>
             </div>
           )}
