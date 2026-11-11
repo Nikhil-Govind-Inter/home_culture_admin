@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   LayoutTemplate,
   Info,
+  Home,
   Phone,
   Newspaper,
   PanelBottom,
@@ -78,6 +79,12 @@ export const NAV: NavSection[] = [
         title: "Pages",
         icon: LayoutTemplate,
         children: [
+          {
+            id: "home",
+            title: "Home",
+            icon: Home,
+            items: [{ title: "Page Content", url: "/home-cms", icon: Home }],
+          },
           {
             id: "about",
             title: "About",

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -60,6 +60,16 @@ export function FileUpload({
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
+
+  // Drop a stale blob preview when the value is changed from outside (form reset or
+  // programmatic clear) and is no longer the picked File.
+  useEffect(() => {
+    if (previewUrl && !(value instanceof File)) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   // Generate placeholder with size information only
   const enhancedPlaceholder = generatePlaceholderWithSizes(

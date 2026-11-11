@@ -42,6 +42,7 @@ const JobList = React.lazy(() => import("./pages/career/JobList"));
 const JobForm = React.lazy(() => import("./pages/career/JobForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
+const HomeCmsForm = React.lazy(() => import("./pages/home/HomeCmsForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
 const AboutHighlightsList = React.lazy(() => import("./pages/about/AboutHighlightsList"));
 const AboutHighlightForm = React.lazy(() => import("./pages/about/AboutHighlightForm"));
@@ -158,6 +159,9 @@ const App = () => (
 
                 {/* Privacy Policy */}
                 <Route path="/privacy-policy" element={<PrivacyPolicyForm />} />
+
+                {/* Home CMS */}
+                <Route path="/home-cms" element={<HomeCmsForm />} />
 
                 {/* About CMS */}
                 <Route path="/about-cms" element={<AboutCmsForm />} />
