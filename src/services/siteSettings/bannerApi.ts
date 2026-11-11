@@ -3,8 +3,8 @@ import { ApiError, parseEnvelope } from "@/services/auth/authApi";
 
 // Banners — backed by the home_culture server's `/admin/banners` (Bearer-JWT).
 // Banners are fixed per-page records: list, get by id and update only.
-// Updates use caller-built FormData (images go in `banner_desktop_media_path`
-// and `banner_mobile_media_path`).
+// Updates use caller-built FormData (media goes in `banner_desktop_media_path`, plus
+// `banner_mobile_media_path` for images or `banner_thumbnail_media_path` for video).
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const BANNERS_URL = `${API_BASE_URL}/banners`;
 
@@ -18,6 +18,8 @@ export interface Banner {
   title: string;
   description: string;
   status: boolean;
+  media_type: "image" | "video";
+  banner_thumbnail_media_path?: string | null;
   banner_desktop_media_path?: string | null;
   banner_mobile_media_path?: string | null;
   banner_media_alt: string;
