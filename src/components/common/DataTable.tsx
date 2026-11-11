@@ -45,6 +45,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
   ChevronDown,
   Search,
   Download,
@@ -117,7 +120,9 @@ export function DataTable<TData, TValue>({
   headerExtra,
   toolbarExtra,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "sort_order", desc: false },
+  ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   // Initialize column visibility with default hidden columns
@@ -174,6 +179,7 @@ export function DataTable<TData, TValue>({
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: "includesString",
     manualPagination: !!pagination,
+    enableSortingRemoval: false,
     state: {
       sorting,
       columnFilters,
@@ -185,7 +191,6 @@ export function DataTable<TData, TValue>({
 
 
 
-  console.log(data)
 
   const selectedRows = table.getFilteredSelectedRowModel().rows;
   const hasSelectedRows = selectedRows.length > 0;
@@ -431,14 +436,42 @@ export function DataTable<TData, TValue>({
                           index < headerGroup.headers.length - 1
                             ? " border-r"
                             : ""
+                        }${
+                          header.column.id === "sort_order" &&
+                          header.column.getCanSort()
+                            ? " cursor-pointer select-none hover:bg-muted/50"
+                            : ""
                         }`}
+                        onClick={
+                          header.column.id === "sort_order"
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
                       >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
+                        {header.isPlaceholder ? null : header.column.id ===
+                            "sort_order" && header.column.getCanSort() ? (
+                          <div
+                            className="flex items-center gap-1"
+                            title="Sort by sort order"
+                          >
+                            {flexRender(
                               header.column.columnDef.header,
                               header.getContext(),
                             )}
+                            {header.column.getIsSorted() === "asc" ? (
+                              <ArrowUp className="h-4 w-4" />
+                            ) : header.column.getIsSorted() === "desc" ? (
+                              <ArrowDown className="h-4 w-4" />
+                            ) : (
+                              <ArrowUpDown className="h-4 w-4 opacity-50" />
+                            )}
+                          </div>
+                        ) : (
+                          flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )
+                        )}
                       </TableHead>
                     ))}
                   </TableRow>

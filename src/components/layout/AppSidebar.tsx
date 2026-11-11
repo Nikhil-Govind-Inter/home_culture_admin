@@ -35,7 +35,7 @@ import {
   type NavItem,
 } from "@/config/navigation";
 
-const Logo = "/home-culture-logo.svg";
+const Logo = "/logo_white.png";
 
 type Loc = { pathname: string; search: string };
 
@@ -62,14 +62,19 @@ const isNavActive = (location: Loc, url: string, end = false) => {
 // "/bulk-upload" is a prefix of its sibling "/bulk-upload/products" etc., so
 // it must match exactly or the Overview link would stay highlighted on every child page.
 const itemIsExact = (item: NavItem, siblings: NavItem[]) =>
-  siblings.some((o) => o !== item && o.url.split("?")[0].startsWith(`${item.url.split("?")[0]}/`));
+  siblings.some(
+    (o) =>
+      o !== item &&
+      o.url.split("?")[0].startsWith(`${item.url.split("?")[0]}/`),
+  );
 
 const isItemActive = (location: Loc, item: NavItem, siblings: NavItem[]) =>
   isNavActive(location, item.url, itemIsExact(item, siblings));
 
 const groupHasActive = (location: Loc, group: NavGroup): boolean =>
-  (group.items ?? []).some((item) => isItemActive(location, item, group.items ?? [])) ||
-  (group.children ?? []).some((child) => groupHasActive(location, child));
+  (group.items ?? []).some((item) =>
+    isItemActive(location, item, group.items ?? []),
+  ) || (group.children ?? []).some((child) => groupHasActive(location, child));
 
 /** Ids of `target` and all its ancestors, outermost first (empty if not found). */
 const groupChain = (groups: NavGroup[], target: string): string[] => {
@@ -112,8 +117,8 @@ export function AppSidebar() {
     const ids: string[] = [active.id];
     let current: NavGroup | undefined = active;
     while (current) {
-      const next: NavGroup | undefined = (current.children ?? []).find((child) =>
-        groupHasActive(location, child),
+      const next: NavGroup | undefined = (current.children ?? []).find(
+        (child) => groupHasActive(location, child),
       );
       if (next) ids.push(next.id);
       current = next;
@@ -139,7 +144,7 @@ export function AppSidebar() {
           className={`border-b border-sidebar-border ${isCollapsed ? "py-4 px-2" : "p-4"}`}
         >
           {!isCollapsed ? (
-            <div className="flex items-center justify-center rounded-lg bg-white px-3 py-2 shadow-sm">
+            <div className="flex justify-center items-center w-full">
               <img
                 src={Logo}
                 alt="Home Culture"
@@ -220,7 +225,11 @@ function NavLinkItem({
         isActive={isNavActive(location, item.url, exact)}
       >
         <NavLink to={item.url} end={exact} className={navItemCls}>
-          <Icon className={small ? "h-4 w-4 flex-shrink-0" : "h-5 w-5 flex-shrink-0"} />
+          <Icon
+            className={
+              small ? "h-4 w-4 flex-shrink-0" : "h-5 w-5 flex-shrink-0"
+            }
+          />
           {!isCollapsed && <span className="ml-2">{title}</span>}
         </NavLink>
       </SidebarMenuButton>
@@ -294,7 +303,10 @@ function NavGroupItem({
 
   return (
     <SidebarMenuItem>
-      <Collapsible open={!isCollapsed && open} onOpenChange={(isOpen) => onToggle(group.id, isOpen)}>
+      <Collapsible
+        open={!isCollapsed && open}
+        onOpenChange={(isOpen) => onToggle(group.id, isOpen)}
+      >
         <CollapsibleTrigger
           title={isCollapsed ? group.title : undefined}
           className={`flex items-center w-full p-2 text-sm font-medium rounded-md transition-colors ${
@@ -358,7 +370,13 @@ function NavGroupItem({
 const flyoutItemCls =
   "cursor-pointer focus:bg-sidebar-accent focus:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-primary/20 data-[active=true]:text-sidebar-foreground";
 
-function FlyoutContent({ group, location }: { group: NavGroup; location: Loc }) {
+function FlyoutContent({
+  group,
+  location,
+}: {
+  group: NavGroup;
+  location: Loc;
+}) {
   const items = group.items ?? [];
   return (
     <>
@@ -383,7 +401,11 @@ function FlyoutContent({ group, location }: { group: NavGroup; location: Loc }) 
         </DropdownMenuSub>
       ))}
       {items.map((item) => (
-        <FlyoutLink key={item.url} item={item} active={isItemActive(location, item, items)} />
+        <FlyoutLink
+          key={item.url}
+          item={item}
+          active={isItemActive(location, item, items)}
+        />
       ))}
     </>
   );
