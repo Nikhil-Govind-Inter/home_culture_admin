@@ -5,8 +5,11 @@ const COMMIT_DELAY_MS = 600;
 
 interface Sortable {
   id?: number;
+  slug?: string;
   sort_order?: number | null;
 }
+
+type Key = string | number;
 
 /**
  * Optimistic, debounced sort-order stepper for list pages.
@@ -17,11 +20,13 @@ export function useSortOrder<T extends Sortable>(
   items: T[],
   setItems: Dispatch<SetStateAction<T[]>>,
   updateSortOrder: (item: T, sortOrder: number) => Promise<unknown>,
+  // Identifies a row; defaults to `id`. Pass e.g. `(i) => i.slug` for resources addressed by slug.
+  getKey: (item: T) => Key = (item) => item.id!,
 ) {
   const { toast } = useToast();
   const itemsRef = useRef(items);
-  const timers = useRef<Record<number, ReturnType<typeof setTimeout>>>({});
-  const originals = useRef<Record<number, number>>({});
+  const timers = useRef<Record<Key, ReturnType<typeof setTimeout>>>({});
+  const originals = useRef<Record<Key, number>>({});
 
   useEffect(() => {
     itemsRef.current = items;
@@ -32,11 +37,13 @@ export function useSortOrder<T extends Sortable>(
     return () => Object.values(pending).forEach(clearTimeout);
   }, []);
 
-  const setSortOrder = (id: number | undefined, sortOrder: number) =>
-    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, sort_order: sortOrder } : i)));
+  const setSortOrder = (id: Key, sortOrder: number) =>
+    setItems((prev) =>
+      prev.map((i) => (getKey(i) === id ? { ...i, sort_order: sortOrder } : i)),
+    );
 
-  const commit = async (id: number) => {
-    const latest = itemsRef.current.find((i) => i.id === id);
+  const commit = async (id: Key) => {
+    const latest = itemsRef.current.find((i) => getKey(i) === id);
     if (!latest) return;
 
     const finalOrder = latest.sort_order ?? 1;
@@ -46,7 +53,10 @@ export function useSortOrder<T extends Sortable>(
 
     try {
       await updateSortOrder(latest, finalOrder);
-      toast({ title: "Success", description: "Sort order updated successfully" });
+      toast({
+        title: "Success",
+        description: "Sort order updated successfully",
+      });
     } catch {
       setSortOrder(id, original);
       toast({
@@ -61,7 +71,7 @@ export function useSortOrder<T extends Sortable>(
     const next = Math.max(1, (item.sort_order ?? 1) + delta);
     if (next === item.sort_order) return;
 
-    const id = item.id!;
+    const id = getKey(item);
     if (!timers.current[id]) originals.current[id] = item.sort_order ?? 1;
     setSortOrder(id, next);
 

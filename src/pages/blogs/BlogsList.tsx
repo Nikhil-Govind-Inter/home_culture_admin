@@ -268,7 +268,7 @@ export default function BlogsList() {
         addButtonText="Add Blog"
         toolbarExtra={
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-[220px]">
+              <SelectTrigger className="w-auto min-w-[220px] gap-2 [&>span]:line-clamp-none [&>span]:whitespace-nowrap">
               <SelectValue placeholder="All categories" />
             </SelectTrigger>
             <SelectContent>

@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface Toggleable {
   id?: number;
+  slug?: string;
   is_active?: boolean;
 }
 
@@ -12,6 +13,8 @@ interface Options<T extends Toggleable> {
   toggleStatus: (item: T, isActive: boolean) => Promise<unknown>;
   /** Shown in the success toast, e.g. "History entry". */
   label: string;
+  /** Identifies a row; defaults to `id`. Pass e.g. `(i) => i.slug` for resources addressed by slug. */
+  getKey?: (item: T) => string | number;
 }
 
 /** Confirm-then-update status flow shared by list pages. */
@@ -20,6 +23,7 @@ export function useStatusToggle<T extends Toggleable>({
   refetch,
   toggleStatus,
   label,
+  getKey = (item) => item.id!,
 }: Options<T>) {
   const { toast } = useToast();
   const [statusToggleItem, setStatusToggleItem] = useState<{
@@ -34,14 +38,20 @@ export function useStatusToggle<T extends Toggleable>({
     try {
       await toggleStatus(item, newStatus);
       setItems((prev) =>
-        prev.map((i) => (i.id === item.id ? { ...i, is_active: newStatus } : i)),
+        prev.map((i) =>
+          getKey(i) === getKey(item) ? { ...i, is_active: newStatus } : i,
+        ),
       );
       refetch();
-      toast({ title: "Success", description: `${label} status updated successfully` });
+      toast({
+        title: "Success",
+        description: `${label} status updated successfully`,
+      });
     } catch (error) {
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to update status",
+        description:
+          error instanceof Error ? error.message : "Failed to update status",
         variant: "destructive",
       });
     } finally {

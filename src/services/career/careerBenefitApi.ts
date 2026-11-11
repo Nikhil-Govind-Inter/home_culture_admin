@@ -78,7 +78,10 @@ export const fetchCareerBenefitById = async (
 export const createCareerBenefit = async (
   formData: FormData,
 ): Promise<{ data: CareerBenefit }> => {
-  const response = await apiFetch(CAREER_BENEFITS_URL, { method: "POST", body: formData });
+  const response = await apiFetch(CAREER_BENEFITS_URL, {
+    method: "POST",
+    body: formData,
+  });
   return parseEnvelope<CareerBenefit>(response);
 };
 
@@ -94,19 +97,27 @@ export const updateCareerBenefit = async (
 };
 
 export const deleteCareerBenefit = async (id: number): Promise<void> => {
-  const response = await apiFetch(`${CAREER_BENEFITS_URL}/${id}`, { method: "DELETE" });
+  const response = await apiFetch(`${CAREER_BENEFITS_URL}/${id}`, {
+    method: "DELETE",
+  });
   await parseEnvelope<{ id: string }>(response);
 };
 
 // Partial update used by the list-page switch: only `status` is sent.
-export const toggleCareerBenefitStatus = (item: { id?: number }, isActive: boolean) => {
+export const toggleCareerBenefitStatus = (
+  item: { id?: number },
+  isActive: boolean,
+) => {
   const formData = new FormData();
   formData.append("status", String(isActive));
   return updateCareerBenefit(item.id!, formData);
 };
 
 // Partial update used by the list-page stepper: only `sort_order` is sent.
-export const updateCareerBenefitSortOrder = (item: { id?: number }, sortOrder: number) => {
+export const updateCareerBenefitSortOrder = (
+  item: { id?: number },
+  sortOrder: number,
+) => {
   const formData = new FormData();
   formData.append("sort_order", String(Math.max(1, sortOrder)));
   return updateCareerBenefit(item.id!, formData);

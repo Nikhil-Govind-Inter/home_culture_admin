@@ -32,6 +32,14 @@ const CareerVisionList = React.lazy(() => import("./pages/career/CareerVisionLis
 const CareerVisionForm = React.lazy(() => import("./pages/career/CareerVisionForm"));
 const CareerBenefitList = React.lazy(() => import("./pages/career/CareerBenefitList"));
 const CareerBenefitForm = React.lazy(() => import("./pages/career/CareerBenefitForm"));
+const StateList = React.lazy(() => import("./pages/masters/StateList"));
+const StateForm = React.lazy(() => import("./pages/masters/StateForm"));
+const CityList = React.lazy(() => import("./pages/masters/CityList"));
+const CityForm = React.lazy(() => import("./pages/masters/CityForm"));
+const DepartmentList = React.lazy(() => import("./pages/career/DepartmentList"));
+const DepartmentForm = React.lazy(() => import("./pages/career/DepartmentForm"));
+const JobList = React.lazy(() => import("./pages/career/JobList"));
+const JobForm = React.lazy(() => import("./pages/career/JobForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
@@ -130,6 +138,20 @@ const App = () => (
                 <Route path="/career-benefits" element={<CareerBenefitList />} />
                 <Route path="/career-benefits/new" element={<CareerBenefitForm />} />
                 <Route path="/career-benefits/:id/edit" element={<CareerBenefitForm />} />
+                <Route path="/departments" element={<DepartmentList />} />
+                <Route path="/departments/new" element={<DepartmentForm />} />
+                <Route path="/departments/:slug/edit" element={<DepartmentForm />} />
+                <Route path="/jobs" element={<JobList />} />
+                <Route path="/jobs/new" element={<JobForm />} />
+                <Route path="/jobs/:slug/edit" element={<JobForm />} />
+
+                {/* Masters */}
+                <Route path="/states" element={<StateList />} />
+                <Route path="/states/new" element={<StateForm />} />
+                <Route path="/states/:slug/edit" element={<StateForm />} />
+                <Route path="/cities" element={<CityList />} />
+                <Route path="/cities/new" element={<CityForm />} />
+                <Route path="/cities/:slug/edit" element={<CityForm />} />
 
                 {/* Contact CMS */}
                 <Route path="/contact-cms" element={<ContactCmsForm />} />

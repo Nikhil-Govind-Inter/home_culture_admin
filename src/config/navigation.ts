@@ -29,6 +29,9 @@ import {
   Briefcase,
   Eye,
   Gift,
+  Building2,
+  Map,
+  Landmark,
 } from "lucide-react";
 
 /**
@@ -118,6 +121,8 @@ export const NAV: NavSection[] = [
               { title: "Page Content", url: "/career-cms", icon: Briefcase },
               { title: "Vision", url: "/career-visions", icon: Eye },
               { title: "Benefits", url: "/career-benefits", icon: Gift },
+              { title: "Departments", url: "/departments", icon: Building2 },
+              { title: "Jobs", url: "/jobs", icon: Briefcase },
             ],
           },
           {
@@ -152,6 +157,15 @@ export const NAV: NavSection[] = [
           { title: "Page Content", url: "/blog-cms", icon: LayoutTemplate },
           { title: "Categories", url: "/blog-categories", icon: Tags },
           { title: "Blogs", url: "/blogs", icon: Newspaper },
+        ],
+      },
+      {
+        id: "masters",
+        title: "Masters",
+        icon: Landmark,
+        items: [
+          { title: "States", url: "/states", icon: Map },
+          { title: "Cities", url: "/cities", icon: MapPin },
         ],
       },
       {

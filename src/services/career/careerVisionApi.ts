@@ -74,7 +74,11 @@ export const fetchCareerVisionById = async (
   return parseEnvelope<CareerVision>(response);
 };
 
-const jsonRequest = (method: "POST" | "PUT", url: string, body: Partial<CareerVision>) =>
+const jsonRequest = (
+  method: "POST" | "PUT",
+  url: string,
+  body: Partial<CareerVision>,
+) =>
   apiFetch(url, {
     method,
     headers: { "Content-Type": "application/json" },
@@ -92,19 +96,29 @@ export const updateCareerVision = async (
   id: number,
   payload: Partial<CareerVision>,
 ): Promise<{ data: CareerVision }> => {
-  const response = await jsonRequest("PUT", `${CAREER_VISIONS_URL}/${id}`, payload);
+  const response = await jsonRequest(
+    "PUT",
+    `${CAREER_VISIONS_URL}/${id}`,
+    payload,
+  );
   return parseEnvelope<CareerVision>(response);
 };
 
 export const deleteCareerVision = async (id: number): Promise<void> => {
-  const response = await apiFetch(`${CAREER_VISIONS_URL}/${id}`, { method: "DELETE" });
+  const response = await apiFetch(`${CAREER_VISIONS_URL}/${id}`, {
+    method: "DELETE",
+  });
   await parseEnvelope<{ id: string }>(response);
 };
 
 // Partial update used by the list-page switch: only `status` is sent.
-export const toggleCareerVisionStatus = (item: { id?: number }, isActive: boolean) =>
-  updateCareerVision(item.id!, { status: isActive });
+export const toggleCareerVisionStatus = (
+  item: { id?: number },
+  isActive: boolean,
+) => updateCareerVision(item.id!, { status: isActive });
 
 // Partial update used by the list-page stepper: only `sort_order` is sent.
-export const updateCareerVisionSortOrder = (item: { id?: number }, sortOrder: number) =>
-  updateCareerVision(item.id!, { sort_order: Math.max(1, sortOrder) });
+export const updateCareerVisionSortOrder = (
+  item: { id?: number },
+  sortOrder: number,
+) => updateCareerVision(item.id!, { sort_order: Math.max(1, sortOrder) });

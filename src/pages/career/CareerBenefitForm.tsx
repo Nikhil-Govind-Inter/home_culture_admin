@@ -160,7 +160,7 @@ export default function CareerBenefitForm() {
                 placeholder="Upload SVG image"
                 accept="image/svg+xml"
                 typeError="Only SVG images are allowed"
-                recommendedDimensions="SVG only"
+                recommendedDimensions="40x40px"
               />
               <FormTextField form={form} name="title" label="Title" placeholder="Title" />
               <FormTextareaField form={form} name="description" label="Description" placeholder="Description" rows={5} />
