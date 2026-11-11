@@ -35,7 +35,7 @@ import {
   type NavItem,
 } from "@/config/navigation";
 
-const Logo = "/logo.png";
+const Logo = "/home-culture-logo.svg";
 
 type Loc = { pathname: string; search: string };
 
