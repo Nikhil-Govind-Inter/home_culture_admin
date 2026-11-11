@@ -31,6 +31,7 @@ import {
   experienceHighlightSchema,
   ExperienceHighlightFormData,
 } from "@/schemas/experience/experienceHighlightSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function ExperienceHighlightForm() {
   const { toast } = useToast();
@@ -201,7 +202,7 @@ export default function ExperienceHighlightForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -213,7 +214,7 @@ export default function ExperienceHighlightForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

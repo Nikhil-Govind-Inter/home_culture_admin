@@ -29,6 +29,7 @@ import {
   departmentSchema,
   DepartmentFormData,
 } from "@/schemas/career/departmentSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function DepartmentForm() {
   const { toast } = useToast();
@@ -228,7 +229,7 @@ export default function DepartmentForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -240,7 +241,7 @@ export default function DepartmentForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

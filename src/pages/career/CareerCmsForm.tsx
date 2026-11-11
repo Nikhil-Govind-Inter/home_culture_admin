@@ -16,6 +16,7 @@ import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { careerCmsSchema, CareerCmsFormData } from "@/schemas/career/careerCmsSchema";
 import { fetchCareerCms, saveCareerCms, ApiError } from "@/services/career/careerCmsApi";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 // Text fields sent as plain strings
 const TEXT_FIELDS = [
@@ -393,12 +394,12 @@ export default function CareerCmsForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : "Save"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

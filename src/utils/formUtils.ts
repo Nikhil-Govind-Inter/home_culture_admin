@@ -26,7 +26,7 @@ const stringValidations = {
       .min(1, `${fieldName} is required`)
       .max(maxLength, `${fieldName} must be ${maxLength} characters or less`),
 
-  optionalString: z.string().optional(),
+  optionalString: z.string().max(255, "Must be 255 characters or less").optional(),
 
   requiredText: (fieldName: string) =>
     z.string().min(1, `${fieldName} is required`),

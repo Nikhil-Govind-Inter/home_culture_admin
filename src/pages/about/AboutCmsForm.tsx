@@ -20,6 +20,7 @@ import {
   saveAboutCms,
   ApiError,
 } from "@/services/about/aboutCmsApi";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 // Text fields sent as plain strings
 const TEXT_FIELDS = [
@@ -510,12 +511,12 @@ export default function AboutCmsForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : "Save"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

@@ -18,6 +18,7 @@ import {
   ApiError,
 } from "@/services/siteSettings/metaDataApi";
 import { metaDataSchema, MetaDataFormData } from "@/schemas/siteSettings/metaDataSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 // Meta data are fixed per-page records, so this form only edits an existing one.
 export default function MetaDataForm() {
@@ -151,7 +152,7 @@ export default function MetaDataForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button type="button" variant="outline" onClick={() => navigate("/meta-data")}>
               Cancel
             </Button>
@@ -159,7 +160,7 @@ export default function MetaDataForm() {
               <Save className="h-4 w-4 mr-2" />
               Update
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

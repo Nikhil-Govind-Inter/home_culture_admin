@@ -32,6 +32,7 @@ import {
   testimonialSchema,
   TestimonialFormData,
 } from "@/schemas/howItWorks/testimonialSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function TestimonialForm() {
   const { toast } = useToast();
@@ -222,7 +223,7 @@ export default function TestimonialForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -234,7 +235,7 @@ export default function TestimonialForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

@@ -18,6 +18,7 @@ import {
   saveSiteSettings,
   ApiError,
 } from "@/services/siteSettings/siteSettingsApi";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 const TEXT_FIELDS = [
   "header_logo_alt",
@@ -204,12 +205,12 @@ export default function SiteSettingsForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               Save
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

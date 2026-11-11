@@ -43,6 +43,18 @@ const JobForm = React.lazy(() => import("./pages/career/JobForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const HomeCmsForm = React.lazy(() => import("./pages/home/HomeCmsForm"));
+const HomeBannerList = React.lazy(() => import("./pages/home/HomeBannerList"));
+const HomeBannerForm = React.lazy(() => import("./pages/home/HomeBannerForm"));
+const HomeHighlightList = React.lazy(() => import("./pages/home/HomeHighlightList"));
+const HomeHighlightForm = React.lazy(() => import("./pages/home/HomeHighlightForm"));
+const HomeExperienceList = React.lazy(() => import("./pages/home/HomeExperienceList"));
+const HomeExperienceForm = React.lazy(() => import("./pages/home/HomeExperienceForm"));
+const HomeBrokenProcessList = React.lazy(() => import("./pages/home/HomeBrokenProcessList"));
+const HomeBrokenProcessForm = React.lazy(() => import("./pages/home/HomeBrokenProcessForm"));
+const HomeProcessStepList = React.lazy(() => import("./pages/home/HomeProcessStepList"));
+const HomeProcessStepForm = React.lazy(() => import("./pages/home/HomeProcessStepForm"));
+const HomeSimplyChooseList = React.lazy(() => import("./pages/home/HomeSimplyChooseList"));
+const HomeSimplyChooseForm = React.lazy(() => import("./pages/home/HomeSimplyChooseForm"));
 const AboutCmsForm = React.lazy(() => import("./pages/about/AboutCmsForm"));
 const AboutHighlightsList = React.lazy(() => import("./pages/about/AboutHighlightsList"));
 const AboutHighlightForm = React.lazy(() => import("./pages/about/AboutHighlightForm"));
@@ -162,6 +174,24 @@ const App = () => (
 
                 {/* Home CMS */}
                 <Route path="/home-cms" element={<HomeCmsForm />} />
+                <Route path="/home-banners" element={<HomeBannerList />} />
+                <Route path="/home-banners/new" element={<HomeBannerForm />} />
+                <Route path="/home-banners/:id/edit" element={<HomeBannerForm />} />
+                <Route path="/home-highlights" element={<HomeHighlightList />} />
+                <Route path="/home-highlights/new" element={<HomeHighlightForm />} />
+                <Route path="/home-highlights/:id/edit" element={<HomeHighlightForm />} />
+                <Route path="/home-experiences" element={<HomeExperienceList />} />
+                <Route path="/home-experiences/new" element={<HomeExperienceForm />} />
+                <Route path="/home-experiences/:id/edit" element={<HomeExperienceForm />} />
+                <Route path="/home-broken-processes" element={<HomeBrokenProcessList />} />
+                <Route path="/home-broken-processes/new" element={<HomeBrokenProcessForm />} />
+                <Route path="/home-broken-processes/:id/edit" element={<HomeBrokenProcessForm />} />
+                <Route path="/home-process-steps" element={<HomeProcessStepList />} />
+                <Route path="/home-process-steps/new" element={<HomeProcessStepForm />} />
+                <Route path="/home-process-steps/:id/edit" element={<HomeProcessStepForm />} />
+                <Route path="/home-simply-choose" element={<HomeSimplyChooseList />} />
+                <Route path="/home-simply-choose/new" element={<HomeSimplyChooseForm />} />
+                <Route path="/home-simply-choose/:id/edit" element={<HomeSimplyChooseForm />} />
 
                 {/* About CMS */}
                 <Route path="/about-cms" element={<AboutCmsForm />} />

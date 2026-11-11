@@ -31,6 +31,7 @@ import {
   bookingProcessSchema,
   BookingProcessFormData,
 } from "@/schemas/experience/bookingProcessSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function BookingProcessForm() {
   const { toast } = useToast();
@@ -201,7 +202,7 @@ export default function BookingProcessForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -213,7 +214,7 @@ export default function BookingProcessForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

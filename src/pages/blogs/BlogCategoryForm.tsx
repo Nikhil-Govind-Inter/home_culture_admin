@@ -29,6 +29,7 @@ import {
   blogCategorySchema,
   BlogCategoryFormData,
 } from "@/schemas/blogs/blogCategorySchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function BlogCategoryForm() {
   const { toast } = useToast();
@@ -230,7 +231,7 @@ export default function BlogCategoryForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -242,7 +243,7 @@ export default function BlogCategoryForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

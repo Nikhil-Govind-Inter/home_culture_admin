@@ -26,6 +26,7 @@ import {
   updateState,
 } from "@/services/masters/stateApi";
 import { stateSchema, StateFormData } from "@/schemas/masters/stateSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function StateForm() {
   const { toast } = useToast();
@@ -225,7 +226,7 @@ export default function StateForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -237,7 +238,7 @@ export default function StateForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

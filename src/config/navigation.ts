@@ -33,6 +33,9 @@ import {
   Building2,
   Map,
   Landmark,
+  Unlink,
+  ListOrdered,
+  CheckCircle2,
 } from "lucide-react";
 
 /**
@@ -83,7 +86,15 @@ export const NAV: NavSection[] = [
             id: "home",
             title: "Home",
             icon: Home,
-            items: [{ title: "Page Content", url: "/home-cms", icon: Home }],
+            items: [
+              { title: "Page Content", url: "/home-cms", icon: Home },
+              { title: "Banners", url: "/home-banners", icon: Image },
+              { title: "Broken Process", url: "/home-broken-processes", icon: Unlink },
+              { title: "Simply Choose", url: "/home-simply-choose", icon: CheckCircle2 },
+              { title: "Highlights", url: "/home-highlights", icon: Star },
+              { title: "Process Steps", url: "/home-process-steps", icon: ListOrdered },
+              { title: "Experiences", url: "/home-experiences", icon: Compass },
+            ],
           },
           {
             id: "about",

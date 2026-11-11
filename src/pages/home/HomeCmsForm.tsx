@@ -17,6 +17,7 @@ import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { homeCmsSchema, homeCmsConditionalErrors, HomeCmsFormData } from "@/schemas/home/homeCmsSchema";
 import { fetchHomeCms, saveHomeCms, ApiError } from "@/services/home/homeCmsApi";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 // Text fields sent as plain strings
 const TEXT_FIELDS = [
@@ -500,12 +501,12 @@ export default function HomeCmsForm() {
             />
           </Section>
 
-          <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : "Save"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

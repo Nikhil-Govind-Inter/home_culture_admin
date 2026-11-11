@@ -23,6 +23,7 @@ import {
   savePrivacyPolicy,
   ApiError,
 } from "@/services/privacyPolicy/privacyPolicyApi";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 const TEXT_FIELDS = [
   "content_section_side_title",
@@ -223,12 +224,12 @@ export default function PrivacyPolicyForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : "Save"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

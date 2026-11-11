@@ -20,6 +20,7 @@ import {
   ApiError,
 } from "@/services/siteSettings/bannerApi";
 import { bannerSchema, BannerFormData, IMAGELESS_BANNER_SLUGS } from "@/schemas/siteSettings/bannerSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 const TEXT_FIELDS = [
   "page_slug",
@@ -207,7 +208,7 @@ export default function BannersForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button type="button" variant="outline" onClick={() => navigate("/banners")}>
               Cancel
             </Button>
@@ -215,7 +216,7 @@ export default function BannersForm() {
               <Save className="h-4 w-4 mr-2" />
               Update
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

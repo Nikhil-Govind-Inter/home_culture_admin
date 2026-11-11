@@ -32,6 +32,7 @@ import {
 import { fetchActiveStates, State } from "@/services/masters/stateApi";
 import { fetchActiveCities, City } from "@/services/masters/cityApi";
 import { jobSchema, JobFormData } from "@/schemas/career/jobSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function JobForm() {
   const { toast } = useToast();
@@ -309,7 +310,7 @@ export default function JobForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -321,7 +322,7 @@ export default function JobForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

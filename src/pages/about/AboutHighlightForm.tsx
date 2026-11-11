@@ -32,6 +32,7 @@ import {
   aboutHighlightSchema,
   AboutHighlightFormData,
 } from "@/schemas/about/aboutHighlightSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function AboutHighlightForm() {
   const { toast } = useToast();
@@ -231,7 +232,7 @@ export default function AboutHighlightForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -243,7 +244,7 @@ export default function AboutHighlightForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

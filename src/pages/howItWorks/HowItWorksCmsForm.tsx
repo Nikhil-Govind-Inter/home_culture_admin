@@ -14,6 +14,7 @@ import {
 } from "@/components/forms/FormFieldComponents";
 import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 import {
   howItWorksCmsSchema,
   HowItWorksCmsFormData,
@@ -266,12 +267,12 @@ export default function HowItWorksCmsForm() {
             </CardContent>
           </Card>
 
-      <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : "Save"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

@@ -10,6 +10,7 @@ import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { contactCmsSchema, ContactCmsFormData } from "@/schemas/contact/contactCmsSchema";
 import { fetchContactCms, saveContactCms, ApiError, type ContactCms } from "@/services/contact/contactCmsApi";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 const defaultValues: ContactCmsFormData = {
   form_section_status: true,
@@ -130,12 +131,12 @@ export default function ContactCmsForm() {
               </div>
             </CardContent>
           </Card>
-          <div className="flex justify-end">
+          <StickyFormActions>
             <Button type="submit" disabled={loading}>
               <Save className="h-4 w-4 mr-2" />
               Save
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

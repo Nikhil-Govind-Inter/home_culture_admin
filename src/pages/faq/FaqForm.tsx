@@ -29,6 +29,7 @@ import { Save, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { fetchFaqById, createFaq, updateFaq } from "@/services/faq/faqApi";
 import { faqSchema, FaqFormData } from "@/schemas/faq/faqSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function FaqForm() {
   const { toast } = useToast();
@@ -224,7 +225,7 @@ export default function FaqForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -236,7 +237,7 @@ export default function FaqForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

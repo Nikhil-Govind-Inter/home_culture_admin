@@ -30,6 +30,7 @@ import {
 } from "@/services/masters/cityApi";
 import { fetchActiveStates, State } from "@/services/masters/stateApi";
 import { citySchema, CityFormData } from "@/schemas/masters/citySchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function CityForm() {
   const { toast } = useToast();
@@ -250,7 +251,7 @@ export default function CityForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -262,7 +263,7 @@ export default function CityForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>

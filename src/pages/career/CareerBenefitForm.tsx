@@ -32,6 +32,7 @@ import {
   careerBenefitSchema,
   CareerBenefitFormData,
 } from "@/schemas/career/careerBenefitSchema";
+import { StickyFormActions } from "@/components/forms/StickyFormActions";
 
 export default function CareerBenefitForm() {
   const { toast } = useToast();
@@ -215,7 +216,7 @@ export default function CareerBenefitForm() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-end gap-4">
+          <StickyFormActions>
             <Button
               type="button"
               variant="outline"
@@ -227,7 +228,7 @@ export default function CareerBenefitForm() {
               <Save className="h-4 w-4 mr-2" />
               {loading ? "Saving..." : isEditing ? "Update" : "Create"}
             </Button>
-          </div>
+          </StickyFormActions>
         </form>
       </Form>
     </div>
