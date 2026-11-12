@@ -1,3 +1,4 @@
+import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 
 const Index = () => {
@@ -9,6 +10,7 @@ const Index = () => {
           Welcome back! Manage your Home Culture content.
         </p>
       </div>
+      <DashboardStats />
       <QuickActions />
     </div>
   );

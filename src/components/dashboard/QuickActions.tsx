@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import type { LucideIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -7,62 +8,77 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Image, Info, Share2, Newspaper, Phone, Settings } from "lucide-react";
+import { NAV, isNavGroup, type NavGroup } from "@/config/navigation";
 
-const quickActions = [
-  { title: "Blogs", description: "Manage blog posts", icon: Newspaper, href: "/blogs", variant: "outline" as const },
-  { title: "Contact CMS", description: "Edit the contact page content", icon: Phone, href: "/contact-cms", variant: "outline" as const },
-  { title: "Site Settings", description: "Edit logos, header button and contact details", icon: Settings, href: "/site-settings", variant: "outline" as const },
-  {
-    title: "Banners",
-    description: "Manage banners",
-    icon: Image,
-    href: "/banners",
-    variant: "gradient" as const,
-  },
-  {
-    title: "About CMS",
-    description: "Edit the about page content",
-    icon: Info,
-    href: "/about-cms",
-    variant: "default" as const,
-  },
-  {
-    title: "Social Media",
-    description: "Manage social media links",
-    icon: Share2,
-    href: "/social-media",
-    variant: "outline" as const,
-  },
-];
+interface Link_ {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+}
+
+/** Only the CMS ("Page Content") entries are shown as quick actions. */
+const CMS_ITEM_TITLE = "Page Content";
+
+/** Flatten a group (and its sub-groups) into labelled links, e.g. "Home · Banners". */
+const collectLinks = (group: NavGroup, prefix = ""): Link_[] => {
+  const label = prefix ? `${prefix} · ${group.title}` : group.title;
+  const items = group.items ?? [];
+  const own = items
+    .filter((item) => item.title === CMS_ITEM_TITLE)
+    .map((item) => ({
+      title: items.length === 1 ? label : `${label} · ${item.title}`,
+      url: item.url,
+      icon: item.icon,
+    }));
+  const nested = (group.children ?? []).flatMap((child) =>
+    collectLinks(child, group.id === "pages" ? "" : label),
+  );
+  return [...nested, ...own];
+};
+
+const sections = NAV.filter((s) => s.id !== "overview").map((section) => ({
+  id: section.id,
+  label: section.label,
+  links: section.entries.flatMap((entry) =>
+    isNavGroup(entry)
+      ? collectLinks(entry)
+      : [],
+  ),
+})).filter((section) => section.links.length > 0);
 
 export function QuickActions() {
   return (
     <Card className="shadow-healthcare-sm">
       <CardHeader>
         <CardTitle className="text-lg">Quick Actions</CardTitle>
-        <CardDescription>Frequently used tasks and shortcuts</CardDescription>
+        <CardDescription>Jump straight to any section</CardDescription>
       </CardHeader>
-      <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {quickActions.map((action) => {
-          const IconComponent = action.icon;
-          return (
-            <Button
-              key={action.title}
-              variant={action.variant}
-              className="h-auto p-4 flex flex-col items-start space-y-2 text-left"
-              asChild
-            >
-              <Link to={action.href}>
-                <div className="flex items-center space-x-2">
-                  <IconComponent className="h-4 w-4" />
-                  <span className="font-medium">{action.title}</span>
-                </div>
-                <span className="text-xs opacity-80">{action.description}</span>
-              </Link>
-            </Button>
-          );
-        })}
+      <CardContent className="space-y-6">
+        {sections.map((section) => (
+          <div key={section.id} className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {section.label}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {section.links.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Button
+                    key={link.url}
+                    variant="outline"
+                    className="h-auto justify-start gap-2 px-3 py-2 text-left"
+                    asChild
+                  >
+                    <Link to={link.url}>
+                      <Icon className="h-4 w-4 flex-shrink-0" />
+                      <span className="font-medium">{link.title}</span>
+                    </Link>
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </CardContent>
     </Card>
   );
