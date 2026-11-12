@@ -9,6 +9,7 @@ export const productSchema = z.object({
   media_alt: commonValidations.requiredString("Image Alt Text"),
   title: commonValidations.requiredString("Title"),
   slug: commonValidations.requiredString("Slug"),
+  excerpt: commonValidations.requiredString("Excerpt"),
   header_title: commonValidations.requiredString("Header Title"),
   description: commonValidations.requiredString("Description"),
   button_text: commonValidations.requiredString("Button Text"),

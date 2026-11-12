@@ -31,6 +31,7 @@ export interface Product {
   media_alt: string;
   slug?: string;
   title: string;
+  excerpt?: string;
   header_title: string;
   description: string;
   button_text: string;
