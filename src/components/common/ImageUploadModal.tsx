@@ -66,17 +66,6 @@ export function ImageUploadModal({ isOpen, onClose, onInsertImage }: ImageUpload
     return hasValidSrc && altText.trim();
   };
 
-  const getPreviewSrc = () => {
-    if (activeTab === "upload" && uploadedFile) {
-      return URL.createObjectURL(uploadedFile);
-    } else if (activeTab === "url" && imageUrl.trim()) {
-      return imageUrl.trim();
-    }
-    return null;
-  };
-
-  const previewSrc = getPreviewSrc();
-
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl">
@@ -121,23 +110,6 @@ export function ImageUploadModal({ isOpen, onClose, onInsertImage }: ImageUpload
               </div>
             </TabsContent>
           </Tabs>
-
-          {/* Preview */}
-          {previewSrc && (
-            <div className="space-y-2">
-              <Label>Preview</Label>
-              <div className="border rounded-md p-4 bg-muted/50">
-                <img
-                  src={previewSrc}
-                  alt={altText || "Preview"}
-                  className="max-w-full h-auto max-h-48 rounded border"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
-            </div>
-          )}
 
           {/* Alt Text - Required */}
           <div>

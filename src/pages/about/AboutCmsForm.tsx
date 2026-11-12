@@ -300,12 +300,11 @@ export default function AboutCmsForm() {
                   recommendedDimensions="64×64px"
                 />
               </div>
-              <FormTextareaField
+              <FormRichTextField
                 form={form}
                 name="mission_description"
                 label="Description"
                 placeholder="Description"
-                rows={6}
               />
             </CardContent>
           </Card>
@@ -331,12 +330,11 @@ export default function AboutCmsForm() {
                   recommendedDimensions="64×64px"
                 />
               </div>
-              <FormTextareaField
+              <FormRichTextField
                 form={form}
                 name="vision_description"
                 label="Description"
                 placeholder="Description"
-                rows={6}
               />
             </CardContent>
           </Card>

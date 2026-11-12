@@ -150,7 +150,7 @@ export default function Login() {
           </form>
 
           <p className="text-center text-xs text-muted-foreground lg:hidden">
-            © {new Date().getFullYear()} Onom. All rights reserved.
+            © {new Date().getFullYear()} On&#333;m. All rights reserved.
           </p>
         </div>
       </main>

@@ -166,10 +166,12 @@ export default function ProductTrimForm() {
                 accept="image/*"
                 recommendedDimensions="800×600px"
               />
-              <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />
-              <FormTextField form={form} name="title" label="Title" placeholder="Title" />
-              <FormTextField form={form} name="slug" label="Slug" placeholder="Auto-generated from the title" />
-              <FormTextField form={form} name="description" label="Description" placeholder="Description" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />
+                <FormTextField form={form} name="title" label="Title" placeholder="Title" />
+                <FormTextField form={form} name="slug" label="Slug" disabled placeholder="Auto-generated from the title" />
+                <FormTextField form={form} name="description" label="Description" placeholder="Description" />
+              </div>
             </CardContent>
           </Card>
 

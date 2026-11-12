@@ -53,7 +53,7 @@ export default function ProductAddOnForm() {
   // The slug follows the subtitle (it can still be edited afterwards; the next change rewrites it).
   useEffect(() => {
     const subscription = form.watch((values, { name }) => {
-      if (name === "subtitle") form.setValue("slug", generateSlug(values.subtitle ?? ""));
+      if (name === "title") form.setValue("slug", generateSlug(values.title ?? ""));
     });
     return () => subscription.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -166,10 +166,12 @@ export default function ProductAddOnForm() {
                 accept="image/*"
                 recommendedDimensions="800×600px"
               />
-              <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />
-              <FormTextField form={form} name="title" label="Title" placeholder="Title" />
-              <FormTextField form={form} name="subtitle" label="Subtitle" placeholder="Subtitle" />
-              <FormTextField form={form} name="slug" label="Slug" placeholder="Auto-generated from the subtitle" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />
+                <FormTextField form={form} name="title" label="Title" placeholder="Title" />
+                <FormTextField form={form} name="subtitle" label="Subtitle" placeholder="Subtitle" />
+                <FormTextField form={form} name="slug" label="Slug" disabled placeholder="Auto-generated from the subtitle" />
+              </div>
             </CardContent>
           </Card>
 

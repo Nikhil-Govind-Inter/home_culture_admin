@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, Extension } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Image } from "@tiptap/extension-image";
 import { Link } from "@tiptap/extension-link";
@@ -25,6 +25,7 @@ import {
   Undo,
   Redo,
   Type,
+  Heading1,
   Heading2,
   Heading3,
   Image as ImageIcon,
@@ -35,6 +36,20 @@ import {
 import { cn } from "@/lib/utils";
 import { IconSelector } from "./IconSelector";
 import { ImageUploadModal } from "./ImageUploadModal";
+
+// Enter inserts a <br> line break instead of starting a new paragraph/heading (lists keep their normal Enter behaviour).
+const EnterInsertsLineBreak = Extension.create({
+  name: "enterInsertsLineBreak",
+  priority: 1000,
+  addKeyboardShortcuts() {
+    return {
+      Enter: ({ editor }) => {
+        if (editor.isActive("listItem")) return false;
+        return editor.commands.setHardBreak();
+      },
+    };
+  },
+});
 
 interface RichTextEditorProps {
   label?: string;
@@ -86,6 +101,7 @@ export function RichTextEditor({
       }),
       TextStyle,
       Color,
+      EnterInsertsLineBreak,
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -107,6 +123,10 @@ export function RichTextEditor({
         class: cn(
           "prose prose-sm max-w-none focus:outline-none p-3",
           "[&_ul]:list-disc [&_ol]:list-decimal [&_ul]:ps-5 [&_ol]:ps-5 [&_blockquote]:border-s-4 [&_blockquote]:ps-4 [&_blockquote]:italic",
+          "[&_h1]:text-3xl [&_h1]:font-bold [&_h1]:mt-4 [&_h1]:mb-3",
+          "[&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2",
+          "[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-3 [&_h3]:mb-2",
+          "[&_p]:text-base",
           "prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground",
           "prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground",
           "prose-blockquote:text-muted-foreground prose-blockquote:border-border",
@@ -147,15 +167,9 @@ export function RichTextEditor({
     }
   }, [value, editor]);
 
-  const handleIconSelect = (iconName: string, iconSvg: string) => {
+  const handleIconSelect = (emoji: string) => {
     if (editor) {
-      const iconHtml = `<span class="inline-flex items-center justify-center w-4 h-4 mx-1" data-icon="${iconName}" title="${iconName}">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <!-- ${iconName} icon placeholder -->
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
-      </span>`;
-      editor.chain().focus().insertContent(iconHtml).run();
+      editor.chain().focus().insertContent(emoji).run();
     }
   };
 
@@ -324,6 +338,13 @@ export function RichTextEditor({
             <Separator orientation="vertical" className="mx-1 h-8" />
 
             {/* Headings */}
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+              isActive={editor.isActive("heading", { level: 1 })}
+            >
+              <Heading1 className="h-4 w-4" />
+            </ToolbarButton>
+
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
               isActive={editor.isActive("heading", { level: 2 })}

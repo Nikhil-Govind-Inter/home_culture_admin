@@ -50,10 +50,16 @@ export default function ProductSizeForm() {
     },
   });
 
-  // The slug follows the title (it can still be edited afterwards; the next change rewrites it).
+  // The slug follows "title-size" (it can still be edited afterwards; the next change rewrites it).
   useEffect(() => {
     const subscription = form.watch((values, { name }) => {
-      if (name === "title") form.setValue("slug", generateSlug(values.title ?? ""));
+      if (name === "title" || name === "size") {
+        const combined = [values.title, values.size]
+          .map((v) => (v ?? "").toString().trim())
+          .filter(Boolean)
+          .join(" ");
+        form.setValue("slug", generateSlug(combined));
+      }
     });
     return () => subscription.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -166,10 +172,12 @@ export default function ProductSizeForm() {
                 accept="image/*"
                 recommendedDimensions="800×600px"
               />
-              <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />
-              <FormTextField form={form} name="title" label="Title" placeholder="Title" />
-              <FormTextField form={form} name="slug" label="Slug" placeholder="Auto-generated from the title" />
-              <FormNumberField form={form} name="size" label="Size" placeholder="Size" min={1} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />
+                <FormTextField form={form} name="title" label="Title" placeholder="Title" />
+                <FormNumberField form={form} name="size" label="Size" placeholder="Size" min={1} />
+                <FormTextField form={form} name="slug" label="Slug" disabled placeholder="Auto-generated from the title and size" />
+              </div>
             </CardContent>
           </Card>
 
