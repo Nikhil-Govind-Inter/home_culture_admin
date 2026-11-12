@@ -64,12 +64,12 @@ export function MultiSelect({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "w-full justify-between min-h-[40px] h-auto",
+            "w-full justify-between min-h-[40px] h-auto font-normal text-left",
             className
           )}
           disabled={disabled}
         >
-          <div className="flex gap-1 flex-wrap">
+          <div className="flex gap-1 flex-wrap flex-1 min-w-0">
             {selectedOptions.length > 0 ? (
               selectedOptions.map((option) => (
                 <Badge
@@ -109,10 +109,13 @@ export function MultiSelect({
           <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
+      <PopoverContent
+        className="w-[var(--radix-popover-trigger-width)] min-w-[var(--radix-popover-trigger-width)] p-0"
+        align="start"
+      >
         <Command>
           <CommandInput placeholder="Search options..." />
-          <CommandList>
+          <CommandList className="max-h-60">
             <CommandEmpty>No options found.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => (
@@ -126,7 +129,7 @@ export function MultiSelect({
                       selected.includes(option.id) ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {option.name}
+                  <span className="truncate">{option.name}</span>
                 </CommandItem>
               ))}
             </CommandGroup>

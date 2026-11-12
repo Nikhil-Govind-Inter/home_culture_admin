@@ -5,6 +5,7 @@ export const productSizeSchema = z.object({
   media_path: commonValidations.requiredFile("Image"),
   media_alt: commonValidations.requiredString("Image Alt Text"),
   title: commonValidations.requiredString("Title"),
+  slug: commonValidations.requiredString("Slug"),
   size: z
     .string()
     .min(1, "Size is required")

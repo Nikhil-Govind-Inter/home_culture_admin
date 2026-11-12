@@ -105,6 +105,13 @@ export default function ProductSizeList() {
       ),
     },
     {
+      accessorKey: "slug",
+      header: "Slug",
+      cell: ({ row }) => (
+        <div className="font-mono text-sm text-muted-foreground">{String(row.getValue("slug") ?? "") || "-"}</div>
+      ),
+    },
+    {
       accessorKey: "sort_order",
       header: "Sort Order",
       cell: ({ row }) => {

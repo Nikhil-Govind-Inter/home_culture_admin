@@ -9,7 +9,7 @@ import {
   FormTextField,
   FormFileUploadField,
   FormSwitchField,
-  FormRichTextField,
+  FormTextareaField,
 } from "@/components/forms/FormFieldComponents";
 import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -140,7 +140,7 @@ export default function ProductCmsForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormTextField form={form} name="product_section_title" label="Title" placeholder="Title" />
-              <FormRichTextField form={form} name="product_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="product_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -151,7 +151,7 @@ export default function ProductCmsForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormTextField form={form} name="style_section_title" label="Title" placeholder="Title" />
-              <FormRichTextField form={form} name="style_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="style_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -162,7 +162,7 @@ export default function ProductCmsForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormTextField form={form} name="trim_section_title" label="Title" placeholder="Title" />
-              <FormRichTextField form={form} name="trim_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="trim_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -173,7 +173,7 @@ export default function ProductCmsForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormTextField form={form} name="size_section_title" label="Title" placeholder="Title" />
-              <FormRichTextField form={form} name="size_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="size_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -184,7 +184,7 @@ export default function ProductCmsForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormTextField form={form} name="add_ons_section_title" label="Title" placeholder="Title" />
-              <FormRichTextField form={form} name="add_ons_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="add_ons_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -195,7 +195,7 @@ export default function ProductCmsForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormTextField form={form} name="summary_section_title" label="Title" placeholder="Title" />
-              <FormRichTextField form={form} name="summary_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="summary_section_description" label="Description" placeholder="Description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField form={form} name="summary_section_media_header_title" label="Image Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="summary_section_media_title" label="Image Title" placeholder="Title" />
@@ -227,7 +227,7 @@ export default function ProductCmsForm() {
                 <FormTextField form={form} name="cta_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="cta_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="cta_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="cta_section_description" label="Description" placeholder="Description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField
                   form={form}

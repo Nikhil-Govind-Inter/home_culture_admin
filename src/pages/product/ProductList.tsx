@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/common/DataTable";
@@ -7,6 +7,9 @@ import SortOrderCell from "@/components/common/SortOrderCell";
 import StatusToggleCell from "@/components/common/StatusToggleCell";
 import RowActionsMenu from "@/components/common/RowActionsMenu";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { RotateCcw } from "lucide-react";
 import {
   fetchProductList,
   deleteProduct,
@@ -14,7 +17,13 @@ import {
   updateProductSortOrder,
   Product,
   ProductRelation,
+  ProductListFilters,
 } from "@/services/product/productApi";
+import { fetchActiveProductStyles } from "@/services/product/productStyleApi";
+import { fetchActiveProductTrims } from "@/services/product/productTrimApi";
+import { fetchActiveProductSizes } from "@/services/product/productSizeApi";
+import { fetchActiveProductAddOns } from "@/services/product/productAddOnApi";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useSortOrder } from "@/hooks/useSortOrder";
 import { useStatusToggle } from "@/hooks/useStatusToggle";
@@ -30,18 +39,78 @@ const RelationCell = ({ items }: { items?: ProductRelation[] }) => {
   return (
     <div className="flex flex-wrap gap-1 max-w-[260px]">
       {items.slice(0, 2).map((item) => (
-        <Badge key={item.id} variant="secondary">
-          {relationName(item)}
-        </Badge>
+        <Tooltip key={item.id} delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Badge variant="secondary" className="block max-w-[130px] truncate whitespace-nowrap">
+              {relationName(item)}
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>{relationName(item)}</TooltipContent>
+        </Tooltip>
       ))}
-      {items.length > 2 && <Badge variant="outline">+{items.length - 2}</Badge>}
+      {items.length > 2 && (
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Badge variant="outline" className="whitespace-nowrap">
+              +{items.length - 2}
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>{items.slice(2).map(relationName).join(", ")}</TooltipContent>
+        </Tooltip>
+      )}
     </div>
   );
 };
 
+interface FilterOption {
+  slug: string;
+  label: string;
+}
+
+const ALL = "all";
+
 export default function ProductList() {
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const [styleFilter, setStyleFilter] = useState(ALL);
+  const [trimFilter, setTrimFilter] = useState(ALL);
+  const [sizeFilter, setSizeFilter] = useState(ALL);
+  const [addOnFilter, setAddOnFilter] = useState(ALL);
+  const [filterOptions, setFilterOptions] = useState<{
+    styles: FilterOption[];
+    trims: FilterOption[];
+    sizes: FilterOption[];
+    addOns: FilterOption[];
+  }>({ styles: [], trims: [], sizes: [], addOns: [] });
+
+  useEffect(() => {
+    Promise.all([
+      fetchActiveProductStyles(),
+      fetchActiveProductTrims(),
+      fetchActiveProductSizes(),
+      fetchActiveProductAddOns(),
+    ])
+      .then(([styles, trims, sizes, addOns]) =>
+        setFilterOptions({
+          styles: styles.map((s) => ({ slug: String(s.slug), label: s.title })),
+          trims: trims.map((t) => ({ slug: String(t.slug), label: t.title })),
+          sizes: sizes.map((s) => ({ slug: String(s.slug), label: `${s.title} (${s.size})` })),
+          addOns: addOns.map((a) => ({ slug: String(a.slug), label: a.title || a.subtitle })),
+        }),
+      )
+      .catch(() =>
+        toast({ title: "Error", description: "Failed to load product filters", variant: "destructive" }),
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const filters: ProductListFilters = {
+    style_slug: styleFilter === ALL ? undefined : styleFilter,
+    trim_slug: trimFilter === ALL ? undefined : trimFilter,
+    size_slug: sizeFilter === ALL ? undefined : sizeFilter,
+    add_ons_slug: addOnFilter === ALL ? undefined : addOnFilter,
+  };
   const {
     items,
     setItems,
@@ -58,7 +127,7 @@ export default function ProductList() {
     loading,
     searching,
     refetch,
-  } = usePaginatedList<Product>(fetchProductList);
+  } = usePaginatedList<Product, ProductListFilters>(fetchProductList, 10, filters);
   const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
 
   const handleSortOrderChange = useSortOrder(items, setItems, updateProductSortOrder);
@@ -112,6 +181,13 @@ export default function ProductList() {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => <div className="font-medium">{(row.getValue("title") as string) || "-"}</div>,
+    },
+    {
+      accessorKey: "slug",
+      header: "Slug",
+      cell: ({ row }) => (
+        <div className="font-mono text-sm text-muted-foreground">{String(row.getValue("slug") ?? "") || "-"}</div>
+      ),
     },
     {
       id: "styles",
@@ -200,6 +276,46 @@ export default function ProductList() {
         searching={searching}
         searchQuery={searchInput}
         onSearchChange={setSearchInput}
+        headerExtra={
+          <div className="flex flex-wrap justify-end gap-2">
+            {(
+              [
+                ["All styles", styleFilter, setStyleFilter, filterOptions.styles],
+                ["All trims", trimFilter, setTrimFilter, filterOptions.trims],
+                ["All sizes", sizeFilter, setSizeFilter, filterOptions.sizes],
+                ["All add-ons", addOnFilter, setAddOnFilter, filterOptions.addOns],
+              ] as const
+            ).map(([placeholder, value, onChange, list]) => (
+              <Select key={placeholder} value={value} onValueChange={onChange}>
+                <SelectTrigger className="w-[140px]">
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={ALL}>{placeholder}</SelectItem>
+                  {list.map((option) => (
+                    <SelectItem key={option.slug} value={option.slug}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ))}
+            <Button
+              type="button"
+              variant="outline"
+              disabled={![styleFilter, trimFilter, sizeFilter, addOnFilter].some((v) => v !== ALL)}
+              onClick={() => {
+                setStyleFilter(ALL);
+                setTrimFilter(ALL);
+                setSizeFilter(ALL);
+                setAddOnFilter(ALL);
+              }}
+            >
+              <RotateCcw className="h-4 w-4 mr-2" />
+              Reset
+            </Button>
+          </div>
+        }
         pagination={{
           currentPage: page,
           totalPages,

@@ -18,6 +18,13 @@ export interface ProductRelation {
   size?: number | string;
 }
 
+export interface ProductListFilters {
+  style_slug?: string;
+  trim_slug?: string;
+  size_slug?: string;
+  add_ons_slug?: string;
+}
+
 export interface Product {
   id?: number;
   media_path: string | null;
@@ -63,12 +70,16 @@ export const fetchProductList = async (
   page: number = 1,
   limit: number = 10,
   search?: string,
+  filters?: ProductListFilters,
 ): Promise<ProductResponse> => {
   const params = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
   });
   if (search) params.set("search", search);
+  Object.entries(filters ?? {}).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
 
   const response = await apiFetch(`${PRODUCT_URL}?${params}`);
   const envelope = await parseEnvelope<Product[]>(response);

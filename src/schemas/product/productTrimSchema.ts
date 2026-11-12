@@ -5,6 +5,7 @@ export const productTrimSchema = z.object({
   media_path: commonValidations.requiredFile("Image"),
   media_alt: commonValidations.requiredString("Image Alt Text"),
   title: commonValidations.requiredString("Title"),
+  slug: commonValidations.requiredString("Slug"),
   description: commonValidations.requiredString("Description"),
   sort_order: commonValidations.sortOrder,
   status: commonValidations.booleanStatus,
