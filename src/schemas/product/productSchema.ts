@@ -7,6 +7,7 @@ const slugList = z.array(z.string());
 export const productSchema = z.object({
   media_path: commonValidations.requiredFile("Image"),
   media_alt: commonValidations.requiredString("Image Alt Text"),
+  icon_media_path: z.custom<File | string>().optional(),
   title: commonValidations.requiredString("Title"),
   slug: commonValidations.requiredString("Slug"),
   excerpt: commonValidations.requiredString("Excerpt"),

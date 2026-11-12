@@ -29,6 +29,7 @@ export interface Product {
   id?: number;
   media_path: string | null;
   media_alt: string;
+  icon_media_path: string | null;
   slug?: string;
   title: string;
   excerpt?: string;

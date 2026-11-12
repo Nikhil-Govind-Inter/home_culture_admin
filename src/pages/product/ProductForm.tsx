@@ -70,6 +70,7 @@ export default function ProductForm() {
     defaultValues: {
       media_path: "",
       media_alt: "",
+      icon_media_path: "",
       title: "",
       slug: "",
       excerpt: "",
@@ -140,6 +141,7 @@ export default function ProductForm() {
         form.reset({
           media_path: data.media_path || "",
           media_alt: data.media_alt || "",
+          icon_media_path: data.icon_media_path || "",
           title: data.title || "",
           slug: data.slug || "",
           excerpt: data.excerpt || "",
@@ -190,6 +192,7 @@ export default function ProductForm() {
 
       // Only newly chosen files are sent; existing paths stay untouched on the server.
       if (data.media_path instanceof File) formData.append("media_path", data.media_path);
+      if (data.icon_media_path instanceof File) formData.append("icon_media_path", data.icon_media_path);
 
       if (isEditing && id) {
         await updateProduct(parseInt(id), formData);
@@ -244,6 +247,14 @@ export default function ProductForm() {
                 placeholder="Upload image"
                 accept="image/*"
                 recommendedDimensions="800×600px"
+              />
+              <FormFileUploadField
+                form={form}
+                name="icon_media_path"
+                label="Icon (shown in footer)"
+                placeholder="Upload icon"
+                accept="image/*"
+                recommendedDimensions="64×64px"
               />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField form={form} name="media_alt" label="Image Alt Text" placeholder="Describe the image" />

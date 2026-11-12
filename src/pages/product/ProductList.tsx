@@ -178,6 +178,13 @@ export default function ProductList() {
       ),
     },
     {
+      accessorKey: "icon_media_path",
+      header: "Icon",
+      cell: ({ row }) => (
+        <MediaThumbnail path={row.getValue("icon_media_path")} alt={row.original.media_alt} />
+      ),
+    },
+    {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => <div className="font-medium">{(row.getValue("title") as string) || "-"}</div>,
