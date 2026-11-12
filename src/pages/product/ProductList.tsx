@@ -181,7 +181,7 @@ export default function ProductList() {
       accessorKey: "icon_media_path",
       header: "Icon",
       cell: ({ row }) => (
-        <MediaThumbnail path={row.getValue("icon_media_path")} alt={row.original.media_alt} />
+        <MediaThumbnail path={row.getValue("icon_media_path")} alt={row.original.icon_media_alt ?? ""} />
       ),
     },
     {

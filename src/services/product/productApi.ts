@@ -30,6 +30,7 @@ export interface Product {
   media_path: string | null;
   media_alt: string;
   icon_media_path: string | null;
+  icon_media_alt: string | null;
   slug?: string;
   title: string;
   excerpt?: string;

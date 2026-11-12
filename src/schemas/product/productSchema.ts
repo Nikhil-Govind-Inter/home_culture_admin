@@ -8,6 +8,7 @@ export const productSchema = z.object({
   media_path: commonValidations.requiredFile("Image"),
   media_alt: commonValidations.requiredString("Image Alt Text"),
   icon_media_path: z.custom<File | string>().optional(),
+  icon_media_alt: z.string().max(255).optional(),
   title: commonValidations.requiredString("Title"),
   slug: commonValidations.requiredString("Slug"),
   excerpt: commonValidations.requiredString("Excerpt"),
