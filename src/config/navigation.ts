@@ -6,7 +6,6 @@ import {
   Home,
   Phone,
   Newspaper,
-  PanelBottom,
   Image,
   Share2,
   Search,
@@ -36,6 +35,11 @@ import {
   Unlink,
   ListOrdered,
   CheckCircle2,
+  Package,
+  Palette,
+  Ruler,
+  Scissors,
+  PlusSquare,
 } from "lucide-react";
 
 /**
@@ -167,6 +171,39 @@ export const NAV: NavSection[] = [
           },
         ],
       },
+      { title: "Banners", url: "/banners", icon: Image },
+    ],
+  },
+  {
+    id: "catalog",
+    label: "Catalog",
+    entries: [
+      {
+        id: "products",
+        title: "Products",
+        icon: Package,
+        items: [
+          { title: "Page Content", url: "/product-cms", icon: LayoutTemplate },
+          { title: "Products", url: "/products", icon: Package },
+        ],
+      },
+      {
+        id: "product-setup",
+        title: "Product Setup",
+        icon: Palette,
+        items: [
+          { title: "Styles", url: "/product-styles", icon: Palette },
+          { title: "Trims", url: "/product-trims", icon: Scissors },
+          { title: "Sizes", url: "/product-sizes", icon: Ruler },
+          { title: "Add-ons", url: "/product-add-ons", icon: PlusSquare },
+        ],
+      },
+    ],
+  },
+  {
+    id: "marketing",
+    label: "Marketing & Content",
+    entries: [
       {
         id: "blogs",
         title: "Blogs",
@@ -177,6 +214,12 @@ export const NAV: NavSection[] = [
           { title: "Blogs", url: "/blogs", icon: Newspaper },
         ],
       },
+    ],
+  },
+  {
+    id: "reference",
+    label: "Reference Data",
+    entries: [
       {
         id: "masters",
         title: "Masters",
@@ -186,17 +229,19 @@ export const NAV: NavSection[] = [
           { title: "Cities", url: "/cities", icon: MapPin },
         ],
       },
-      {
-        id: "site-elements",
-        title: "Site Elements",
-        icon: PanelBottom,
-        items: [
-          { title: "Site Settings", url: "/site-settings", icon: Settings },
-          { title: "Banners", url: "/banners", icon: Image },
-          { title: "Meta Data", url: "/meta-data", icon: Search },
-          { title: "Social Media", url: "/social-media", icon: Share2 },
-        ],
-      },
+    ],
+  },
+  {
+    id: "seo",
+    label: "SEO",
+    entries: [{ title: "Meta Data", url: "/meta-data", icon: Search }],
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    entries: [
+      { title: "Site Settings", url: "/site-settings", icon: Settings },
+      { title: "Social Media", url: "/social-media", icon: Share2 },
     ],
   },
 ];

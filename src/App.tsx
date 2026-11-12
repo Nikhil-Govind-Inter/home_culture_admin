@@ -88,6 +88,17 @@ const ExperienceFeatureList = React.lazy(() => import("./pages/experience/Experi
 const ExperienceFeatureForm = React.lazy(() => import("./pages/experience/ExperienceFeatureForm"));
 const SocialMediaList = React.lazy(() => import("./pages/siteSettings/SocialMediaList"));
 const SocialMediaForm = React.lazy(() => import("./pages/siteSettings/SocialMediaForm"));
+const ProductCmsForm = React.lazy(() => import("./pages/product/ProductCmsForm"));
+const ProductStyleList = React.lazy(() => import("./pages/product/ProductStyleList"));
+const ProductStyleForm = React.lazy(() => import("./pages/product/ProductStyleForm"));
+const ProductTrimList = React.lazy(() => import("./pages/product/ProductTrimList"));
+const ProductTrimForm = React.lazy(() => import("./pages/product/ProductTrimForm"));
+const ProductSizeList = React.lazy(() => import("./pages/product/ProductSizeList"));
+const ProductSizeForm = React.lazy(() => import("./pages/product/ProductSizeForm"));
+const ProductAddOnList = React.lazy(() => import("./pages/product/ProductAddOnList"));
+const ProductAddOnForm = React.lazy(() => import("./pages/product/ProductAddOnForm"));
+const ProductList = React.lazy(() => import("./pages/product/ProductList"));
+const ProductForm = React.lazy(() => import("./pages/product/ProductForm"));
 
 const queryClient = new QueryClient();
 
@@ -247,6 +258,24 @@ const App = () => (
                 <Route path="/journey-steps" element={<JourneyStepList />} />
                 <Route path="/journey-steps/new" element={<JourneyStepForm />} />
                 <Route path="/journey-steps/:id/edit" element={<JourneyStepForm />} />
+
+                {/* Product */}
+                <Route path="/product-cms" element={<ProductCmsForm />} />
+                <Route path="/product-styles" element={<ProductStyleList />} />
+                <Route path="/product-styles/new" element={<ProductStyleForm />} />
+                <Route path="/product-styles/:id/edit" element={<ProductStyleForm />} />
+                <Route path="/product-trims" element={<ProductTrimList />} />
+                <Route path="/product-trims/new" element={<ProductTrimForm />} />
+                <Route path="/product-trims/:id/edit" element={<ProductTrimForm />} />
+                <Route path="/product-sizes" element={<ProductSizeList />} />
+                <Route path="/product-sizes/new" element={<ProductSizeForm />} />
+                <Route path="/product-sizes/:id/edit" element={<ProductSizeForm />} />
+                <Route path="/product-add-ons" element={<ProductAddOnList />} />
+                <Route path="/product-add-ons/new" element={<ProductAddOnForm />} />
+                <Route path="/product-add-ons/:id/edit" element={<ProductAddOnForm />} />
+                <Route path="/products" element={<ProductList />} />
+                <Route path="/products/new" element={<ProductForm />} />
+                <Route path="/products/:id/edit" element={<ProductForm />} />
 
                 {/* Social Media */}
                 <Route path="/social-media" element={<SocialMediaList />} />
