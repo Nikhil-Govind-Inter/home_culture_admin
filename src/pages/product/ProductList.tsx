@@ -166,8 +166,8 @@ export default function ProductList() {
       id: "id",
       header: "ID",
       // Serial ID that stays continuous across pagination.
-      cell: ({ row }) => (
-        <div className="font-mono text-sm">{(itemsPage - 1) * itemsLimit + row.index + 1}</div>
+      cell: ({ row, table }) => (
+        <div className="font-mono text-sm">{(itemsPage - 1) * itemsLimit + table.getRowModel().rows.findIndex((r) => r.id === row.id) + 1}</div>
       ),
     },
     {

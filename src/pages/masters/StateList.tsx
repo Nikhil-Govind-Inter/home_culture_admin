@@ -88,9 +88,9 @@ export default function StateList() {
     {
       id: "id",
       header: "ID",
-      cell: ({ row }) => (
+      cell: ({ row, table }) => (
         <div className="font-mono text-sm">
-          {(itemsPage - 1) * itemsLimit + row.index + 1}
+          {(itemsPage - 1) * itemsLimit + table.getRowModel().rows.findIndex((r) => r.id === row.id) + 1}
         </div>
       ),
     },

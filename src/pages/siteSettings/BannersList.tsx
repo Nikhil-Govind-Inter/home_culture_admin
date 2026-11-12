@@ -49,9 +49,9 @@ export default function BannersList() {
       header: "ID",
       enableHiding: true,
       meta: { defaultVisible: true },
-      cell: ({ row }) => (
+      cell: ({ row, table }) => (
         <div className="font-medium">
-          {(itemsPage - 1) * itemsLimit + row.index + 1}
+          {(itemsPage - 1) * itemsLimit + table.getRowModel().rows.findIndex((r) => r.id === row.id) + 1}
         </div>
       ),
     },

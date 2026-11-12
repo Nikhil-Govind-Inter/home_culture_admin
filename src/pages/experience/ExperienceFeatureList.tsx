@@ -81,9 +81,9 @@ export default function ExperienceFeatureList() {
       id: "id",
       header: "ID",
       // Serial ID that stays continuous across pagination.
-      cell: ({ row }) => (
+      cell: ({ row, table }) => (
         <div className="font-mono text-sm">
-          {(itemsPage - 1) * itemsLimit + row.index + 1}
+          {(itemsPage - 1) * itemsLimit + table.getRowModel().rows.findIndex((r) => r.id === row.id) + 1}
         </div>
       ),
     },

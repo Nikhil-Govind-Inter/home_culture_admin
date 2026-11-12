@@ -94,9 +94,9 @@ export default function JourneyStepList() {
       // loaded data actually corresponds to) rather than page/limit
       // directly, so it doesn't flash the next page's numbers over the
       // still-loading current page's rows.
-      cell: ({ row }) => (
+      cell: ({ row, table }) => (
         <div className="font-mono text-sm">
-          {(itemsPage - 1) * itemsLimit + row.index + 1}
+          {(itemsPage - 1) * itemsLimit + table.getRowModel().rows.findIndex((r) => r.id === row.id) + 1}
         </div>
       ),
     },
