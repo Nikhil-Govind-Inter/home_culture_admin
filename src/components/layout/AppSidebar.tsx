@@ -35,7 +35,7 @@ import {
   type NavItem,
 } from "@/config/navigation";
 
-const Logo = "/logo_white.png";
+const Logo = "/logo_white.svg";
 
 type Loc = { pathname: string; search: string };
 
@@ -205,6 +205,7 @@ function NavLinkItem({
   isCollapsed,
   exact = false,
   small = false,
+  asGroup = false,
   title = item.title,
   Icon = item.icon,
 }: {
@@ -213,6 +214,7 @@ function NavLinkItem({
   isCollapsed: boolean;
   exact?: boolean;
   small?: boolean;
+  asGroup?: boolean;
   title?: string;
   Icon?: LucideIcon;
 }) {
@@ -227,10 +229,16 @@ function NavLinkItem({
         <NavLink to={item.url} end={exact} className={navItemCls}>
           <Icon
             className={
-              small ? "h-4 w-4 flex-shrink-0" : "h-5 w-5 flex-shrink-0"
+              small || (asGroup && !isCollapsed)
+                ? "h-4 w-4 flex-shrink-0"
+                : "h-5 w-5 flex-shrink-0"
             }
           />
-          {!isCollapsed && <span className="ml-2">{title}</span>}
+          {!isCollapsed && (
+            <span className={asGroup ? "ml-2 font-medium" : "ml-2"}>
+              {title}
+            </span>
+          )}
         </NavLink>
       </SidebarMenuButton>
     </SidebarMenuItem>
@@ -266,6 +274,7 @@ function NavGroupItem({
         location={location}
         isCollapsed={isCollapsed}
         small={nested}
+        asGroup={!nested}
       />
     );
   }

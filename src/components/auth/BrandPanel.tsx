@@ -1,4 +1,4 @@
-const Logo = "/logo_white.png";
+const Logo = "/logo_white.svg";
 
 export function BrandPanel() {
   return (
