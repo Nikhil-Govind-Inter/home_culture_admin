@@ -206,6 +206,7 @@ function NavLinkItem({
   exact = false,
   small = false,
   asGroup = false,
+  groupRow = false,
   title = item.title,
   Icon = item.icon,
 }: {
@@ -215,6 +216,7 @@ function NavLinkItem({
   exact?: boolean;
   small?: boolean;
   asGroup?: boolean;
+  groupRow?: boolean;
   title?: string;
   Icon?: LucideIcon;
 }) {
@@ -222,20 +224,28 @@ function NavLinkItem({
     <SidebarMenuItem>
       <SidebarMenuButton
         asChild
-        size={small ? "sm" : "default"}
+        size={small && !groupRow ? "sm" : "default"}
         tooltip={title}
         isActive={isNavActive(location, item.url, exact)}
       >
         <NavLink to={item.url} end={exact} className={navItemCls}>
           <Icon
             className={
-              small || (asGroup && !isCollapsed)
+              small || groupRow || (asGroup && !isCollapsed)
                 ? "h-4 w-4 flex-shrink-0"
                 : "h-5 w-5 flex-shrink-0"
             }
           />
           {!isCollapsed && (
-            <span className={asGroup ? "ml-2 font-medium" : "ml-2"}>
+            <span
+              className={
+                groupRow
+                  ? "font-medium"
+                  : asGroup
+                    ? "ml-2 font-medium"
+                    : "ml-2"
+              }
+            >
               {title}
             </span>
           )}
@@ -274,6 +284,7 @@ function NavGroupItem({
         location={location}
         isCollapsed={isCollapsed}
         small={nested}
+        groupRow={nested}
         asGroup={!nested}
       />
     );
