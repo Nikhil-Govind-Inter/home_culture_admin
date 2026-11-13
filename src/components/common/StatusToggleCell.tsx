@@ -16,7 +16,11 @@ export default function StatusToggleCell({
   return (
     <div className="flex items-center space-x-2">
       <Switch checked={status} onCheckedChange={onCheckedChange} />
-      <Badge variant={status ? "default" : "secondary"}>
+      {/* Fixed width + colour transition so the label change doesn't shift the row. */}
+      <Badge
+        variant={status ? "default" : "secondary"}
+        className="justify-center transition-colors duration-300"
+      >
         {status ? "active" : "inactive"}
       </Badge>
     </div>

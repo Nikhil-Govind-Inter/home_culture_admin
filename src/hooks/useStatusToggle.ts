@@ -4,12 +4,13 @@ import { useToast } from "@/hooks/use-toast";
 interface Toggleable {
   id?: number;
   slug?: string;
-  is_active?: boolean;
+  status?: boolean;
 }
 
 interface Options<T extends Toggleable> {
   setItems: Dispatch<SetStateAction<T[]>>;
-  refetch: () => unknown;
+  /** Unused now (rows update locally); kept so existing call sites compile. */
+  refetch?: () => unknown;
   toggleStatus: (item: T, isActive: boolean) => Promise<unknown>;
   /** Shown in the success toast, e.g. "History entry". */
   label: string;
@@ -20,7 +21,6 @@ interface Options<T extends Toggleable> {
 /** Confirm-then-update status flow shared by list pages. */
 export function useStatusToggle<T extends Toggleable>({
   setItems,
-  refetch,
   toggleStatus,
   label,
   getKey = (item) => item.id!,
@@ -35,27 +35,28 @@ export function useStatusToggle<T extends Toggleable>({
     if (!statusToggleItem) return;
     const { item, newStatus } = statusToggleItem;
 
+    const apply = (value: boolean) =>
+      setItems((prev) =>
+        prev.map((i) => (getKey(i) === getKey(item) ? { ...i, status: value } : i)),
+      );
+
+    // Update the row first so the switch flips at once; roll back if the request fails.
+    setStatusToggleItem(null);
+    apply(newStatus);
     try {
       await toggleStatus(item, newStatus);
-      setItems((prev) =>
-        prev.map((i) =>
-          getKey(i) === getKey(item) ? { ...i, is_active: newStatus } : i,
-        ),
-      );
-      refetch();
       toast({
         title: "Success",
         description: `${label} status updated successfully`,
       });
     } catch (error) {
+      apply(!newStatus);
       toast({
         title: "Error",
         description:
           error instanceof Error ? error.message : "Failed to update status",
         variant: "destructive",
       });
-    } finally {
-      setStatusToggleItem(null);
     }
   };
 

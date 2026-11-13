@@ -26,9 +26,9 @@ import { fetchActiveProductSizes } from "@/services/product/productSizeApi";
 import { fetchActiveProductAddOns } from "@/services/product/productAddOnApi";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useStatusToggle } from "@/hooks/useStatusToggle";
 import { useSortOrder } from "@/hooks/useSortOrder";
 import { useShowInHomeToggle } from "@/hooks/useShowInHomeToggle";
-import { useStatusToggle } from "@/hooks/useStatusToggle";
 import { usePaginatedList } from "@/hooks/usePaginatedList";
 import DeleteDialogue from "@/components/common/DeleteDialogue";
 import StatusChangeDialogue from "@/components/common/StatusChangeDialogue";
@@ -135,7 +135,6 @@ export default function ProductList() {
   const handleSortOrderChange = useSortOrder(items, setItems, updateProductSortOrder);
   const { statusToggleItem, setStatusToggleItem, confirmStatusToggle } = useStatusToggle({
     setItems,
-    refetch,
     toggleStatus: toggleProductStatus,
     label: "Product",
   });

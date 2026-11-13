@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
   LayoutTemplate,
-  Info,
+  Users,
   Home,
   Phone,
   Newspaper,
@@ -73,7 +73,8 @@ export interface NavSection {
   entries: (NavGroup | NavItem)[];
 }
 
-export const isNavGroup = (entry: NavGroup | NavItem): entry is NavGroup => "id" in entry;
+export const isNavGroup = (entry: NavGroup | NavItem): entry is NavGroup =>
+  "id" in entry;
 
 export const NAV: NavSection[] = [
   {
@@ -97,17 +98,29 @@ export const NAV: NavSection[] = [
             items: [
               { title: "Page Content", url: "/home-cms", icon: FileText },
               { title: "Home Banners", url: "/home-banners", icon: Images },
-              { title: "Broken Process", url: "/home-broken-processes", icon: Unlink },
-              { title: "Simply Choose", url: "/home-simply-choose", icon: CheckCircle2 },
+              {
+                title: "Broken Process",
+                url: "/home-broken-processes",
+                icon: Unlink,
+              },
+              {
+                title: "Simply Choose",
+                url: "/home-simply-choose",
+                icon: CheckCircle2,
+              },
               { title: "Highlights", url: "/home-highlights", icon: Star },
-              { title: "Process Steps", url: "/home-process-steps", icon: ListOrdered },
+              {
+                title: "Process Steps",
+                url: "/home-process-steps",
+                icon: ListOrdered,
+              },
               { title: "Experiences", url: "/home-experiences", icon: Compass },
             ],
           },
           {
             id: "about",
             title: "About",
-            icon: Info,
+            icon: Users,
             items: [
               { title: "Page Content", url: "/about-cms", icon: FileText },
               { title: "Highlights", url: "/about-highlights", icon: Star },
@@ -118,8 +131,16 @@ export const NAV: NavSection[] = [
             title: "How It Works",
             icon: Workflow,
             items: [
-              { title: "Page Content", url: "/how-it-works-cms", icon: FileText },
-              { title: "Workshop Materials", url: "/workshop-materials", icon: Hammer },
+              {
+                title: "Page Content",
+                url: "/how-it-works-cms",
+                icon: FileText,
+              },
+              {
+                title: "Workshop Materials",
+                url: "/workshop-materials",
+                icon: Hammer,
+              },
               { title: "Testimonials", url: "/testimonials", icon: Quote },
               { title: "Journey Steps", url: "/journey-steps", icon: Route },
             ],
@@ -130,12 +151,24 @@ export const NAV: NavSection[] = [
             icon: Compass,
             items: [
               { title: "Page Content", url: "/experience-cms", icon: FileText },
-              { title: "Journey Process", url: "/journey-processes", icon: Route },
+              {
+                title: "Journey Process",
+                url: "/journey-processes",
+                icon: Route,
+              },
               { title: "Timeline", url: "/experience-timeline", icon: Clock },
-              { title: "Highlights", url: "/experience-highlights", icon: Sparkles },
+              {
+                title: "Highlights",
+                url: "/experience-highlights",
+                icon: Sparkles,
+              },
               { title: "Features", url: "/experience-features", icon: Gem },
               { title: "Locations", url: "/locations", icon: MapPin },
-              { title: "Booking Process", url: "/booking-processes", icon: CalendarCheck },
+              {
+                title: "Booking Process",
+                url: "/booking-processes",
+                icon: CalendarCheck,
+              },
               { title: "FAQs", url: "/experience-faqs", icon: MessageSquare },
             ],
           },
@@ -161,17 +194,21 @@ export const NAV: NavSection[] = [
               { title: "FAQs", url: "/faqs", icon: MessageCircleQuestion },
             ],
           },
-           {
+          {
             id: "contact",
             title: "Contact",
             icon: Phone,
-            items: [{ title: "Page Content", url: "/contact-cms", icon: FileText }],
+            items: [
+              { title: "Page Content", url: "/contact-cms", icon: FileText },
+            ],
           },
           {
             id: "privacy-policy",
             title: "Privacy Policy",
             icon: ShieldCheck,
-            items: [{ title: "Page Content", url: "/privacy-policy", icon: FileText }],
+            items: [
+              { title: "Page Content", url: "/privacy-policy", icon: FileText },
+            ],
           },
         ],
       },

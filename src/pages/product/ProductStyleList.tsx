@@ -106,20 +106,6 @@ export default function ProductStyleList() {
       ),
     },
     {
-      accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => (
-        <div className="text-sm text-muted-foreground max-w-[320px] truncate">{String(row.getValue("description") ?? "") || "-"}</div>
-      ),
-    },
-    {
-      accessorKey: "button_text",
-      header: "Button Text",
-      cell: ({ row }) => (
-        <div className="text-sm text-muted-foreground max-w-[320px] truncate">{String(row.getValue("button_text") ?? "") || "-"}</div>
-      ),
-    },
-    {
       accessorKey: "slug",
       header: "Slug",
       cell: ({ row }) => (
