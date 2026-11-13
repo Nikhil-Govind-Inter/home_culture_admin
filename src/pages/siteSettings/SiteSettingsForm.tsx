@@ -7,6 +7,7 @@ import { Form } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   FormFileUploadField,
+  FormRichTextField,
   FormTextField,
   FormTextareaField,
 } from "@/components/forms/FormFieldComponents";
@@ -188,7 +189,7 @@ export default function SiteSettingsForm() {
                 />
               </div>
               <FormTextField form={form} name="footer_title" label="Footer Title" placeholder="Footer title" />
-              <FormTextareaField form={form} name="description" label="Description" placeholder="Description" rows={4} />
+              <FormRichTextField form={form} name="description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 

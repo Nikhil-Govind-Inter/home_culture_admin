@@ -43,6 +43,7 @@ export interface Product {
   add_ons?: ProductRelation[];
   sort_order?: number;
   status?: boolean;
+  show_in_home?: boolean;
   deleted_at?: string | null;
   createdAt?: string;
   updatedAt?: string;
@@ -125,6 +126,13 @@ export const deleteProduct = async (id: number): Promise<void> => {
 export const toggleProductStatus = (item: { id?: number }, isActive: boolean) => {
   const formData = new FormData();
   formData.append("status", String(isActive));
+  return updateProduct(item.id!, formData);
+};
+
+// Partial update used by the list-page switch: only `show_in_home` is sent.
+export const toggleProductShowInHome = (item: { id?: number }, showInHome: boolean) => {
+  const formData = new FormData();
+  formData.append("show_in_home", String(showInHome));
   return updateProduct(item.id!, formData);
 };
 

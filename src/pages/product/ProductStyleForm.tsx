@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FormTextField, FormFileUploadField } from "@/components/forms/FormFieldComponents";
+import { FormTextField, FormFileUploadField, FormSwitchField } from "@/components/forms/FormFieldComponents";
 import { generateSlug } from "@/utils/formUtils";
 import { Save, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -48,6 +48,7 @@ export default function ProductStyleForm() {
       button_text: "",
       sort_order: "1",
       status: true,
+      show_in_home: true,
     },
   });
 
@@ -83,6 +84,7 @@ export default function ProductStyleForm() {
           button_text: data.button_text != null ? String(data.button_text) : "",
           sort_order: (data.sort_order ?? 1).toString(),
           status: data.status ?? true,
+          show_in_home: data.show_in_home ?? true,
         });
       }
     } catch (error) {
@@ -109,6 +111,7 @@ export default function ProductStyleForm() {
       formData.append("button_text", data.button_text);
       formData.append("sort_order", (data.sort_order || "1").toString());
       formData.append("status", String(data.status ?? true));
+      formData.append("show_in_home", String(data.show_in_home ?? true));
 
       // Only newly chosen files are sent; existing paths stay untouched on the server.
       if (data.media_path instanceof File) formData.append("media_path", data.media_path);
@@ -212,6 +215,12 @@ export default function ProductStyleForm() {
                       </FormControl>
                     </FormItem>
                   )}
+                />
+                <FormSwitchField
+                  form={form}
+                  name="show_in_home"
+                  label="Show in Home"
+                  description="Display this style on the home page."
                 />
               </div>
             </CardContent>

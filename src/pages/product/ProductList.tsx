@@ -14,6 +14,7 @@ import {
   fetchProductList,
   deleteProduct,
   toggleProductStatus,
+  toggleProductShowInHome,
   updateProductSortOrder,
   Product,
   ProductRelation,
@@ -26,6 +27,7 @@ import { fetchActiveProductAddOns } from "@/services/product/productAddOnApi";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useSortOrder } from "@/hooks/useSortOrder";
+import { useShowInHomeToggle } from "@/hooks/useShowInHomeToggle";
 import { useStatusToggle } from "@/hooks/useStatusToggle";
 import { usePaginatedList } from "@/hooks/usePaginatedList";
 import DeleteDialogue from "@/components/common/DeleteDialogue";
@@ -138,6 +140,12 @@ export default function ProductList() {
     label: "Product",
   });
 
+  const { requestToggle: requestShowInHomeToggle, dialog: showInHomeDialog } = useShowInHomeToggle({
+    setItems,
+    toggle: toggleProductShowInHome,
+    label: "product",
+  });
+
   const confirmDelete = async () => {
     if (!deleteItemId) return;
 
@@ -232,6 +240,16 @@ export default function ProductList() {
       },
     },
     {
+      accessorKey: "show_in_home",
+      header: "Show in Home",
+      cell: ({ row }) => (
+        <StatusToggleCell
+          status={Boolean(row.original.show_in_home)}
+          onCheckedChange={(checked) => requestShowInHomeToggle(row.original, checked)}
+        />
+      ),
+    },
+    {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {
@@ -245,15 +263,6 @@ export default function ProductList() {
           />
         );
       },
-    },
-    {
-      accessorKey: "createdAt",
-      header: "Created At",
-      cell: ({ row }) => (
-        <div className="text-sm text-muted-foreground">
-          {new Date(row.getValue("createdAt")).toLocaleDateString()}
-        </div>
-      ),
     },
     {
       id: "actions",
@@ -341,6 +350,8 @@ export default function ProductList() {
         setDeleteItemId={setDeleteItemId}
         confirmDelete={confirmDelete}
       />
+
+      {showInHomeDialog}
 
       <StatusChangeDialogue
         statusToggleItem={statusToggleItem}

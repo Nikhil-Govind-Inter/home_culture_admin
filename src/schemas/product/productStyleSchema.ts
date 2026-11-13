@@ -10,6 +10,7 @@ export const productStyleSchema = z.object({
   button_text: commonValidations.requiredString("Button Text"),
   sort_order: commonValidations.sortOrder,
   status: commonValidations.booleanStatus,
+  show_in_home: z.boolean(),
 });
 
 export type ProductStyleFormData = z.infer<typeof productStyleSchema>;

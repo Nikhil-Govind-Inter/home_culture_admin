@@ -10,11 +10,13 @@ import {
   fetchProductStyleList,
   deleteProductStyle,
   toggleProductStyleStatus,
+  toggleProductStyleShowInHome,
   updateProductStyleSortOrder,
   ProductStyle,
 } from "@/services/product/productStyleApi";
 import { useToast } from "@/hooks/use-toast";
 import { useSortOrder } from "@/hooks/useSortOrder";
+import { useShowInHomeToggle } from "@/hooks/useShowInHomeToggle";
 import { useStatusToggle } from "@/hooks/useStatusToggle";
 import { usePaginatedList } from "@/hooks/usePaginatedList";
 import DeleteDialogue from "@/components/common/DeleteDialogue";
@@ -48,6 +50,12 @@ export default function ProductStyleList() {
     refetch,
     toggleStatus: toggleProductStyleStatus,
     label: "Style",
+  });
+
+  const { requestToggle: requestShowInHomeToggle, dialog: showInHomeDialog } = useShowInHomeToggle({
+    setItems,
+    toggle: toggleProductStyleShowInHome,
+    label: "style",
   });
 
   const confirmDelete = async () => {
@@ -134,6 +142,16 @@ export default function ProductStyleList() {
       },
     },
     {
+      accessorKey: "show_in_home",
+      header: "Show in Home",
+      cell: ({ row }) => (
+        <StatusToggleCell
+          status={Boolean(row.original.show_in_home)}
+          onCheckedChange={(checked) => requestShowInHomeToggle(row.original, checked)}
+        />
+      ),
+    },
+    {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => {
@@ -203,6 +221,8 @@ export default function ProductStyleList() {
         setDeleteItemId={setDeleteItemId}
         confirmDelete={confirmDelete}
       />
+
+      {showInHomeDialog}
 
       <StatusChangeDialogue
         statusToggleItem={statusToggleItem}
