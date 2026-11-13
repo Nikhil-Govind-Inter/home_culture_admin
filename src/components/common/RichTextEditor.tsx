@@ -28,6 +28,9 @@ import {
   Heading1,
   Heading2,
   Heading3,
+  Heading4,
+  Heading5,
+  Heading6,
   Image as ImageIcon,
   Smile,
   Link as LinkIcon,
@@ -126,6 +129,9 @@ export function RichTextEditor({
           "[&_h1]:text-3xl [&_h1]:font-bold [&_h1]:mt-4 [&_h1]:mb-3",
           "[&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2",
           "[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-3 [&_h3]:mb-2",
+          "[&_h4]:text-lg [&_h4]:font-semibold [&_h4]:mt-3 [&_h4]:mb-2",
+          "[&_h5]:text-base [&_h5]:font-semibold [&_h5]:mt-2 [&_h5]:mb-1",
+          "[&_h6]:text-xs [&_h6]:font-semibold [&_h6]:normal-case [&_h6]:mt-2 [&_h6]:mb-1",
           "[&_p]:text-base",
           "prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground",
           "prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground",
@@ -177,6 +183,82 @@ export function RichTextEditor({
     if (editor) {
       editor.chain().focus().setImage({ src, alt, title }).run();
     }
+  };
+
+  // Apply a heading only to the selected text (or the current line when nothing is selected),
+  // by splitting the surrounding block instead of converting the whole block.
+  const toggleHeadingOnSelection = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
+    if (!editor) return;
+    const { $from, $to, empty } = editor.state.selection;
+    const parent = $from.parent;
+
+    // Toggle off, or fall back to default behaviour for multi-block selections
+    if (
+      (parent.type.name === "heading" && parent.attrs.level === level) ||
+      $from.parent !== $to.parent ||
+      !parent.isTextblock
+    ) {
+      editor.chain().focus().toggleHeading({ level }).run();
+      return;
+    }
+
+    const blockStart = $from.start();
+    const blockEnd = blockStart + parent.content.size;
+    let from = $from.pos;
+    let to = $to.pos;
+
+    if (empty) {
+      // Expand to the current line (between hard breaks)
+      let lineStart = blockStart;
+      let lineEnd = blockEnd;
+      let endFound = false;
+      parent.forEach((node, offset) => {
+        if (node.type.name !== "hardBreak") return;
+        const pos = blockStart + offset;
+        if (pos < from) {
+          lineStart = pos + node.nodeSize;
+        } else if (!endFound) {
+          lineEnd = pos;
+          endFound = true;
+        }
+      });
+      from = lineStart;
+      to = lineEnd;
+    }
+
+    let selFrom = from;
+    let selTo = to;
+
+    editor
+      .chain()
+      .focus()
+      .command(({ tr }) => {
+        // Split after the range (dropping a hard break at the boundary)
+        if (to < blockEnd) {
+          if (tr.doc.nodeAt(to)?.type.name === "hardBreak") tr.delete(to, to + 1);
+          const $t = tr.doc.resolve(to);
+          if ($t.parentOffset < $t.parent.content.size) tr.split(to);
+        }
+        // Split before the range
+        let f = from;
+        let t = to;
+        if (f > blockStart && tr.doc.nodeAt(f - 1)?.type.name === "hardBreak") {
+          tr.delete(f - 1, f);
+          f -= 1;
+          t -= 1;
+        }
+        if (f > blockStart) {
+          tr.split(f);
+          f += 2;
+          t += 2;
+        }
+        selFrom = f;
+        selTo = t;
+        return true;
+      })
+      .command(({ commands }) => commands.setTextSelection({ from: selFrom, to: selTo }))
+      .toggleHeading({ level })
+      .run();
   };
 
   const handleLinkToggle = () => {
@@ -339,24 +421,45 @@ export function RichTextEditor({
 
             {/* Headings */}
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+              onClick={() => toggleHeadingOnSelection(1)}
               isActive={editor.isActive("heading", { level: 1 })}
             >
               <Heading1 className="h-4 w-4" />
             </ToolbarButton>
 
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+              onClick={() => toggleHeadingOnSelection(2)}
               isActive={editor.isActive("heading", { level: 2 })}
             >
               <Heading2 className="h-4 w-4" />
             </ToolbarButton>
-            
+
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+              onClick={() => toggleHeadingOnSelection(3)}
               isActive={editor.isActive("heading", { level: 3 })}
             >
               <Heading3 className="h-4 w-4" />
+            </ToolbarButton>
+
+            <ToolbarButton
+              onClick={() => toggleHeadingOnSelection(4)}
+              isActive={editor.isActive("heading", { level: 4 })}
+            >
+              <Heading4 className="h-4 w-4" />
+            </ToolbarButton>
+
+            <ToolbarButton
+              onClick={() => toggleHeadingOnSelection(5)}
+              isActive={editor.isActive("heading", { level: 5 })}
+            >
+              <Heading5 className="h-4 w-4" />
+            </ToolbarButton>
+
+            <ToolbarButton
+              onClick={() => toggleHeadingOnSelection(6)}
+              isActive={editor.isActive("heading", { level: 6 })}
+            >
+              <Heading6 className="h-4 w-4" />
             </ToolbarButton>
             
             <ToolbarButton
