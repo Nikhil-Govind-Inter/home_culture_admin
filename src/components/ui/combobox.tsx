@@ -35,6 +35,8 @@ interface ComboboxProps {
   maxVisibleItems?: number
   /** Size the trigger to the longest option label instead of full width. */
   autoWidth?: boolean
+  /** Start at the placeholder's width, then resize to fit the selected label. */
+  fitSelected?: boolean
 }
 
 export function Combobox({
@@ -48,16 +50,23 @@ export function Combobox({
   className,
   maxVisibleItems,
   autoWidth,
+  fitSelected,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
+  const selected = options.find((option) => option.value === value)
   // ch ≈ one character; +6 leaves room for padding, chevron and check icon.
   const autoWidthStyle = autoWidth
     ? {
         width: `${Math.max(...options.map((o) => o.label.length), placeholder.length) + 6}ch`,
         maxWidth: "24rem",
       }
-    : undefined
-  const selected = options.find((option) => option.value === value)
+    : fitSelected
+      ? {
+          // Never narrower than the placeholder; +8 covers padding, gap and chevron.
+          width: `${Math.max(selected ? selected.label.length : 0, placeholder.length) + 8}ch`,
+          maxWidth: "24rem",
+        }
+      : undefined
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -70,7 +79,8 @@ export function Combobox({
           disabled={disabled}
           style={autoWidthStyle}
           className={cn(
-            "w-full justify-between font-normal",
+            "w-full shrink-0 justify-between font-normal",
+            fitSelected && "transition-[width] duration-200",
             !selected && "text-muted-foreground",
             className
           )}
@@ -79,15 +89,17 @@ export function Combobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-        <Command>
+      {/* Grows to fit the longest option (never narrower than the trigger) so labels aren't clipped. */}
+      <PopoverContent className="w-auto min-w-[--radix-popover-trigger-width] max-w-[24rem] p-0">
+        <Command className="overflow-visible">
           <CommandInput placeholder={searchPlaceholder} />
           {/* row = 32px (py-1.5 + text-sm), group padding = 8px */}
           <CommandList
+            className="overflow-x-visible"
             style={maxVisibleItems ? { maxHeight: maxVisibleItems * 32 + 8 } : undefined}
           >
             <CommandEmpty>{emptyText}</CommandEmpty>
-            <CommandGroup>
+            <CommandGroup className="overflow-visible">
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
@@ -96,7 +108,7 @@ export function Combobox({
                     onChange(option.value)
                     setOpen(false)
                   }}
-                  className="capitalize"
+                  className="capitalize whitespace-nowrap"
                 >
                   <Check
                     className={cn(

@@ -24,7 +24,7 @@ import { fetchActiveProductStyles } from "@/services/product/productStyleApi";
 import { fetchActiveProductTrims } from "@/services/product/productTrimApi";
 import { fetchActiveProductSizes } from "@/services/product/productSizeApi";
 import { fetchActiveProductAddOns } from "@/services/product/productAddOnApi";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import { useToast } from "@/hooks/use-toast";
 import { useStatusToggle } from "@/hooks/useStatusToggle";
 import { useSortOrder } from "@/hooks/useSortOrder";
@@ -40,24 +40,29 @@ const RelationCell = ({ items }: { items?: ProductRelation[] }) => {
   if (!items?.length) return <span className="text-sm text-muted-foreground">-</span>;
   return (
     <div className="flex flex-wrap gap-1 max-w-[260px]">
+      {/* At most 2 items; hovering one previews its full text, "+N" lists the rest. */}
       {items.slice(0, 2).map((item) => (
         <Tooltip key={item.id} delayDuration={0}>
           <TooltipTrigger asChild>
-            <Badge variant="secondary" className="block max-w-[130px] truncate whitespace-nowrap">
+            <Badge variant="secondary" className="block max-w-[130px] cursor-default truncate whitespace-nowrap">
               {relationName(item)}
             </Badge>
           </TooltipTrigger>
-          <TooltipContent>{relationName(item)}</TooltipContent>
+          <TooltipContent side="top" className="max-w-sm whitespace-normal break-words">
+            {relationName(item)}
+          </TooltipContent>
         </Tooltip>
       ))}
       {items.length > 2 && (
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
-            <Badge variant="outline" className="whitespace-nowrap">
+            <Badge variant="outline" className="cursor-default whitespace-nowrap">
               +{items.length - 2}
             </Badge>
           </TooltipTrigger>
-          <TooltipContent>{items.slice(2).map(relationName).join(", ")}</TooltipContent>
+          <TooltipContent side="top" className="max-w-sm whitespace-normal break-words">
+            {items.slice(2).map(relationName).join(", ")}
+          </TooltipContent>
         </Tooltip>
       )}
     </div>
@@ -185,13 +190,6 @@ export default function ProductList() {
       ),
     },
     {
-      accessorKey: "icon_media_path",
-      header: "Icon",
-      cell: ({ row }) => (
-        <MediaThumbnail path={row.getValue("icon_media_path")} alt={row.original.icon_media_alt ?? ""} />
-      ),
-    },
-    {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => <div className="font-medium">{(row.getValue("title") as string) || "-"}</div>,
@@ -301,19 +299,19 @@ export default function ProductList() {
                 ["All add-ons", addOnFilter, setAddOnFilter, filterOptions.addOns],
               ] as const
             ).map(([placeholder, value, onChange, list]) => (
-              <Select key={placeholder} value={value} onValueChange={onChange}>
-                <SelectTrigger className="w-[140px]">
-                  <SelectValue placeholder={placeholder} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={ALL}>{placeholder}</SelectItem>
-                  {list.map((option) => (
-                    <SelectItem key={option.slug} value={option.slug}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Combobox
+                key={placeholder}
+                options={[
+                  { value: ALL, label: placeholder },
+                  ...list.map((option) => ({ value: option.slug, label: option.label })),
+                ]}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                searchPlaceholder="Search..."
+                maxVisibleItems={6}
+                fitSelected
+              />
             ))}
             <Button
               type="button"

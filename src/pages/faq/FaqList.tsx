@@ -14,13 +14,7 @@ import {
   FaqListFilters,
 } from "@/services/faq/faqApi";
 import { fetchAllFaqCategories, FaqCategory } from "@/services/faq/faqCategoryApi";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import { useToast } from "@/hooks/use-toast";
 import { useSortOrder } from "@/hooks/useSortOrder";
 import { useStatusToggle } from "@/hooks/useStatusToggle";
@@ -206,19 +200,22 @@ export default function FaqList() {
         onAdd={() => navigate("/faqs/new")}
         addButtonText="Add FAQ"
         toolbarExtra={
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="w-[220px]">
-              <SelectValue placeholder="All categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All categories</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category.id} value={String(category.id)}>
-                  {category.title}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Combobox
+            options={[
+              { value: "all", label: "All categories" },
+              ...categories.map((category) => ({
+                value: String(category.id),
+                label: category.title,
+              })),
+            ]}
+            value={categoryFilter}
+            onChange={setCategoryFilter}
+            placeholder="All categories"
+            searchPlaceholder="Search categories..."
+            emptyText="No categories found."
+            maxVisibleItems={6}
+            autoWidth
+          />
         }
         loading={loading}
         searching={searching}

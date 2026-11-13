@@ -5,13 +5,7 @@ import { DataTable } from "@/components/common/DataTable";
 import SortOrderCell from "@/components/common/SortOrderCell";
 import StatusToggleCell from "@/components/common/StatusToggleCell";
 import RowActionsMenu from "@/components/common/RowActionsMenu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import {
   fetchJobList,
   deleteJob,
@@ -269,65 +263,54 @@ export default function JobList() {
         title="Jobs"
         searchPlaceholder="Search by Position or Slug..."
         toolbarExtra={
-          <div className="flex gap-2">
-            <Select
+          <div className="flex flex-wrap gap-2">
+            <Combobox
+              options={[
+                { value: "all", label: "All states" },
+                ...states.map((state) => ({ value: state.slug, label: state.name })),
+              ]}
               value={stateFilter}
-              onValueChange={(value) => {
+              onChange={(value) => {
                 setStateFilter(value);
                 setCityFilter("all");
               }}
-            >
-              <SelectTrigger className="w-auto min-w-[180px] gap-2 [&>span]:line-clamp-none [&>span]:whitespace-nowrap">
-                <SelectValue placeholder="All states" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All states</SelectItem>
-                {states.map((state) => (
-                  <SelectItem key={state.slug} value={state.slug}>
-                    {state.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select
-              value={cityFilter}
-              onValueChange={setCityFilter}
+              placeholder="All states"
+              searchPlaceholder="Search states..."
+              emptyText="No states found."
+              maxVisibleItems={6}
+              autoWidth
+            />
+            <Combobox
+              options={[
+                { value: "all", label: "All cities" },
+                ...cities.map((city) => ({ value: city.slug, label: city.name })),
+              ]}
+              // Empty value while disabled so the "Select a state first" placeholder shows.
+              value={stateFilter === "all" ? "" : cityFilter}
+              onChange={setCityFilter}
               disabled={stateFilter === "all"}
-            >
-              <SelectTrigger className="w-auto min-w-[180px] gap-2 [&>span]:line-clamp-none [&>span]:whitespace-nowrap">
-                <SelectValue
-                  placeholder={
-                    stateFilter === "all"
-                      ? "Select a state first"
-                      : "All cities"
-                  }
-                />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All cities</SelectItem>
-                {cities.map((city) => (
-                  <SelectItem key={city.slug} value={city.slug}>
-                    {city.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select
+              placeholder={stateFilter === "all" ? "Select a state first" : "All cities"}
+              searchPlaceholder="Search cities..."
+              emptyText="No cities found."
+              maxVisibleItems={6}
+              autoWidth
+            />
+            <Combobox
+              options={[
+                { value: "all", label: "All departments" },
+                ...departments.map((department) => ({
+                  value: department.slug,
+                  label: department.name,
+                })),
+              ]}
               value={departmentFilter}
-              onValueChange={setDepartmentFilter}
-            >
-              <SelectTrigger className="w-auto min-w-[200px] gap-2 [&>span]:line-clamp-none [&>span]:whitespace-nowrap">
-                <SelectValue placeholder="All departments" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All departments</SelectItem>
-                {departments.map((department) => (
-                  <SelectItem key={department.slug} value={department.slug}>
-                    {department.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              onChange={setDepartmentFilter}
+              placeholder="All departments"
+              searchPlaceholder="Search departments..."
+              emptyText="No departments found."
+              maxVisibleItems={6}
+              autoWidth
+            />
           </div>
         }
         onAdd={() => navigate("/jobs/new")}

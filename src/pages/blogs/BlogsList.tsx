@@ -8,13 +8,7 @@ import StatusToggleCell from "@/components/common/StatusToggleCell";
 import RowActionsMenu from "@/components/common/RowActionsMenu";
 import DeleteDialogue from "@/components/common/DeleteDialogue";
 import StatusChangeDialogue from "@/components/common/StatusChangeDialogue";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -71,7 +65,7 @@ export default function BlogsList() {
   }, []);
 
   const {
-    items: blogs,
+  items: blogs,
     setItems: setBlogs,
     page,
     setPage,
@@ -267,19 +261,22 @@ export default function BlogsList() {
         onAdd={() => navigate("/blogs/new")}
         addButtonText="Add Blog"
         toolbarExtra={
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger className="w-auto min-w-[220px] gap-2 [&>span]:line-clamp-none [&>span]:whitespace-nowrap">
-              <SelectValue placeholder="All categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All categories</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category.id} value={String(category.id)}>
-                  {category.title}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Combobox
+            options={[
+              { value: "all", label: "All categories" },
+              ...categories.map((category) => ({
+                value: String(category.id),
+                label: category.title,
+              })),
+            ]}
+            value={categoryFilter}
+            onChange={setCategoryFilter}
+            placeholder="All categories"
+            searchPlaceholder="Search categories..."
+            emptyText="No categories found."
+            maxVisibleItems={6}
+            autoWidth
+          />
         }
         loading={loading}
         searching={searching}

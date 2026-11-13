@@ -5,13 +5,7 @@ import { DataTable } from "@/components/common/DataTable";
 import SortOrderCell from "@/components/common/SortOrderCell";
 import StatusToggleCell from "@/components/common/StatusToggleCell";
 import RowActionsMenu from "@/components/common/RowActionsMenu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox } from "@/components/ui/combobox";
 import {
   fetchCityList,
   deleteCity,
@@ -212,19 +206,19 @@ export default function CityList() {
         title="Cities"
         searchPlaceholder="Search by Name, Slug or State..."
         toolbarExtra={
-          <Select value={stateFilter} onValueChange={setStateFilter}>
-            <SelectTrigger className="w-[220px]">
-              <SelectValue placeholder="All states" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All states</SelectItem>
-              {states.map((state) => (
-                <SelectItem key={state.slug} value={state.slug}>
-                  {state.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Combobox
+            options={[
+              { value: "all", label: "All states" },
+              ...states.map((state) => ({ value: state.slug, label: state.name })),
+            ]}
+            value={stateFilter}
+            onChange={setStateFilter}
+            placeholder="All states"
+            searchPlaceholder="Search states..."
+            emptyText="No states found."
+            maxVisibleItems={6}
+            autoWidth
+          />
         }
         onAdd={() => navigate("/cities/new")}
         addButtonText="Add City"
