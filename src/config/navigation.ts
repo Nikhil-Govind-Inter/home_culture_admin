@@ -83,6 +83,32 @@ export const NAV: NavSection[] = [
     entries: [{ title: "Dashboard", url: "/", icon: LayoutDashboard }],
   },
   {
+    id: "catalog",
+    label: "Catalog",
+    entries: [
+      {
+        id: "products",
+        title: "Products",
+        icon: Package,
+        items: [
+          { title: "Page Content", url: "/product-cms", icon: FileText },
+          { title: "Products", url: "/products", icon: Package },
+        ],
+      },
+      {
+        id: "product-setup",
+        title: "Product Setup",
+        icon: SlidersHorizontal,
+        items: [
+          { title: "Styles", url: "/product-styles", icon: Palette },
+          { title: "Trims", url: "/product-trims", icon: Scissors },
+          { title: "Sizes", url: "/product-sizes", icon: Ruler },
+          { title: "Add-ons", url: "/product-add-ons", icon: PlusSquare },
+        ],
+      },
+    ],
+  },
+  {
     id: "website",
     label: "Website Content",
     entries: [
@@ -127,25 +153,6 @@ export const NAV: NavSection[] = [
             ],
           },
           {
-            id: "how-it-works",
-            title: "How It Works",
-            icon: Workflow,
-            items: [
-              {
-                title: "Page Content",
-                url: "/how-it-works-cms",
-                icon: FileText,
-              },
-              {
-                title: "Workshop Materials",
-                url: "/workshop-materials",
-                icon: Hammer,
-              },
-              { title: "Testimonials", url: "/testimonials", icon: Quote },
-              { title: "Journey Steps", url: "/journey-steps", icon: Route },
-            ],
-          },
-          {
             id: "experience",
             title: "Experience",
             icon: Compass,
@@ -172,6 +179,26 @@ export const NAV: NavSection[] = [
               { title: "FAQs", url: "/experience-faqs", icon: MessageSquare },
             ],
           },
+          {
+            id: "how-it-works",
+            title: "How It Works",
+            icon: Workflow,
+            items: [
+              {
+                title: "Page Content",
+                url: "/how-it-works-cms",
+                icon: FileText,
+              },
+              {
+                title: "Workshop Materials",
+                url: "/workshop-materials",
+                icon: Hammer,
+              },
+              { title: "Testimonials", url: "/testimonials", icon: Quote },
+              { title: "Journey Steps", url: "/journey-steps", icon: Route },
+            ],
+          },
+
           {
             id: "career",
             title: "Career",
@@ -212,33 +239,6 @@ export const NAV: NavSection[] = [
           },
         ],
       },
-      { title: "Banners", url: "/banners", icon: GalleryHorizontal },
-    ],
-  },
-  {
-    id: "catalog",
-    label: "Catalog",
-    entries: [
-      {
-        id: "products",
-        title: "Products",
-        icon: Package,
-        items: [
-          { title: "Page Content", url: "/product-cms", icon: FileText },
-          { title: "Products", url: "/products", icon: Package },
-        ],
-      },
-      {
-        id: "product-setup",
-        title: "Product Setup",
-        icon: SlidersHorizontal,
-        items: [
-          { title: "Styles", url: "/product-styles", icon: Palette },
-          { title: "Trims", url: "/product-trims", icon: Scissors },
-          { title: "Sizes", url: "/product-sizes", icon: Ruler },
-          { title: "Add-ons", url: "/product-add-ons", icon: PlusSquare },
-        ],
-      },
     ],
   },
   {
@@ -258,6 +258,20 @@ export const NAV: NavSection[] = [
     ],
   },
   {
+    id: "seo",
+    label: "SEO",
+    entries: [{ title: "Meta Data", url: "/meta-data", icon: Search }],
+  },
+  {
+    id: "layout",
+    label: "Layout",
+    entries: [
+      { title: "Banners", url: "/banners", icon: GalleryHorizontal },
+      { title: "Social Media", url: "/social-media", icon: Share2 },
+      { title: "Site Settings", url: "/site-settings", icon: Settings },
+    ],
+  },
+  {
     id: "reference",
     label: "Reference Data",
     entries: [
@@ -270,19 +284,6 @@ export const NAV: NavSection[] = [
           { title: "Cities", url: "/cities", icon: MapPin },
         ],
       },
-    ],
-  },
-  {
-    id: "seo",
-    label: "SEO",
-    entries: [{ title: "Meta Data", url: "/meta-data", icon: Search }],
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    entries: [
-      { title: "Site Settings", url: "/site-settings", icon: Settings },
-      { title: "Social Media", url: "/social-media", icon: Share2 },
     ],
   },
 ];

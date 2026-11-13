@@ -21,11 +21,9 @@ export function AppHeader() {
 
   const handleLogout = () => {
     logout();
-    toast.success("Logged out successfully", 
-      {
-        duration: 3000,
-      }
-    );
+    toast.success("Logged out successfully", {
+      duration: 3000,
+    });
     navigate("/login", { replace: true });
   };
 
@@ -35,10 +33,7 @@ export function AppHeader() {
         {/* Sidebar trigger */}
         <SidebarTrigger className="-ml-1" />
 
-    
-
         <div className="flex items-end gap-3 ml-auto">
-
           {/* User menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -47,31 +42,31 @@ export function AppHeader() {
                   <User className="h-4 w-4 text-primary-foreground" />
                 </div>
                 <div className="hidden md:block text-left">
-                  <div className="text-sm font-medium">{user?.name ?? user?.email ?? "Admin"}</div>
-                  <div className="text-xs text-muted-foreground capitalize">{user?.role ?? "Admin"}</div>
+                  <div className="text-sm font-medium">
+                    {user?.name ?? user?.email ?? "Admin"}
+                  </div>
+                  <div className="text-xs text-muted-foreground capitalize">
+                    {user?.role ?? "Admin"}
+                  </div>
                 </div>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user?.name ?? user?.email ?? "Admin"}</p>
+                  <p className="text-sm font-medium leading-none">
+                    {user?.name ?? user?.email ?? "Admin"}
+                  </p>
                   <p className="text-xs leading-none text-muted-foreground">
                     {user?.email ?? "—"}
                   </p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive" onClick={handleLogout}>
+              <DropdownMenuItem
+                className="text-destructive"
+                onClick={handleLogout}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>

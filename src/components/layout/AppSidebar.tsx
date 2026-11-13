@@ -163,7 +163,7 @@ export function AppSidebar() {
         {NAV.map((section) => {
           const entries = section.entries;
           return (
-            <SidebarGroup key={section.id} className="py-1">
+            <SidebarGroup key={section.id} className=" border-sidebar-border py-1">
               {!isCollapsed && (
                 <SidebarGroupLabel className="h-7 px-2 text-[11px] font-semibold uppercase tracking-wider text-sidebar-foreground/50">
                   {section.label}
@@ -224,14 +224,14 @@ function NavLinkItem({
     <SidebarMenuItem>
       <SidebarMenuButton
         asChild
-        size={small && !groupRow ? "sm" : "default"}
+        size="default"
         tooltip={title}
         isActive={isNavActive(location, item.url, exact)}
       >
         <NavLink to={item.url} end={exact} className={navItemCls}>
           <Icon
             className={
-              small || groupRow || (asGroup && !isCollapsed)
+              small || groupRow || !isCollapsed
                 ? "h-4 w-4 flex-shrink-0"
                 : "h-5 w-5 flex-shrink-0"
             }
@@ -239,11 +239,7 @@ function NavLinkItem({
           {!isCollapsed && (
             <span
               className={
-                groupRow
-                  ? "font-medium"
-                  : asGroup
-                    ? "ml-2 font-medium"
-                    : "ml-2"
+                small && !groupRow ? "text-sm" : "text-sm font-medium"
               }
             >
               {title}
