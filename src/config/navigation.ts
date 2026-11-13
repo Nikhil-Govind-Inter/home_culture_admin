@@ -169,8 +169,8 @@ export const NAV: NavSection[] = [
                 url: "/experience-highlights",
                 icon: Sparkles,
               },
-              { title: "Features", url: "/experience-features", icon: Gem },
               { title: "Locations", url: "/locations", icon: MapPin },
+              { title: "Features", url: "/experience-features", icon: Gem },
               {
                 title: "Booking Process",
                 url: "/booking-processes",
