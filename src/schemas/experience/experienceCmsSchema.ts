@@ -29,8 +29,10 @@ export const experienceCmsSchema = z.object({
 
   // Visit Section
   visit_section_status: z.boolean(),
-  visit_section_media_path: file("Visit image"),
-  visit_section_media_alt: short("Visit image alt text"),
+  visit_section_media_type: z.enum(["image", "video"]),
+  visit_section_media_path: file("Visit media"),
+  visit_section_thumbnail: z.any().optional(),
+  visit_section_media_alt: short("Visit media alt text"),
   visit_section_header_title: short("Visit header title"),
   visit_section_title: short("Visit title"),
   visit_section_description: text("Visit description"),
@@ -59,3 +61,33 @@ export const experienceCmsSchema = z.object({
 });
 
 export type ExperienceCmsFormData = z.infer<typeof experienceCmsSchema>;
+
+const hasFile = (v: unknown) =>
+  v instanceof File || (typeof v === "string" && v.trim().length > 0);
+
+// Media-type dependent checks, merged into the resolver errors by the form.
+export const experienceCmsConditionalErrors = (data: ExperienceCmsFormData) => {
+  const errors: Partial<Record<keyof ExperienceCmsFormData, string>> = {};
+  const wantVideo = data.visit_section_media_type === "video";
+
+  // Visit media must match the chosen type (File mime type, or stored path extension).
+  const media = data.visit_section_media_path;
+  if (hasFile(media)) {
+    const ok =
+      media instanceof File
+        ? media.type.startsWith(wantVideo ? "video/" : "image/")
+        : (wantVideo ? /\.(mp4|webm)$/i : /\.(jpe?g|png|webp|gif)$/i).test(
+            String(media).split("?")[0],
+          );
+    if (!ok) {
+      errors.visit_section_media_path = wantVideo
+        ? "Visit video must be a valid video file (mp4 or webm)"
+        : "Visit image must be a valid image file (jpg, png, webp or gif)";
+    }
+  }
+
+  if (wantVideo && !hasFile(data.visit_section_thumbnail)) {
+    errors.visit_section_thumbnail = "Thumbnail is required";
+  }
+  return errors;
+};

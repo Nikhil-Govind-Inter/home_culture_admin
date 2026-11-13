@@ -2,7 +2,8 @@ import { apiFetch } from "@/lib/apiClient";
 import { ApiError, parseEnvelope } from "@/services/auth/authApi";
 
 // Experience CMS — singleton backed by `/experience-cms` (GET + multipart PUT).
-// The PUT creates the record on first save (both images are required then).
+// The PUT creates the record on first save (both media files are required then;
+// the visit thumbnail only when the visit media is a video).
 const EXPERIENCE_CMS_URL = `${import.meta.env.VITE_API_BASE_URL}/experience-cms`;
 
 export { ApiError };
@@ -29,7 +30,9 @@ export interface ExperienceCms {
   lifestyle_description: string;
 
   visit_section_status: boolean;
+  visit_section_media_type: "image" | "video";
   visit_section_media_path: string | null;
+  visit_section_thumbnail: string | null;
   visit_section_media_alt: string;
   visit_section_header_title: string;
   visit_section_title: string;

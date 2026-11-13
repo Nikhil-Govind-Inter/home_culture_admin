@@ -10,11 +10,15 @@ import {
   FormFileUploadField,
   FormSwitchField,
   FormTextareaField,
-  FormRichTextField,
+  FormSelectField,
 } from "@/components/forms/FormFieldComponents";
 import { Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { experienceCmsSchema, ExperienceCmsFormData } from "@/schemas/experience/experienceCmsSchema";
+import {
+  experienceCmsSchema,
+  experienceCmsConditionalErrors,
+  ExperienceCmsFormData,
+} from "@/schemas/experience/experienceCmsSchema";
 import {
   fetchExperienceCms,
   saveExperienceCms,
@@ -31,6 +35,7 @@ const TEXT_FIELDS = [
   "journey_section_title",
   "lifestyle_header_title",
   "lifestyle_title",
+  "visit_section_media_type",
   "visit_section_media_alt",
   "visit_section_header_title",
   "visit_section_title",
@@ -55,7 +60,13 @@ const TEXT_FIELDS = [
 const MEDIA_FIELDS = [
   "intro_section_media_path",
   "visit_section_media_path",
+  "visit_section_thumbnail",
 ] as const;
+
+const MEDIA_TYPE_OPTIONS = [
+  { value: "image", label: "Image" },
+  { value: "video", label: "Video" },
+];
 
 // Section visibility switches
 const STATUS_FIELDS = [
@@ -73,6 +84,7 @@ const defaultValues = {
   ...Object.fromEntries(TEXT_FIELDS.map((field) => [field, ""])),
   ...Object.fromEntries(MEDIA_FIELDS.map((field) => [field, ""])),
   ...Object.fromEntries(STATUS_FIELDS.map((field) => [field, true])),
+  visit_section_media_type: "image",
 } as ExperienceCmsFormData;
 
 export default function ExperienceCmsForm() {
@@ -81,9 +93,32 @@ export default function ExperienceCmsForm() {
   const [initialLoading, setInitialLoading] = useState(true);
 
   const form = useForm<ExperienceCmsFormData>({
-    resolver: zodResolver(experienceCmsSchema),
+    // Merge the media-type dependent errors so they show together with the others.
+    resolver: async (values, context, options) => {
+      const result = await zodResolver(experienceCmsSchema)(values, context, options);
+      const extra = experienceCmsConditionalErrors(values);
+      const keys = Object.keys(extra) as (keyof typeof extra)[];
+      if (!keys.length) return result;
+      const errors: Record<string, unknown> = { ...result.errors };
+      keys.forEach((k) => {
+        errors[k] = { type: "required", message: extra[k] };
+      });
+      return { values: {}, errors } as typeof result;
+    },
     defaultValues,
   });
+
+  const visitType = form.watch("visit_section_media_type");
+
+  // Switching the media type clears the uploaded media (user changes only, not form.reset).
+  useEffect(() => {
+    const sub = form.watch((_, { name, type }) => {
+      if (type !== "change" || name !== "visit_section_media_type") return;
+      form.setValue("visit_section_media_path", "");
+      form.setValue("visit_section_thumbnail", "");
+    });
+    return () => sub.unsubscribe();
+  }, [form]);
 
   const load = async () => {
     try {
@@ -92,7 +127,8 @@ export default function ExperienceCmsForm() {
       if (data) {
         const values = { ...defaultValues } as Record<string, string | boolean>;
         [...TEXT_FIELDS, ...MEDIA_FIELDS].forEach((field) => {
-          values[field] = data[field] || "";
+          values[field] =
+            data[field] || (field === "visit_section_media_type" ? "image" : "");
         });
         STATUS_FIELDS.forEach((field) => {
           values[field] = data[field] ?? true;
@@ -130,6 +166,7 @@ export default function ExperienceCmsForm() {
       // Only freshly picked files are sent; unchanged media keep their stored path.
       MEDIA_FIELDS.forEach((field) => {
         const value = values[field];
+        if (field === "visit_section_thumbnail" && values.visit_section_media_type !== "video") return;
         if (value instanceof File) formData.append(field, value);
       });
 
@@ -182,7 +219,7 @@ export default function ExperienceCmsForm() {
                 <FormTextField form={form} name="intro_section_title" label="Title" placeholder="Title" />
               </div>
               <FormTextareaField form={form} name="intro_section_quote" label="Quote" placeholder="Quote" rows={4} />
-              <FormRichTextField form={form} name="intro_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="intro_section_description" label="Description" placeholder="Description" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField
                   {...imageProps}
@@ -209,7 +246,7 @@ export default function ExperienceCmsForm() {
                 <FormTextField form={form} name="journey_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="journey_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="journey_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="journey_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -226,7 +263,7 @@ export default function ExperienceCmsForm() {
                 <FormTextField form={form} name="lifestyle_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="lifestyle_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="lifestyle_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="lifestyle_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -243,16 +280,36 @@ export default function ExperienceCmsForm() {
                 <FormTextField form={form} name="visit_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="visit_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="visit_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="visit_section_description" label="Description" placeholder="Description" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormSelectField
+                  form={form}
+                  name="visit_section_media_type"
+                  label="Media Type"
+                  placeholder="Select media type"
+                  options={MEDIA_TYPE_OPTIONS}
+                />
+                <FormTextField form={form} name="visit_section_media_alt" label="Media Alt Text" placeholder="Describe the media" />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField
-                  {...imageProps}
+                  form={form}
+                  accept={visitType === "video" ? "video/mp4,video/webm" : "image/*"}
                   name="visit_section_media_path"
-                  label="Image"
-                  placeholder="Upload image"
+                  label={visitType === "video" ? "Video" : "Image"}
+                  placeholder={visitType === "video" ? "Upload video" : "Upload image"}
                   recommendedDimensions="600×700px"
+                  maxVideoSize={50 * 1024 * 1024}
                 />
-                <FormTextField form={form} name="visit_section_media_alt" label="Image Alt Text" placeholder="Describe the image" />
+                {visitType === "video" && (
+                  <FormFileUploadField
+                    {...imageProps}
+                    name="visit_section_thumbnail"
+                    label="Thumbnail"
+                    placeholder="Upload thumbnail"
+                    recommendedDimensions="600×700px"
+                  />
+                )}
               </div>
             </CardContent>
           </Card>
@@ -302,7 +359,7 @@ export default function ExperienceCmsForm() {
                 <FormTextField form={form} name="faq_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="faq_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="faq_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="faq_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
@@ -319,7 +376,7 @@ export default function ExperienceCmsForm() {
                 <FormTextField form={form} name="enquiry_section_header_title" label="Header Title" placeholder="Header title" />
                 <FormTextField form={form} name="enquiry_section_title" label="Title" placeholder="Title" />
               </div>
-              <FormRichTextField form={form} name="enquiry_section_description" label="Description" placeholder="Description" />
+              <FormTextareaField form={form} name="enquiry_section_description" label="Description" placeholder="Description" />
             </CardContent>
           </Card>
 
