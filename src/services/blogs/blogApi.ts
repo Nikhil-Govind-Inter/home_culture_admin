@@ -2,7 +2,7 @@ import { apiFetch } from "@/lib/apiClient";
 import { ApiError, parseEnvelope } from "@/services/auth/authApi";
 
 // Blogs — backed by the server's `/blogs` (Bearer-JWT).
-// Create/update send multipart FormData (thumbnail_media_path + media_path files).
+// Create/update send multipart FormData (media_path file).
 // Status and sort order are changed with partial PUTs.
 const BLOGS_URL = `${import.meta.env.VITE_API_BASE_URL}/blogs`;
 
@@ -17,8 +17,6 @@ export interface Blog {
   excerpt: string;
   description: string;
   reading_time: number;
-  thumbnail_media_path: string | null;
-  thumbnail_media_alt: string;
   media_path: string | null;
   media_alt: string;
   sort_order?: number;

@@ -59,8 +59,7 @@ export default function HomeBrokenProcessForm() {
       title: "",
       media_type: "image",
       media_alt: "",
-      desktop_media_path: "",
-      mobile_media_path: "",
+      media_path: "",
       thumbnail: "",
       sort_order: "1",
       status: true,
@@ -73,8 +72,7 @@ export default function HomeBrokenProcessForm() {
   useEffect(() => {
     const sub = form.watch((_, { name, type }) => {
       if (type === "change" && name === "media_type") {
-        form.setValue("desktop_media_path", "");
-        form.setValue("mobile_media_path", "");
+        form.setValue("media_path", "");
         form.setValue("thumbnail", "");
       }
     });
@@ -99,8 +97,7 @@ export default function HomeBrokenProcessForm() {
           title: data.title || "",
           media_type: data.media_type || "image",
           media_alt: data.media_alt || "",
-          desktop_media_path: data.desktop_media_path || "",
-          mobile_media_path: data.mobile_media_path || "",
+          media_path: data.media_path || "",
           thumbnail: data.thumbnail || "",
           sort_order: (data.sort_order ?? 1).toString(),
           status: data.status ?? true,
@@ -129,8 +126,7 @@ export default function HomeBrokenProcessForm() {
       formData.append("status", String(data.status ?? true));
 
       // Only newly chosen files are sent; existing paths stay untouched on the server.
-      if (data.desktop_media_path instanceof File) formData.append("desktop_media_path", data.desktop_media_path);
-      if (data.media_type === "image" && data.mobile_media_path instanceof File) formData.append("mobile_media_path", data.mobile_media_path);
+      if (data.media_path instanceof File) formData.append("media_path", data.media_path);
       if (data.media_type === "video" && data.thumbnail instanceof File) formData.append("thumbnail", data.thumbnail);
 
       if (isEditing && id) {
@@ -198,27 +194,17 @@ export default function HomeBrokenProcessForm() {
                 />
                 <FormTextField form={form} name="media_alt" label="Media Alt Text" placeholder="Describe the media" />
               </div>
-              {/* Desktop media sits beside its companion file: mobile image (image) or thumbnail (video). */}
+              {/* Media sits beside its thumbnail (video only). */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField
                   form={form}
                   accept={mediaAccept(mediaType)}
-                  name="desktop_media_path"
-                  label={`Desktop ${mediaLabel(mediaType)}`}
-                  placeholder="Upload desktop media"
+                  name="media_path"
+                  label={mediaType === "video" ? "Video" : "Image"}
+                  placeholder={`Upload ${mediaLabel(mediaType)}`}
                   recommendedDimensions="1920×1080px"
                   maxVideoSize={50 * 1024 * 1024}
                 />
-                {mediaType === "image" && (
-                  <FormFileUploadField
-                    form={form}
-                    name="mobile_media_path"
-                    label="Mobile Image"
-                    placeholder="Upload image"
-                    accept="image/*"
-                    recommendedDimensions="768×900px"
-                  />
-                )}
                 {mediaType === "video" && (
                   <FormFileUploadField
                     form={form}

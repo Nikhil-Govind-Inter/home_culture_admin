@@ -3,7 +3,6 @@ import { commonValidations } from "@/utils/formUtils";
 
 export const productSizeSchema = z.object({
   media_path: commonValidations.requiredFile("Image"),
-  media_alt: commonValidations.requiredString("Image Alt Text"),
   title: commonValidations.requiredString("Title"),
   slug: commonValidations.requiredString("Slug"),
   size: z

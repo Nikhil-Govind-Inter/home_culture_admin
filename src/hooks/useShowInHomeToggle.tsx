@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useRef, useState, Dispatch, SetStateAction } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { ApiError } from "@/services/auth/authApi";
 import {
@@ -26,6 +26,7 @@ export function useShowInHomeToggle<T extends { id?: number; show_in_home?: bool
   label,
 }: Options<T>) {
   const { toast } = useToast();
+  const confirmRef = useRef<HTMLButtonElement>(null);
   const [pending, setPending] = useState<{ item: T; checked: boolean } | null>(null);
 
   const confirm = async () => {
@@ -52,7 +53,12 @@ export function useShowInHomeToggle<T extends { id?: number; show_in_home?: bool
 
   const dialog = (
     <AlertDialog open={!!pending} onOpenChange={(open) => !open && setPending(null)}>
-      <AlertDialogContent>
+      <AlertDialogContent
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          confirmRef.current?.focus();
+        }}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm show in home change</AlertDialogTitle>
           <AlertDialogDescription>
@@ -62,7 +68,7 @@ export function useShowInHomeToggle<T extends { id?: number; show_in_home?: bool
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={confirm}>Confirm</AlertDialogAction>
+          <AlertDialogAction ref={confirmRef} onClick={confirm}>Confirm</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

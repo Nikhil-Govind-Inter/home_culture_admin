@@ -10,11 +10,9 @@ export { ApiError };
 export interface ProductStyle {
   id?: number;
   media_path: string | null;
-  media_alt: string;
   slug?: string;
   title: string;
   description: string;
-  button_text: string;
   sort_order?: number;
   status?: boolean;
   show_in_home?: boolean;

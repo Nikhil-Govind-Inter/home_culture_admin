@@ -226,8 +226,8 @@ export default function HomeBannerForm() {
                   form={form}
                   accept={mediaAccept(mediaType)}
                   name="desktop_media_path"
-                  label={`Desktop ${mediaLabel(mediaType)}`}
-                  placeholder="Upload desktop media"
+                  label={mediaType === "video" ? "Video" : "Desktop image"}
+                  placeholder={mediaType === "video" ? "Upload video" : "Upload desktop image"}
                   recommendedDimensions="1920×1080px"
                   maxVideoSize={50 * 1024 * 1024}
                 />
@@ -236,7 +236,7 @@ export default function HomeBannerForm() {
                     form={form}
                     name="mobile_media_path"
                     label="Mobile Image"
-                    placeholder="Upload image"
+                    placeholder="Upload mobile image"
                     accept="image/*"
                     recommendedDimensions="768×900px"
                   />

@@ -87,7 +87,7 @@ export default function ProductTrimList() {
       accessorKey: "media_path",
       header: "Image",
       cell: ({ row }) => (
-        <MediaThumbnail path={row.getValue("media_path")} alt={row.original.media_alt} />
+        <MediaThumbnail path={row.getValue("media_path")} alt={row.original.title} />
       ),
     },
     {

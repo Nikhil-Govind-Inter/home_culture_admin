@@ -279,35 +279,6 @@ export default function AboutCmsForm() {
             </CardContent>
           </Card>
 
-          {/* Mission */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Mission</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormTextField
-                  form={form}
-                  name="mission_title"
-                  label="Title"
-                  placeholder="Mission title"
-                />
-                <FormFileUploadField
-                  {...imageProps}
-                  name="mission_icon"
-                  label="Icon"
-                  placeholder="Upload icon"
-                  recommendedDimensions="64×64px"
-                />
-              </div>
-              <FormRichTextField
-                form={form}
-                name="mission_description"
-                label="Description"
-                placeholder="Description"
-              />
-            </CardContent>
-          </Card>
 
           {/* Vision */}
           <Card>
@@ -315,7 +286,6 @@ export default function AboutCmsForm() {
               <CardTitle>Vision</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormTextField
                   form={form}
                   name="vision_title"
@@ -329,7 +299,6 @@ export default function AboutCmsForm() {
                   placeholder="Upload icon"
                   recommendedDimensions="64×64px"
                 />
-              </div>
               <FormRichTextField
                 form={form}
                 name="vision_description"
@@ -338,6 +307,35 @@ export default function AboutCmsForm() {
               />
             </CardContent>
           </Card>
+
+          {/* Mission */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Mission</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <FormTextField
+                  form={form}
+                  name="mission_title"
+                  label="Title"
+                  placeholder="Mission title"
+                />
+                <FormFileUploadField
+                  {...imageProps}
+                  name="mission_icon"
+                  label="Icon"
+                  placeholder="Upload icon"
+                  recommendedDimensions="64×64px"
+                />
+              <FormRichTextField
+                form={form}
+                name="mission_description"
+                label="Description"
+                placeholder="Description"
+              />
+            </CardContent>
+          </Card>
+
 
           {/* Highlight Section */}
           <Card>

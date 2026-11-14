@@ -1,4 +1,5 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog"
+import { useRef } from "react";
+import { AlertDialog,AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog"
 
 const StatusChangeDialogue = ({
     statusToggleItem,
@@ -7,13 +8,19 @@ const StatusChangeDialogue = ({
     itemLabel = "item",
 
 }) => {
+  const confirmRef = useRef<HTMLButtonElement>(null);
   return (
     <div>
        <AlertDialog
               open={!!statusToggleItem}
               onOpenChange={() => setStatusToggleItem(null)}
             >
-              <AlertDialogContent>
+              <AlertDialogContent
+                onOpenAutoFocus={(e) => {
+                  e.preventDefault();
+                  confirmRef.current?.focus();
+                }}
+              >
                 <AlertDialogHeader>
                   <AlertDialogTitle>Confirm Status Change</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -25,7 +32,7 @@ const StatusChangeDialogue = ({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={confirmStatusToggle}>
+                  <AlertDialogAction ref={confirmRef} onClick={confirmStatusToggle}>
                     {statusToggleItem?.newStatus ? "Activate" : "Deactivate"}
                   </AlertDialogAction>
                 </AlertDialogFooter>

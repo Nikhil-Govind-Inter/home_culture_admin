@@ -220,7 +220,7 @@ export default function BannersForm() {
                     <FormFileUploadField
                       form={form}
                       name="banner_desktop_media_path"
-                      label={mediaType === "video" ? "Desktop Video" : "Desktop Image"}
+                      label={mediaType === "video" ? "Video" : "Desktop Image"}
                       placeholder="Upload desktop banner"
                       accept={mediaType === "video" ? "video/mp4,video/webm" : "image/*"}
                       recommendedDimensions="1920×600px"

@@ -10,7 +10,6 @@ export { ApiError };
 export interface ProductTrim {
   id?: number;
   media_path: string | null;
-  media_alt: string;
   slug?: string;
   title: string;
   description: string;

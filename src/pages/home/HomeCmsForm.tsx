@@ -326,8 +326,8 @@ export default function HomeCmsForm() {
                 form={form}
                 accept={mediaAccept(ownershipType)}
                 name="ownership_desktop_media_path"
-                label={`Desktop ${mediaLabel(ownershipType)}`}
-                placeholder="Upload desktop media"
+                label={ownershipType === "video" ? "Video" : "Desktop image"}
+                placeholder={ownershipType === "video" ? "Upload video" : "Upload desktop image"}
                 recommendedDimensions="1920×1080px"
                 maxVideoSize={50 * 1024 * 1024}
               />
@@ -345,7 +345,7 @@ export default function HomeCmsForm() {
                   accept={mediaAccept(ownershipType)}
                   name="ownership_mobile_media_path"
                   label={`Mobile ${mediaLabel(ownershipType)}`}
-                  placeholder="Upload mobile media"
+                  placeholder={`Upload mobile ${mediaLabel(ownershipType)}`}
                   recommendedDimensions="768×900px"
                   maxVideoSize={50 * 1024 * 1024}
                 />
@@ -424,8 +424,8 @@ export default function HomeCmsForm() {
                 form={form}
                 accept={mediaAccept(journeyType)}
                 name="journey_section_desktop_media_path"
-                label={`Desktop ${mediaLabel(journeyType)}`}
-                placeholder="Upload desktop media"
+                label={journeyType === "video" ? "Video" : "Desktop image"}
+                placeholder={journeyType === "video" ? "Upload video" : "Upload desktop image"}
                 recommendedDimensions="1920×1080px"
                 maxVideoSize={50 * 1024 * 1024}
               />
@@ -443,7 +443,7 @@ export default function HomeCmsForm() {
                   accept={mediaAccept(journeyType)}
                   name="journey_section_mobile_media_path"
                   label={`Mobile ${mediaLabel(journeyType)}`}
-                  placeholder="Upload mobile media"
+                  placeholder={`Upload mobile ${mediaLabel(journeyType)}`}
                   recommendedDimensions="768×900px"
                   maxVideoSize={50 * 1024 * 1024}
                 />

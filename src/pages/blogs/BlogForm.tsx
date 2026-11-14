@@ -54,8 +54,6 @@ export default function BlogForm() {
       excerpt: "",
       description: "",
       reading_time: "",
-      thumbnail_media_path: "",
-      thumbnail_media_alt: "",
       media_path: "",
       media_alt: "",
       sort_order: "1",
@@ -98,8 +96,6 @@ export default function BlogForm() {
           excerpt: data.excerpt || "",
           description: data.description || "",
           reading_time: data.reading_time ? String(data.reading_time) : "",
-          thumbnail_media_path: data.thumbnail_media_path || "",
-          thumbnail_media_alt: data.thumbnail_media_alt || "",
           media_path: data.media_path || "",
           media_alt: data.media_alt || "",
           sort_order: (data.sort_order ?? 1).toString(),
@@ -131,7 +127,6 @@ export default function BlogForm() {
       formData.append("excerpt", data.excerpt);
       formData.append("description", data.description);
       formData.append("reading_time", data.reading_time);
-      formData.append("thumbnail_media_alt", data.thumbnail_media_alt);
       formData.append("media_alt", data.media_alt);
       formData.append("sort_order", (data.sort_order || "1").toString());
       formData.append("status", String(data.status ?? true));
@@ -139,9 +134,6 @@ export default function BlogForm() {
       formData.append("show_in_home", String(data.show_in_home));
 
       // Only newly chosen files are sent; existing paths stay untouched on the server.
-      if (data.thumbnail_media_path instanceof File) {
-        formData.append("thumbnail_media_path", data.thumbnail_media_path);
-      }
       if (data.media_path instanceof File) {
         formData.append("media_path", data.media_path);
       }
@@ -259,22 +251,6 @@ export default function BlogForm() {
               <CardTitle>Media</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormFileUploadField
-                  form={form}
-                  name="thumbnail_media_path"
-                  label="Thumbnail Image"
-                  placeholder="Upload thumbnail"
-                  accept="image/*"
-                  recommendedDimensions="600×400px"
-                />
-                <FormTextField
-                  form={form}
-                  name="thumbnail_media_alt"
-                  label="Thumbnail Alt Text"
-                  placeholder="Describe the thumbnail"
-                />
-              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormFileUploadField
                   form={form}

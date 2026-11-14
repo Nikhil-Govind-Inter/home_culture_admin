@@ -16,8 +16,6 @@ export const blogSchema = z.object({
       return !isNaN(num) && num > 0;
     }, "Reading time must be a positive number of minutes"),
 
-  thumbnail_media_path: commonValidations.requiredFile("Thumbnail image"),
-  thumbnail_media_alt: commonValidations.requiredString("Thumbnail alt text"),
   media_path: commonValidations.requiredFile("Main image"),
   media_alt: commonValidations.requiredString("Main image alt text"),
 

@@ -10,7 +10,6 @@ export { ApiError };
 export interface ProductAddOn {
   id?: number;
   media_path: string | null;
-  media_alt: string;
   slug?: string;
   title: string;
   subtitle: string;

@@ -229,8 +229,8 @@ export default function HomeExperienceForm() {
                   form={form}
                   accept={mediaAccept(mediaType)}
                   name="media_path"
-                  label={`Media ${mediaLabel(mediaType)}`}
-                  placeholder="Upload media media"
+                  label={mediaType === "video" ? "Video" : "Image"}
+                  placeholder={`Upload ${mediaLabel(mediaType)}`}
                   recommendedDimensions="800×600px"
                   maxVideoSize={50 * 1024 * 1024}
                 />

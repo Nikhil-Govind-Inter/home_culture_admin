@@ -88,10 +88,10 @@ export default function HomeBrokenProcessList() {
       ),
     },
     {
-      accessorKey: "desktop_media_path",
+      accessorKey: "media_path",
       header: "Media",
       cell: ({ row }) => (
-        <MediaThumbnail path={row.original.media_type === "video" ? row.original.thumbnail : row.original.desktop_media_path} alt={row.original.media_alt} />
+        <MediaThumbnail path={row.original.media_type === "video" ? row.original.thumbnail : row.original.media_path} alt={row.original.media_alt} />
       ),
     },
     {

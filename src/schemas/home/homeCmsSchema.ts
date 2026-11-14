@@ -20,7 +20,7 @@ const homeCmsBase = z.object({
   // Section Two - Ownership
   ownership_status: z.boolean(),
   ownership_media_type: mediaType,
-  ownership_desktop_media_path: file("Desktop media"),
+  ownership_desktop_media_path: z.any().optional(),
   ownership_mobile_media_path: z.any().optional(),
   ownership_mobile_media_alt: short("Media alt text"),
   ownership_thumbnail: z.any().optional(),
@@ -58,7 +58,7 @@ const homeCmsBase = z.object({
   journey_section_header_title: short("Header title"),
   journey_section_title: short("Title"),
   journey_section_media_type: mediaType,
-  journey_section_desktop_media_path: file("Desktop media"),
+  journey_section_desktop_media_path: z.any().optional(),
   journey_section_mobile_media_path: z.any().optional(),
   journey_section_media_alt: short("Media alt text"),
   journey_section_thumbnail: z.any().optional(),
@@ -108,14 +108,17 @@ export const homeCmsConditionalErrors = (data: Values) => {
     desktop: "ownership_desktop_media_path" | "journey_section_desktop_media_path",
   ) => {
     const value = data[desktop];
-    if (!hasFile(value)) return;
     const wantVideo = data[type] === "video";
+    if (!hasFile(value)) {
+      errors[desktop] = `${wantVideo ? "Video" : "Desktop image"} is required`;
+      return;
+    }
     const ok =
       value instanceof File
         ? value.type.startsWith(wantVideo ? "video/" : "image/")
         : (wantVideo ? VIDEO_EXT : IMAGE_EXT).test(String(value).split("?")[0]);
     if (!ok) errors[desktop] = wantVideo
-        ? "Desktop video must be a valid video file (mp4 or webm)"
+        ? "Video must be a valid video file (mp4 or webm)"
         : "Desktop image must be a valid image file (jpg, png, webp or gif)";
   };
   checkDesktop("ownership_media_type", "ownership_desktop_media_path");

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/common/DataTable";
@@ -45,6 +45,7 @@ export default function BlogsList() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
+  const flagConfirmRef = useRef<HTMLButtonElement>(null);
   const [flagToggle, setFlagToggle] = useState<{
     item: Blog;
     field: "is_featured" | "show_in_home";
@@ -161,12 +162,12 @@ export default function BlogsList() {
       ),
     },
     {
-      accessorKey: "thumbnail_media_path",
-      header: "Thumbnail",
+      accessorKey: "media_path",
+      header: "Image",
       cell: ({ row }) => (
         <MediaThumbnail
-          path={row.original.thumbnail_media_path}
-          alt={row.original.thumbnail_media_alt}
+          path={row.original.media_path}
+          alt={row.original.media_alt}
         />
       ),
     },
@@ -305,7 +306,12 @@ export default function BlogsList() {
         open={!!flagToggle}
         onOpenChange={(open) => !open && setFlagToggle(null)}
       >
-        <AlertDialogContent>
+        <AlertDialogContent
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+            flagConfirmRef.current?.focus();
+          }}
+        >
           <AlertDialogHeader>
             <AlertDialogTitle>
               Confirm {flagToggle ? TOGGLE_LABELS[flagToggle.field].name : ""} change
@@ -320,7 +326,7 @@ export default function BlogsList() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmFlagToggle}>Confirm</AlertDialogAction>
+            <AlertDialogAction ref={flagConfirmRef} onClick={confirmFlagToggle}>Confirm</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

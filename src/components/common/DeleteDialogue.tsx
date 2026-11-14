@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,13 +16,19 @@ const DeleteDialogue = ({
   confirmDelete,
   itemLabel = "Home",
 }) => {
+  const confirmRef = useRef<HTMLButtonElement>(null);
   return (
     <div>
       <AlertDialog
         open={!!deleteItemId}
         onOpenChange={() => setDeleteItemId(null)}
       >
-        <AlertDialogContent>
+        <AlertDialogContent
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+            confirmRef.current?.focus();
+          }}
+        >
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -32,6 +39,7 @@ const DeleteDialogue = ({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
+              ref={confirmRef}
               onClick={confirmDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >

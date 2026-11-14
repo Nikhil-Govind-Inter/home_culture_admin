@@ -12,8 +12,7 @@ export interface HomeBrokenProcess {
   title: string;
   media_type: "image" | "video";
   media_alt: string;
-  desktop_media_path: string | null;
-  mobile_media_path: string | null;
+  media_path: string | null;
   thumbnail: string | null;
   sort_order?: number;
   status?: boolean;
