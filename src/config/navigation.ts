@@ -258,6 +258,17 @@ export const NAV: NavSection[] = [
     ],
   },
   {
+    id: "enquiries",
+    label: "Enquiries",
+    entries: [
+      {
+        title: "Contact Enquiries",
+        url: "/contact-enquiries",
+        icon: MessageSquare,
+      },
+    ],
+  },
+  {
     id: "seo",
     label: "SEO",
     entries: [{ title: "Meta Data", url: "/meta-data", icon: Search }],

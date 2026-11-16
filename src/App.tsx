@@ -41,6 +41,8 @@ const DepartmentForm = React.lazy(() => import("./pages/career/DepartmentForm"))
 const JobList = React.lazy(() => import("./pages/career/JobList"));
 const JobForm = React.lazy(() => import("./pages/career/JobForm"));
 const ContactCmsForm = React.lazy(() => import("./pages/contact/ContactCmsForm"));
+const ContactEnquiryList = React.lazy(() => import("./pages/contact/ContactEnquiryList"));
+const ContactEnquiryView = React.lazy(() => import("./pages/contact/ContactEnquiryView"));
 const PrivacyPolicyForm = React.lazy(() => import("./pages/privacyPolicy/PrivacyPolicyForm"));
 const HomeCmsForm = React.lazy(() => import("./pages/home/HomeCmsForm"));
 const HomeBannerList = React.lazy(() => import("./pages/home/HomeBannerList"));
@@ -179,6 +181,8 @@ const App = () => (
 
                 {/* Contact CMS */}
                 <Route path="/contact-cms" element={<ContactCmsForm />} />
+                <Route path="/contact-enquiries" element={<ContactEnquiryList />} />
+                <Route path="/contact-enquiries/:id" element={<ContactEnquiryView />} />
 
                 {/* Privacy Policy */}
                 <Route path="/privacy-policy" element={<PrivacyPolicyForm />} />
